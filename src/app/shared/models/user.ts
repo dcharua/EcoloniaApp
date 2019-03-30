@@ -10,5 +10,8 @@ export class User {
     };
     admin: boolean;
     createdOn: string;
+    points: number;
+    photos?: string [];
+    coupons?: string [];
   }
   
