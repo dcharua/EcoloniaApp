@@ -1,0 +1,15 @@
+ion-row {
+  display: flex;
+}
+
+ion-col {
+  display: flex !important;
+  justify-content: center;
+  align-items: flex-end;
+  color: #b7cd44;
+  font-size: 200%;
+}
+
+#photoIcon {
+  font-size: 300%;
+}
