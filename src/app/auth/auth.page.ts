@@ -12,19 +12,19 @@ import { Observable } from 'rxjs';
 })
 export class AuthPage implements OnInit {
   isLoading = false;
-  isLogin = true;
+  isLogin = false;
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   authenticate(email: string, password: string) {
-   
+
   }
 
   onSwitchAuthMode() {
@@ -35,9 +35,9 @@ export class AuthPage implements OnInit {
     if (!form.valid) {
       return;
     }
-    if (this.isLogin){
+    if (this.isLogin) {
       this.authService.SignIn(form.value);
-    } else{
+    } else {
       this.authService.SignUp(form.value);
     }
     form.reset();

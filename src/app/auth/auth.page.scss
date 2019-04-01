@@ -1,0 +1,66 @@
+#all {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: middle;
+
+  --ion-background-color: #12151b;
+  background-color: #12151b;
+  min-height: 100vh;
+  height: auto;
+}
+
+img {
+  width: 20vw;
+  height: auto;
+  object-fit: contain;
+}
+
+#box {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: white;
+
+  h3 {
+    font-size: 22px;
+  }
+
+  input {
+    text-align: center;
+    padding: 7px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #a8c328;
+  }
+
+  input:focus {
+    outline: none !important;
+    border-color: none;
+  }
+}
+
+.boton {
+  // Size Box
+  width: 70vw;
+  height: 120%;
+  padding: 10px;
+  margin: 20px 0;
+
+  // Style box
+  border: none;
+  border-radius: 4px;
+  background-color: rgba(255,255,255,0.2);
+
+  // Text in box
+  text-align: center;
+  text-decoration: none;
+  color: #a8c328;
+  font-size: 25px;
+}
+
+.registrar {
+  color: lightgrey;
+  font-size: 18px;
+}

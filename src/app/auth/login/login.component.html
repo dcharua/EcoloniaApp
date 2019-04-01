@@ -1,0 +1,38 @@
+<div id="all">
+  <ion-row id="box">
+    <img src="../../../assets/images/logo-small.png" alt="">
+  </ion-row>
+
+  <ion-row id="box">
+    <ion-col>
+      <ion-row id="box">
+        <h3>Correo electronico</h3>
+      </ion-row>
+      <ion-row id="box">
+        <input type="text" [(ngModel)]="this.mail" name="mail">
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row id="box">
+    <ion-col>
+      <ion-row id="box">
+        <h3>Contraseña</h3>
+      </ion-row>
+      <ion-row id="box">
+        <input type="password" [(ngModel)]="this.password" name="password">
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row id="box">
+    <ion-col>
+      <ion-row id="box">
+        <a class="boton" (click)="login()">Ingresar</a>
+      </ion-row>
+      <ion-row id="box">
+        <a class="registrar" (click)="change()">Nuevo aquí?</a>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</div>

@@ -7,7 +7,8 @@ const routes: Routes = [
   { path: 'user-home', loadChildren: './user/home/home.module#HomePageModule' },
   { path: 'user-coupon', loadChildren: './user/coupon/coupon.module#CouponPageModule' },
   { path: 'admin-home', loadChildren: './admin/home/home.module#HomePageModule' },
-  { path: 'admin-coupon', loadChildren: './admin/coupon/coupon.module#CouponPageModule' }
+  { path: 'admin-coupon', loadChildren: './admin/coupon/coupon.module#CouponPageModule' },
+  { path: 'home', loadChildren: './home/home.module#HomePageModule' }
 ];
 
 @NgModule({

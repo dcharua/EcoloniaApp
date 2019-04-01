@@ -1,0 +1,64 @@
+<div id="all">
+  <ion-row id="box">
+    <img src="../../../assets/images/logo-small.png" alt="">
+  </ion-row>
+
+  <ion-row id="box">
+    <ion-col>
+      <ion-row id="box">
+        <h3>Nombre completo</h3>
+      </ion-row>
+      <ion-row id="box">
+        <input type="text" [(ngModel)]="this.name" name="name">
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row id="box">
+    <ion-col>
+      <ion-row id="box">
+        <h3>Correo electronico</h3>
+      </ion-row>
+      <ion-row id="box">
+        <input type="text" [(ngModel)]="this.mail" name="mail">
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row id="box">
+    <ion-col>
+      <ion-row id="box">
+        <h3>Confirmación de correo electronico</h3>
+      </ion-row>
+      <ion-row id="box">
+        <input type="text" [(ngModel)]="this.mailConfirmation" name="mailConfirmation">
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row id="box">
+    <ion-col>
+      <ion-row id="box">
+        <h3>Contraseña</h3>
+      </ion-row>
+      <ion-row id="box">
+        <input type="password" [(ngModel)]="this.password" name="password">
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row id="box">
+    <ion-col>
+      <ion-row id="box">
+        <h3>Confirmación de contraseña</h3>
+      </ion-row>
+      <ion-row id="box">
+        <input type="password" [(ngModel)]="this.passwordConfirmation" name="passwordConfirmation">
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row id="box">
+    <a class="boton" (click)="registrar()">Registrar</a>
+  </ion-row>
+</div>

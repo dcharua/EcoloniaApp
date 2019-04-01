@@ -1,8 +1,10 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>{{ isLogin ? 'Login' : 'Signup' }}</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <app-login *ngIf="isLogin"></app-login>
+  <app-signin *ngIf="!isLogin"></app-signin>
+</ion-content>
+
+
+<!--
 
 <ion-content padding>
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
@@ -74,8 +76,6 @@
       </ion-row>
     </ion-grid>
   </form>
-
-  <!-- <div text-center>
-    <ion-spinner color="primary" *ngIf="isLoading"></ion-spinner>
-  </div> -->
 </ion-content>
+
+-->
