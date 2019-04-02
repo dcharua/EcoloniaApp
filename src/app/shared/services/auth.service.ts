@@ -4,7 +4,7 @@ import * as moment from "moment";
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from "@angular/router";
-import {UserService} from './user.service'
+import { UserService } from './user.service'
 import { Observable } from 'rxjs';
 import { Plugins } from '@capacitor/core';
 import { BehaviorSubject, from } from 'rxjs';
@@ -24,26 +24,26 @@ export class AuthService {
     private userService: UserService,
     public router: Router,
     public ngZone: NgZone // NgZone service to remove outside scope warning
-  ) {}
+  ) { }
 
   // Sign in with email/password
   SignIn(data) {
     return this.afAuth.auth.signInWithEmailAndPassword(data.email, data.password)
       .then((result) => {
         this.userService.getUserById(result.user.uid)
-        .subscribe((users) => {
-          const user: User = users[0];
-          this.SetLocal(user);
-          if (user.admin){
-            this.ngZone.run(() => {
-              this.router.navigate(['/home']);
-            });
-          } else{
-            this.ngZone.run(() => {
-              this.router.navigate(['/home']);
-            });
-          }
-        });
+          .subscribe((users) => {
+            const user: User = users[0];
+            this.SetLocal(user);
+            if (user.admin) {
+              this.ngZone.run(() => {
+                this.router.navigate(['/home']);
+              });
+            } else {
+              this.ngZone.run(() => {
+                this.router.navigate(['/home']);
+              });
+            }
+          });
       }).catch((error) => {
         window.alert(error.message)
       })
@@ -51,12 +51,11 @@ export class AuthService {
 
   // Sign up with email/password
   SignUp(data) {
-    const user: User =  new User();
+    const user: User = new User();
     console.log(data)
     return this.afAuth.auth.createUserWithEmailAndPassword(data.email, data.password)
       .then((res) => {
-        user.email = res.user.email;
-        user.uid = res.user.uid;
+        user.mail = res.user.email;
         user.admin = false;
         user.createdOn = moment().format('MMMM Do YYYY');
         this.userService.addUser(user).then((docRef) => {
@@ -64,44 +63,44 @@ export class AuthService {
           console.log("Document successfully written!");
           this.SetLocal(user);
           this.getLoggedInUser();
-          this.router.navigate(['/home']);
+          this.router.navigate(['/auth']);
         })
-        .catch(function(error) {
+          .catch(function(error) {
             console.error("Error writing document: ", error);
-        });;
+          });;
       }).catch((error) => {
         window.alert(error.message)
       })
   }
 
-  SetLocal(user: User){
+  SetLocal(user: User) {
     Plugins.Storage.set({ key: 'user', value: JSON.stringify(user) });
   }
 
   // Reset Forgot password
   ForgotPassword(passwordResetEmail) {
     return this.afAuth.auth.sendPasswordResetEmail(passwordResetEmail)
-    .then(() => {
-      window.alert('Password reset email sent, check your inbox.');
-    }).catch((error) => {
-      window.alert(error)
-    })
+      .then(() => {
+        window.alert('Password reset email sent, check your inbox.');
+      }).catch((error) => {
+        window.alert(error)
+      })
   }
 
   // Returns true when user is logged
-  async isLogged(){
+  async isLogged() {
     const user = await this.getLocalUser();
-    return (user !== null ) ? true : false;
+    return (user !== null) ? true : false;
   }
 
-   // Returns true when user is admin
-  async isAdmin(){
+  // Returns true when user is admin
+  async isAdmin() {
     const user = await this.getLocalUser();
     return user.admin;
   }
 
   getLocalUser() {
-    return Plugins.Storage.get({ key: 'user' }).then( data => {
+    return Plugins.Storage.get({ key: 'user' }).then(data => {
       const user = JSON.parse(data.value) as User;
       return user;
     });
@@ -113,6 +112,11 @@ export class AuthService {
       Plugins.Storage.remove({ key: 'user' });
       this.router.navigate(['/auth']);
     })
+  }
+
+  validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
   }
 
   getLoggedInUser() {
