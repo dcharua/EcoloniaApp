@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { AuthPage } from './auth.page';
 import { LoginComponent } from './login/login.component';
-import { SigninComponent } from './signin/signin.component';
+import { SignupComponent } from './signup/signup.component';
 
 
 const routes: Routes = [
@@ -27,7 +27,7 @@ const routes: Routes = [
   declarations: [
     AuthPage,
     LoginComponent,
-    SigninComponent
+    SignupComponent
   ]
 })
 export class AuthPageModule { }

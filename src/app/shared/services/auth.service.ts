@@ -55,8 +55,9 @@ export class AuthService {
     console.log(data)
     return this.afAuth.auth.createUserWithEmailAndPassword(data.email, data.password)
       .then((res) => {
-        user.mail = res.user.email;
+        user.email = res.user.email;
         user.admin = false;
+        user.name = data.name;
         user.createdOn = moment().format('MMMM Do YYYY');
         this.userService.addUser(user).then((docRef) => {
           user.$key = docRef.id;

@@ -1,7 +1,7 @@
 export class User {
   $key?: string;
-  name?: string;
-  mail: string;
+  name: string;
+  email: string;
   password: string;
   location?: {
     lat: number;

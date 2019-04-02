@@ -9,7 +9,7 @@
         <h3>Nombre completo</h3>
       </ion-row>
       <ion-row id="box">
-        <input type="text" [(ngModel)]="this.name" name="name">
+        <input type="text" [(ngModel)]="this.user.name" name="name">
       </ion-row>
     </ion-col>
   </ion-row>
@@ -20,7 +20,7 @@
         <h3>Correo electronico</h3>
       </ion-row>
       <ion-row id="box">
-        <input type="text" [(ngModel)]="this.mail" name="mail">
+        <input type="text" [(ngModel)]="this.user.email" name="email">
       </ion-row>
     </ion-col>
   </ion-row>
@@ -42,7 +42,7 @@
         <h3>Contraseña</h3>
       </ion-row>
       <ion-row id="box">
-        <input type="password" [(ngModel)]="this.password" name="password">
+        <input type="password" [(ngModel)]="this.user.password" name="password">
       </ion-row>
     </ion-col>
   </ion-row>
