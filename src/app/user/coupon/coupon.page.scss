@@ -70,3 +70,21 @@ ion-icon {
   border-radius: 5px;
   margin-top: 10px;
 }
+
+.navbarRow {
+  display: flex;
+}
+
+.navbarCol {
+  display: flex !important;
+  justify-content: center;
+  align-items: flex-end;
+  ion-icon {
+    color: #8fe326 !important;
+  }
+  font-size: 200%;
+}
+
+#photoIcon {
+  font-size: 300%;
+}

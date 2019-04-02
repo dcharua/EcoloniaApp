@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { CouponPage } from './coupon.page';
-import { NavbarComponent } from '../navbar/navbar.component';
+// import { SharedModule } from '../../shared/modules/shared.module';
 
 const routes: Routes = [
   {
@@ -23,8 +23,7 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   declarations: [
-    CouponPage,
-    NavbarComponent
+    CouponPage
   ]
 })
 export class CouponPageModule { }

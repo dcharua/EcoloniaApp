@@ -1,3 +1,20 @@
 <ion-content>
   PROFILE
 </ion-content>
+
+<ion-footer>
+  <ion-row class="navbarRow">
+    <ion-col size="4.5" class="navbarCol">
+      <ion-icon name="barcode" [routerLink]="['/user-coupon']"></ion-icon>
+    </ion-col>
+
+    <ion-col id="photoIcon" size="3" class="navbarCol">
+      <!-- [routerLink]="[/user-coupons]" -->
+      <ion-icon name="aperture"></ion-icon>
+    </ion-col>
+
+    <ion-col size="4.5" class="navbarCol">
+      <ion-icon name="person" [routerLink]="['/user-profile']"></ion-icon>
+    </ion-col>
+  </ion-row>
+</ion-footer>

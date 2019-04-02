@@ -8,18 +8,26 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 
+// import { SharedModule } from './shared/modules/shared.module';
+
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent
+  ],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule],
+    AngularFirestoreModule
+    // SharedModule
+  ],
   providers: [
     AngularFireAuth,
     StatusBar,
@@ -29,4 +37,4 @@ import { AngularFireAuth } from '@angular/fire/auth';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

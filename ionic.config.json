@@ -1,5 +1,7 @@
 {
   "name": "Ecolonia",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
