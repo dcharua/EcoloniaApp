@@ -1,36 +1,57 @@
-#all {
-  --ion-background-color: #12151b;
-  background-color: #12151b;
-  height: auto;
-  min-height: 100vh;
-}
-
-.puntos {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  height: 100px;
-  width: 100px;
-  margin: 10px;
-
-  border-radius: 50%;
-  border: 4px solid green;
-
-  color: green;
-  font-size: 30px;
-}
-
 .container {
   display: flex;
-  flex-direction: column;
+  flex-direction: initial;
   justify-content: center;
   align-items: center;
-  height: auto;
+  height: 30vh;
+
+  --ion-background-color: #12151b;
+  background-color: #12151b;
 }
 
-ion-card-title {
-  color: red;
-  font-weight: 900;
-  font-size: 2.5em;
+.alignContainer {
+  display: flex;
+  flex-direction: initial;
+  justify-content: center;
+  align-items: center;
+}
+
+ion-card-content {
+  color: white;
+
+  h1 {
+    color: #a8c328;
+    font-weight: 900;
+    margin-bottom: 10px;
+  }
+
+  h1::first-letter {
+    font-size: 110%;
+  }
+}
+
+ion-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+
+  align-self: flex-end;
+}
+
+ion-icon {
+  color: #a8c328 !important;
+  width: 2em;
+  height: 2em;
+  padding: 5px;
+}
+
+#coloring {
+  align-items: flex-end;
+  justify-content: flex-end;
+
+  --ion-background-color: rgba(255,255,255,0.2) !important;
+  background-color: rgba(255,255,255,0.2) !important;
+
+  border-radius: 5px;
+  margin-top: 10px;
 }

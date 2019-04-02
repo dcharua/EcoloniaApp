@@ -26,16 +26,16 @@ export class SignupComponent implements OnInit {
   registrar() {
     if (this.user.name, this.user.email, this.mailConfirmation, this.user.password, this.passwordConfirmation) {
       if (this.user.email != this.mailConfirmation) {
-        console.log("Los correos no coiciden");
         this.showAlert("Los correos no coiciden");
       } else {
         if (!this.authService.validateEmail(this.user.email)) {
-          console.log("Ingresa un mail valido");
+          this.showAlert("Ingresa un mail valido");
         } else {
           if (this.user.password != this.passwordConfirmation) {
-            console.log("Las contraseñas no coinciden");
+            this.showAlert("Las contraseñas no coinciden");
           } else {
-            console.log("USUARIO REGISTRADO CORRECTAMENTE", this.user.name, this.user.email, this.user.password);
+            this.showAlert("USUARIO REGISTRADO CORRECTAMENTE!");
+            // console.log("USUARIO REGISTRADO CORRECTAMENTE", this.user.name, this.user.email, this.user.password);
             this.authService.SignUp(this.user);
             this.user.name = "";
             this.user.email = "";
@@ -46,7 +46,6 @@ export class SignupComponent implements OnInit {
         }
       }
     } else {
-      console.log("Llene todos los campos requeridos");
       this.showAlert("Llene todos los campos requeridos");
     }
   }

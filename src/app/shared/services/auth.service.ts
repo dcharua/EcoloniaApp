@@ -36,11 +36,11 @@ export class AuthService {
             this.SetLocal(user);
             if (user.admin) {
               this.ngZone.run(() => {
-                this.router.navigate(['/home']);
+                this.router.navigate(['/admin-home']);
               });
             } else {
               this.ngZone.run(() => {
-                this.router.navigate(['/home']);
+                this.router.navigate(['/user-home']);
               });
             }
           });
@@ -52,19 +52,19 @@ export class AuthService {
   // Sign up with email/password
   SignUp(data) {
     const user: User = new User();
-    console.log(data)
+    user.name = data.name;
     return this.afAuth.auth.createUserWithEmailAndPassword(data.email, data.password)
       .then((res) => {
         user.email = res.user.email;
+        user.uid = res.user.uid;
         user.admin = false;
-        user.name = data.name;
         user.createdOn = moment().format('MMMM Do YYYY');
         this.userService.addUser(user).then((docRef) => {
           user.$key = docRef.id;
           console.log("Document successfully written!");
           this.SetLocal(user);
           this.getLoggedInUser();
-          this.router.navigate(['/auth']);
+          this.router.navigate(['/user-home']);
         })
           .catch(function(error) {
             console.error("Error writing document: ", error);

@@ -6,7 +6,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { HomePage } from './home.page';
-import { NavbarComponent } from '../navbar/navbar.component';
 
 const routes: Routes = [
   {
@@ -23,8 +22,7 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   declarations: [
-    HomePage,
-    NavbarComponent
+    HomePage
   ]
 })
 export class HomePageModule { }
