@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./auth.page.scss']
 })
 export class AuthPage implements OnInit {
-  isLogin = false;
+  isLogin = true;
 
   constructor(
     private router: Router
@@ -15,7 +15,7 @@ export class AuthPage implements OnInit {
 
   ngOnInit() { }
 
-  onSwitchAuthMode() {
+  onSwitchAuthMode(event) {
     this.isLogin = !this.isLogin;
   }
 }

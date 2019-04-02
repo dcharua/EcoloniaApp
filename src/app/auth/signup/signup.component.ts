@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthService } from './../../shared/services/auth.service';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -11,6 +11,8 @@ import { User } from '../../shared/models/user';
   styleUrls: ['../auth.page.scss'],
 })
 export class SignupComponent implements OnInit {
+  @Output() emitLogin = new EventEmitter<boolean>();
+
   public user: User = new User();
   public mailConfirmation: string;
   public passwordConfirmation: string;
@@ -58,6 +60,10 @@ export class SignupComponent implements OnInit {
         buttons: ['Okay']
       })
       .then(alertEl => alertEl.present());
+  }
+
+  changeLogin() {
+    this.emitLogin.emit(true);
   }
 
 }

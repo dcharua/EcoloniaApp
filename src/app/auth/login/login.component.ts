@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { AuthService } from './../../shared/services/auth.service';
+import { User } from '../../shared/models/user';
 
 @Component({
   selector: 'app-login',
@@ -6,19 +8,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['../auth.page.scss'],
 })
 export class LoginComponent implements OnInit {
-  mail: string;
-  password: string;
+  @Output() emitLogin = new EventEmitter<boolean>();
+  public user: User = new User();
 
-  constructor() { }
+
+  constructor(
+    private authService: AuthService,
+  ) { }
 
   ngOnInit() { }
 
   login() {
-    console.log(this.mail, this.password);
+    this.authService.SignIn(this.user);
   }
 
-  change() {
-    console.log("He cambiado");
+  changeLogin() {
+    this.emitLogin.emit(true);
   }
 
 }
