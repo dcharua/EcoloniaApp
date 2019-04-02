@@ -9,7 +9,8 @@ const routes: Routes = [
   { path: 'admin-home', loadChildren: './admin/home/home.module#HomePageModule' },
   { path: 'admin-coupon', loadChildren: './admin/coupon/coupon.module#CouponPageModule' },
   { path: 'user-profile', loadChildren: './user/profile/profile.module#ProfilePageModule' },
-  { path: 'home', loadChildren: './home/home.module#HomePageModule' }
+  { path: 'home', loadChildren: './home/home.module#HomePageModule' },
+  { path: 'camera', loadChildren: './user/camera/camera.module#CameraPageModule' }
 ];
 
 @NgModule({

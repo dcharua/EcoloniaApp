@@ -1,0 +1,60 @@
+#alignContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  margin-top: 30px !important;
+  font-size: 22px;
+  text-align: center;
+  padding: 7px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #a8c328;
+  margin: 10px 0;
+  width: 80vw;
+}
+
+input:focus {
+  outline: none !important;
+  border-color: none;
+}
+
+.boton {
+  // Size Box
+  width: 70vw;
+  height: 120%;
+  padding: 10px;
+  margin: 20px 0;
+
+  // Style box
+  border: none;
+  border-radius: 4px;
+  background-color: rgba(170, 182, 70, 0.7);
+
+  // Text in box
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+}
+
+.navbarRow {
+  display: flex;
+}
+
+.navbarCol {
+  display: flex !important;
+  justify-content: center;
+  align-items: flex-end;
+  ion-icon {
+    color: #8fe326 !important;
+  }
+  font-size: 200%;
+}
+
+#photoIcon {
+  font-size: 300%;
+}

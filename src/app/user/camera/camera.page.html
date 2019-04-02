@@ -1,5 +1,19 @@
 <ion-content>
-  PROFILE
+  <ion-col id="alignContent">
+
+    <ion-row>
+      <input type="text" [(ngModel)]="text" placeholder="Titulo de la foto">
+    </ion-row>
+
+    <ion-row>
+      <a class="boton" (click)="takePhoto()">Tomar foto</a>
+    </ion-row>
+
+    <ion-row>
+      <p align="center"><img src="{{myPhoto}}"></p>
+    </ion-row>
+
+  </ion-col>
 </ion-content>
 
 <ion-footer>

@@ -12,6 +12,8 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Camera } from '@ionic-native/camera/ngx';
+
 
 // import { SharedModule } from './shared/modules/shared.module';
 
@@ -32,6 +34,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
     AngularFireAuth,
     StatusBar,
     SplashScreen,
+    Camera,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
   ],
