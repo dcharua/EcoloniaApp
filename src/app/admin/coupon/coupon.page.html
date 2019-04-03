@@ -1,9 +1,35 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>coupon</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
 
+  <ion-card class="container">
+    <ion-col size=3>
+      <div class="puntos">
+        <ion-icon name="leaf"></ion-icon> 15
+      </div>
+    </ion-col>
+    <ion-col size=9>
+      <ion-card-header>
+        <ion-card-subtitle style="text-transform: uppercase !important">Comida</ion-card-subtitle>
+        <ion-card-title>VIPS</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Te hacemos descuento de 30% si tu compra es mayor a $200, y te regalamos el pastel de tu elección.</p>
+        <ion-icon id="canjeo" name="trash" style="color: #ed5f67;"></ion-icon>
+        <ion-icon id="canjeo" name="create" style="color: #feb73c;"></ion-icon>
+      </ion-card-content>
+    </ion-col>
+  </ion-card>
+
+  <ion-card class="container container_add">
+    <ion-icon id="canjeo" class="add" name="add"></ion-icon>
+  </ion-card>
+
 </ion-content>
+
+<ion-footer id="navbar">
+  <div class="iconBox" style="background-color: lightgrey !important;">
+    <ion-icon name="barcode"></ion-icon>
+  </div>
+  <div class="iconBox">
+    <ion-icon name="camera" [routerLink]="['/admin-images']"></ion-icon>
+  </div>
+</ion-footer>
