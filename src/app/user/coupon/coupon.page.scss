@@ -15,11 +15,35 @@
   margin: 10px;
 
   border-radius: 50%;
-  border: 3px solid #a8c328;
-  background-color: rgba(255, 255, 255, 0.2);
+  // border: 3px solid #a8c328;
+  border: 5px solid white;
+  background-color: #637d38;
 
-  color: #a8c328;
+  // color: #a8c328;
+  color: white;
   font-size: 26px;
+}
+
+ion-card-title {
+  color: #466c1d;
+  font-weight: 900;
+  font-size: 2.5em;
+}
+
+ion-card-title::first-letter {
+  font-size: 115%;
+}
+
+ion-card-subtitle {
+  text-transform: capitalize;
+  font-size: 125%;
+  color: rgba(255,255,255,0.6);
+  align-self: flex-end;
+  float:right;
+}
+
+ion-card-subtitle::first-letter {
+  font-size: 120%;
 }
 
 .container {
@@ -29,46 +53,24 @@
   align-items: center;
   height: auto;
 
-  --ion-background-color: #12151b;
-  background-color: #12151b;
+  --ion-background-color: rgba(170, 182, 70, 1);
+  background-color: rgba(170, 182, 70, 1);
 }
 
-ion-card-title {
-  color: red;
-  font-weight: 900;
-  font-size: 2.5em;
-}
-
-ion-card-subtitle {
-  color: white
-}
 
 ion-card-content {
-  color: white;
+  color: rgba(255,255,255,0.85);
+  ion-icon {
+    color: #466c1d;
+  }
 }
 
-ion-item {
+#canjeo {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-
-  align-self: flex-end;
-  color: white;
-}
-
-ion-icon {
-  color: lightgrey;
-}
-
-#coloring {
-  align-items: flex-end;
-  justify-content: flex-end;
-
-  --ion-background-color: rgba(255,255,255,0.2) !important;
-  background-color: rgba(255,255,255,0.2) !important;
-
-  border-radius: 5px;
-  margin-top: 10px;
+  float: right;
+  margin: 10px 5px;
+  font-size: 250%;
 }
 
 .navbarRow {
