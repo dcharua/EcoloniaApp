@@ -49,18 +49,51 @@ ion-card-title {
   color: green;
 }
 
-.navbarRow {
+#navbar {
+  // position: fixed;
+  position: relative;
+  overflow: auto;
+
+  bottom: 0; /* Position the navbar at the top of the page */
+  width: 100%;
+  height: auto;
+  margin-bottom: 5px;
+  background-color: transparent;
+  --ion-background-color: transparent;
+
   display: flex;
-}
-
-.navbarCol {
-  display: flex !important;
-  justify-content: center;
+  justify-content: space-around;
   align-items: flex-end;
-  color: #8fe326 !important;
-  font-size: 200%;
-}
 
-#photoIcon {
-  font-size: 300%;
+  color: white;
+  font-size: 200%;
+
+  .iconBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    // Icons align
+    text-align: center;
+    line-height: 0;
+    vertical-align: middle;
+
+    // Box style
+    border-radius: 50%;
+    background-color: #8fe326 !important;
+
+    height: 50px;
+    width: 50px;
+
+    &_photo {
+      height: 80px;
+      width: 80px;
+
+      // Icon photo style
+      #photoIcon {
+        font-size: 200%;
+      }
+    }
+  }
+
 }

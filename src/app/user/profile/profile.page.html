@@ -57,20 +57,24 @@
     </ion-card>
   </ion-row>
 
-</ion-content>
-
-<ion-footer>
-  <ion-row class="navbarRow">
-    <ion-col size="4.5" class="navbarCol">
-      <ion-icon name="barcode" [routerLink]="['/user-coupon']"></ion-icon>
-    </ion-col>
-
-    <ion-col id="photoIcon" size="3" class="navbarCol">
-      <ion-icon name="aperture" [routerLink]="['/camera']"></ion-icon>
-    </ion-col>
-
-    <ion-col size="4.5" class="navbarCol">
-      <ion-icon name="person" [routerLink]="['/user-profile']"></ion-icon>
+  <!-- BUTTON LOGOUT -->
+  <ion-row>
+    <ion-col size=12>
+      <ion-button expand="block" fill="outline" color="danger">Cerrar sesión</ion-button>
     </ion-col>
   </ion-row>
+
+</ion-content>
+
+
+<ion-footer id="navbar">
+  <div class="iconBox">
+    <ion-icon name="barcode" [routerLink]="['/user-coupon']"></ion-icon>
+  </div>
+  <div class="iconBox iconBox_photo">
+    <ion-icon id="photoIcon" name="aperture" [routerLink]="['/camera']"></ion-icon>
+  </div>
+  <div class="iconBox">
+    <ion-icon name="person" [routerLink]="['/user-profile']"></ion-icon>
+  </div>
 </ion-footer>
