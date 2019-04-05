@@ -3,14 +3,17 @@
     <img src="../../assets/images/logo-blanco.png" alt="">
   </ion-row>
 
-  <ion-row>
+  <ion-row id="aligmentTexts">
     <ion-col size=12 id="time_line">
+      <div class="box-class">
+        <span class="text-up">Si ves una basura en el piso,</span>
+      </div>
       <ion-row id="box">
-        <div class="numberCircle">1</div><span class="text">Registrate</span>
+        <div class="numberCircle">1</div><span class="text">Recógela</span>
       </ion-row>
       <ion-row id="line"></ion-row>
       <ion-row id="box">
-        <div class="numberCircle">2</div><span class="text">Sube tus fotos</span>
+        <div class="numberCircle">2</div><span class="text">Sube la foto</span>
       </ion-row>
       <ion-row id="line"></ion-row>
       <ion-row id="box">
@@ -18,7 +21,7 @@
       </ion-row>
       <ion-row id="line"></ion-row>
       <ion-row id="box">
-        <div class="numberCircle">4</div><span class="text">Canjealos por cupones</span>
+        <div class="numberCircle">4</div><span class="text">Canjéalos por cupones</span>
       </ion-row>
     </ion-col>
   </ion-row>
@@ -28,9 +31,6 @@
       <ion-row id="box">
         <a class="boton" [routerLink]="['/auth']">Ingresar</a>
       </ion-row>
-      <!-- <ion-row id="box">
-        <a class="registrar" [routerLink]="['/auth']">Nuevo aquí?</a>
-      </ion-row> -->
     </ion-col>
   </ion-row>
 </div>

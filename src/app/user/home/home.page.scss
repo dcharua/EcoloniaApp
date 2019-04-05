@@ -1,12 +1,25 @@
+#all {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
 .container {
   display: flex;
   flex-direction: initial;
   justify-content: center;
   align-items: center;
-  height: 30vh;
+  height: 25vh;
 
-  --ion-background-color: #12151b;
-  background-color: #12151b;
+  border: 1.5px solid green;
+
+  // --ion-background-color: #12151b;
+  // background-color: #12151b;
+}
+
+ion-tab-button {
+
 }
 
 .alignContainer {
@@ -17,16 +30,19 @@
 }
 
 ion-card-content {
-  color: white;
-
   h1 {
-    color: #a8c328;
+    // color: #a8c328;}
+    color: green;
     font-weight: 900;
     margin-bottom: 10px;
   }
 
   h1::first-letter {
     font-size: 110%;
+  }
+
+  h3 {
+    color: grey;
   }
 }
 

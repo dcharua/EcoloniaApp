@@ -1,53 +1,81 @@
-<ion-card class="container" [routerLink]="['/user-coupon']">
-  <ion-row>
-    <ion-col class="alignContainer" size=3>
-      <ion-icon size="large" name="albums"></ion-icon>
-    </ion-col>
-    <ion-col size=8>
-      <ion-card-content>
-        <h1>
-          CUPONES
-        </h1>
-        <h3>
-          Te hacemos descuento de 30% si tu compra es mayor a $200, y te regalamos el pastel de tu elección.
-        </h3>
-      </ion-card-content>
-    </ion-col>
-  </ion-row>
-</ion-card>
+<div id="all">
+  <ion-card class="container" [routerLink]="['/user-coupon']">
+    <ion-row>
+      <ion-col class="alignContainer" size=3>
+        <ion-icon size="large" name="albums"></ion-icon>
+      </ion-col>
+      <ion-col size=8>
+        <ion-card-content>
+          <h1>
+            CUPONES
+          </h1>
+          <h3>
+            ¡Nuestros patrocinadores quieren mantener nuestras calles más limpias!<br>
+            Canjea los puntos que recibiste por cupones de consumo.
+          </h3>
+        </ion-card-content>
+      </ion-col>
+    </ion-row>
+  </ion-card>
 
-<ion-card class="container" [routerLink]="['/user-camera']">
-  <ion-row>
-    <ion-col class="alignContainer" size=3>
-      <ion-icon size="large" name="camera"></ion-icon>
-    </ion-col>
-    <ion-col size=8>
-      <ion-card-content>
-        <h1>
-          SUBIR FOTOS
-        </h1>
-        <h3>
-          Te hacemos descuento de 30% si tu compra es mayor a $200, y te regalamos el pastel de tu elección.
-        </h3>
-      </ion-card-content>
-    </ion-col>
-  </ion-row>
-</ion-card>
+  <ion-card class="container" [routerLink]="['/user-camera']">
+    <ion-row>
+      <ion-col class="alignContainer" size=3>
+        <ion-icon size="large" name="camera"></ion-icon>
+      </ion-col>
+      <ion-col size=8>
+        <ion-card-content>
+          <h1>
+            FOTOS
+          </h1>
+          <h3>
+            ¡Sube la foto de la basura que recogiste! Describe el residuo con ayuda de las etiquetas.<br>
+            Recibe tus Puntos <br>
+            (Recuerda que entre mejor describas tu foto más puntos ganas)
+          </h3>
+        </ion-card-content>
+      </ion-col>
+    </ion-row>
+  </ion-card>
 
-<ion-card class="container" [routerLink]="['/user-profile']">
-  <ion-row>
-    <ion-col class="alignContainer" size=3>
-      <ion-icon size="large" name="person"></ion-icon>
-    </ion-col>
-    <ion-col size=8>
-      <ion-card-content>
-        <h1>
-          PERFIL
-        </h1>
-        <h3>
-          Te hacemos descuento de 30% si tu compra es mayor a $200, y te regalamos el pastel de tu elección.
-        </h3>
-      </ion-card-content>
-    </ion-col>
-  </ion-row>
-</ion-card>
+  <ion-card class="container" [routerLink]="['/user-profile']">
+    <ion-row>
+      <ion-col class="alignContainer" size=3>
+        <ion-icon size="large" name="person"></ion-icon>
+      </ion-col>
+      <ion-col size=8>
+        <ion-card-content>
+          <h1>
+            PERFIL
+          </h1>
+          <h3>
+            ¡Sube la foto de la basura que recogiste! Describe el residuo con ayuda de las etiquetas.<br>
+            Recibe tus Puntos<br>
+            (Recuerda que entre mejor describas tu foto más puntos ganas)
+          </h3>
+        </ion-card-content>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+</div>
+
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+
+    <ion-tab-button [routerLink]="['/user-coupon']">
+      <ion-icon name="barcode"></ion-icon>
+      <ion-label style="color: grey;">Cupones</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button [routerLink]="['/user-camera']">
+      <ion-icon name="aperture"></ion-icon>
+      <ion-label style="color: grey;">Photos</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button [routerLink]="['/user-profile']">
+      <ion-icon name="person"></ion-icon>
+      <ion-label style="color: grey;">Perfil</ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+</ion-tabs>
