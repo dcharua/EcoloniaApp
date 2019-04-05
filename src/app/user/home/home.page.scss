@@ -5,6 +5,17 @@
   justify-content: flex-start;
 }
 
+#logoTop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  --ion-background-color: #12151b;
+  background-color: #12151b;
+
+  padding: 5px !important;
+}
+
 .container {
   display: flex;
   flex-direction: initial;

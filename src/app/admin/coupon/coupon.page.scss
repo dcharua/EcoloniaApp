@@ -89,51 +89,9 @@ ion-card-content {
   background-color: green;
 }
 
-#navbar {
-  // position: fixed;
-  position: relative;
-  overflow: auto;
-
-  bottom: 0; /* Position the navbar at the top of the page */
-  width: 100%;
-  height: auto;
-  padding: 5px;
-  background-color: transparent;
-  --ion-background-color: transparent;
-
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
-
-  color: white;
-  font-size: 200%;
-
-  .iconBox {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    // Icons align
-    text-align: center;
-    line-height: 0;
-    vertical-align: middle;
-
-    // Box style
-    border-radius: 50%;
-    background-color: #a8c328 !important;
-
-    height: 50px;
-    width: 50px;
-
-    &_photo {
-      height: 80px;
-      width: 80px;
-
-      // Icon photo style
-      #photoIcon {
-        font-size: 200%;
-      }
-    }
+ion-tab-button {
+  ion-icon {
+    color: #a8c328;
+    font-size: 20px;
   }
-
 }

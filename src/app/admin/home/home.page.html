@@ -1,9 +1,25 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Admin home</ion-title>
-  </ion-toolbar>
+  <ion-row id="logoTop">
+    <img src="../../../assets/images/logo-small.png" alt="">
+  </ion-row>
 </ion-header>
 
 <ion-content>
   Something
 </ion-content>
+
+<ion-footer>
+  <ion-tab-bar slot="bottom">
+
+    <ion-tab-button [routerLink]="['/admin-coupon']">
+      <ion-icon name="barcode"></ion-icon>
+      <ion-label style="color: grey;">Cupones</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button [routerLink]="['/admin-images']">
+      <ion-icon name="camera"></ion-icon>
+      <ion-label style="color: grey;">Fotos</ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+</ion-footer>

@@ -28,11 +28,18 @@
 
 </ion-content>
 
-<ion-footer id="navbar">
-  <div class="iconBox">
-    <ion-icon name="barcode" [routerLink]="['/admin-coupon']"></ion-icon>
-  </div>
-  <div class="iconBox" style="background-color: lightgrey !important;">
-    <ion-icon name="camera"></ion-icon>
-  </div>
+<ion-footer>
+  <ion-tab-bar slot="bottom">
+
+    <ion-tab-button [routerLink]="['/admin-coupon']">
+      <ion-icon name="barcode"></ion-icon>
+      <ion-label style="color: grey;">Cupones</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button>
+      <ion-icon name="camera"></ion-icon>
+      <ion-label style="color: grey;">Fotos</ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar>
 </ion-footer>
