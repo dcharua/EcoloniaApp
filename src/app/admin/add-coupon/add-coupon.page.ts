@@ -1,3 +1,4 @@
+
 import { Coupon } from './../../shared/models/coupon';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, NgForm } from '@angular/forms';
@@ -6,6 +7,7 @@ import { LoadingController, AlertController, Platform } from '@ionic/angular';
 import { switchMap } from 'rxjs/operators';
 import { Plugins, Capacitor,  CameraSource,CameraResultType } from '@capacitor/core';
 import { CouponService } from '../../shared/services/coupon.service';
+import { map, take, finalize } from 'rxjs/operators';
 export interface Location{
   lat: number;
   lng: number;
@@ -69,9 +71,7 @@ export class AddCouponPage implements OnInit {
       if (this.coupon.$key){
         this.editCoupon()
       } else {
-        this.loadingCtrl.create(
-          {message: 'Creando Cupón...'}
-          ).then(loadingEl => {
+        this.loadingCtrl.create({message: 'Creando Cupón...'}).then(loadingEl => {
             loadingEl.present();
             this.couponService.addCoupon(this.coupon).then(() => {
               loadingEl.dismiss();
@@ -221,8 +221,14 @@ export class AddCouponPage implements OnInit {
     fr.onload = () => {
       const dataUrl = fr.result.toString();
       this.selectedImage = dataUrl;
-      console.log(dataUrl)
-    };
+      const file = this.couponService.uploadIMG(dataUrl, this.coupon.title)
+      file.task.snapshotChanges().pipe(
+        finalize(() => {
+          file.ref.getDownloadURL().subscribe(url =>{
+            console.log(url)
+          });
+        }));
+    }
     fr.readAsDataURL(pickedFile);
   }
 }

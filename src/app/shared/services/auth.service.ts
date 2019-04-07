@@ -100,7 +100,7 @@ export class AuthService {
     return user.admin;
   }
 
-  getLocalUser() {
+  private getLocalUser() {
     return Plugins.Storage.get({ key: 'user' }).then(data => {
       const user = JSON.parse(data.value) as User;
       return user;
@@ -120,9 +120,8 @@ export class AuthService {
     return re.test(String(email).toLowerCase());
   }
 
-  getLoggedInUser() {
+  getLoggedInUser(): Promise<User> {
     const user = this.getLocalUser();
-    console.log(user);
     return user;
   }
 }

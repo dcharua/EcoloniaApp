@@ -16,10 +16,14 @@ export class CouponPage implements OnInit, OnDestroy {
     private alertCtrl: AlertController,
     private couponService: CouponService
   ) {
-    this.sub = this.couponService.getCoupons().subscribe(coupons => {
-      this.coupons = coupons;
-      console.log(this.coupons)
+    this.loadingCtrl.create({message: '¿Donde estan?'}).then(loadingEl => {
+      loadingEl.present();
+      this.sub = this.couponService.getCoupons().subscribe(coupons => {
+        this.coupons = coupons;
+        loadingEl.dismiss();
+      });
     });
+   
   }
 
   ngOnInit() {

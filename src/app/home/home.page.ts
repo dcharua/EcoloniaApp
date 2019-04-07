@@ -1,5 +1,7 @@
+import { User } from './../shared/models/user';
+import { AuthService } from './../shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -10,8 +12,17 @@ import { ActivatedRoute } from '@angular/router';
 export class HomePage implements OnInit {
 
   constructor(
-    private route: ActivatedRoute
-  ) { }
+    private router: Router,
+    private authService: AuthService
+  ) {
+    this.authService.getLoggedInUser().then( user =>{
+      if (user.admin) {
+        this.router.navigate(['/admin-home'])
+      } else if (!user.admin) {
+        this.router.navigate(['/user-home'])
+      }
+    })
+  }
 
   ngOnInit() {
   }

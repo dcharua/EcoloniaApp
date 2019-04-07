@@ -29,7 +29,36 @@
         </ion-row>
       </ion-card-content>
     </ion-card>
+
+
+    <ion-card *ngFor="let photo of photos">
+      <ion-card-header>
+        <ion-card-title class="ion-bold">{{photo.user_name}}</ion-card-title>
+        <ion-card-subtitle> {{photo.createdOn}}</ion-card-subtitle>
+      </ion-card-header>
+      <img [src]="photo.src">
+      <ion-card-content>
+        <ion-row>
+          <ul>
+            <li *ngFor="let tag of photo.tags">{{tag}}</li>
+          </ul>
+        </ion-row>
+        <ion-row style="float: right; text-align: end;">
+          <p id="puntosCard">
+            <ion-icon name="leaf"></ion-icon> +
+          </p>
+          <input id="inputNumber" type="number" name="points" [(ngModel)]="photo.points">
+        </ion-row>
+        <ion-row style="float: left; text-align: end;" class="iconsAccept">
+          <ion-icon type="" name="checkmark" style="color: green;"></ion-icon>
+          <ion-icon name="close" style="color: #ed5f67;" (click)="deletePhoto(photo)"></ion-icon>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+
   </ion-row>
+
+  
 
 </ion-content>
 

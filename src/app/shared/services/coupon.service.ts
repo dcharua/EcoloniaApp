@@ -2,13 +2,22 @@ import { Coupon } from './../models/coupon';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
-
+import { map, take, finalize } from 'rxjs/operators';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
 @Injectable({
   providedIn: 'root'
 })
 export class CouponService {
-  constructor(private db: AngularFirestore ) {}
+
+  task: AngularFireUploadTask;
+
+  progress: any;  // Observable 0 to 100
+
+  image: string; // base64
+  constructor(
+    private db: AngularFirestore,
+    private storage: AngularFireStorage 
+  ) {}
 
   addCoupon(coupon: Coupon) {
     return this.db.collection('coupons').add({...coupon});
@@ -45,6 +54,21 @@ export class CouponService {
     const key = coupon.$key;
     delete coupon.$key;
     return this.db.collection('coupons').doc(key).update(coupon);
+  }
+
+  uploadIMG(img: string, title: string){
+    const filePath = `/coupons/${ title ? title : 'sin_titulo' }.jpg`;
+    const fileRef = this.storage.ref(filePath);
+    const image = 'data:image/jpg;base64,' + img;
+    const task = fileRef.putString(image.replace('data:image/jpeg;base64,', ''), 'data_url');
+    return {task :task, ref: fileRef};
+    task.snapshotChanges().pipe(
+      finalize(() => {
+        return fileRef.getDownloadURL().pipe(map(url => {
+          return url;
+        }))
+      })
+    )
   }
 
 }

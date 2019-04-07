@@ -1,3 +1,5 @@
+import { PhotoService } from './../../shared/services/photo.service';
+import { Photo } from './../../shared/models/photo';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ImagesPage implements OnInit {
 
-  constructor() { }
+  constructor( private photoService: PhotoService) {
+   
+  }
 
   ngOnInit() {
+  }
+
+  deletePhoto(photo: Photo){
+    this.photoService.deletePhoto(photo.$key).then(succ => {
+      console.log("deleted")
+    }, (err) =>{
+      console.log(err)
+    });
   }
 
 }

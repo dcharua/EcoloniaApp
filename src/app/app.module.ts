@@ -13,6 +13,7 @@ import { environment } from '../environments/environment';
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Camera } from '@ionic-native/camera/ngx';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 
 // import { SharedModule } from './shared/modules/shared.module';
@@ -31,6 +32,7 @@ import { Camera } from '@ionic-native/camera/ngx';
     // SharedModule
   ],
   providers: [
+    AngularFireStorage,
     AngularFireAuth,
     StatusBar,
     SplashScreen,

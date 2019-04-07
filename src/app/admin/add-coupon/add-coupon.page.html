@@ -54,7 +54,8 @@
         </ion-item>
       </ion-col>
     </ion-row>
-
+    <ion-button (click)="takePhoto()">Take</ion-button>
+    <ion-button (click)="takePhoto()">Pick</ion-button>
 
       <div class="picker">
         <ion-img role="button" class="image" (click)="onPickImage()" [src]="selectedImage" *ngIf="selectedImage"></ion-img>
