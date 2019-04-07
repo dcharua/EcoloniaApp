@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin-coupon"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ coupon.$key ? 'Editar' : 'Agregar'}} Cupón</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #f="ngForm" (ngSubmit)="createCoupon(f)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-label position="floating">Titulo</ion-label>
+            <ion-input type="text" name="title" [(ngModel)]="coupon.title" #title="ngModel"  [ngClass]="{ 'invalid': f.submitted && title.invalid }" autocomplete autocorrect required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-label position="floating">Cost</ion-label>
+            <ion-input type="number"  name="cost"  [(ngModel)]="coupon.cost" #cost="ngModel"  [ngClass]="{ 'invalid': f.submitted && cost.invalid }" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-label position="floating">Categoría</ion-label>
+            <ion-input type="text"  name="category"  [(ngModel)]="coupon.category" #category="ngModel"  [ngClass]="{ 'invalid': f.submitted && category.invalid }" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+      <ion-col size-sm="6">
+        <ion-item>
+          <ion-label position="floating">Expiración</ion-label>
+          <ion-datetime display-format="MMM DD, YYYY" name="expiration"  [(ngModel)]="coupon.expiration" #expiration="ngModel"  [ngClass]="{ 'invalid': f.submitted && expiration.invalid }" required=""></ion-datetime>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3">
+        <ion-item>
+          <ion-label position="floating" style="margin-bottom: 20px;">Descripción</ion-label>
+          <ion-textarea rows="3" name="des"  [(ngModel)]="coupon.description" #des="ngModel"  [ngClass]="{ 'invalid': f.submitted && des.invalid }" required></ion-textarea>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+
+      <div class="picker">
+        <ion-img role="button" class="image" (click)="onPickImage()" [src]="selectedImage" *ngIf="selectedImage"></ion-img>
+        <ion-button color="primary" (click)="onPickImage()" *ngIf="!selectedImage || !showPreview">
+          <ion-icon name="camera" slot="start"></ion-icon>
+          <ion-label>Take Picture</ion-label>
+        </ion-button>
+      </div>
+      <input type="file" accept="image/jpeg" *ngIf="usePicker" #filePicker (change)="onFileChosen($event)"/>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-button type="submit">{{ coupon.$key ? 'Editar' : 'Agregar'}}</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

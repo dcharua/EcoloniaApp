@@ -1,31 +1,34 @@
 <ion-header>
-  <ion-row id="logoTop">
-    <img src="../../../assets/images/logo-small.png" alt="">
-  </ion-row>
-</ion-header>
-
+    <ion-toolbar>
+      <ion-button color="primary" [routerLink]="['/add-coupon']" slot="end">
+        <ion-icon name="add" slot="icon-only">Agregar</ion-icon>
+      </ion-button>
+      <img height="50" src="../../../assets/images/logo-small_negro.png" alt="">
+      <ion-title slot="center"> Cupones</ion-title>
+    </ion-toolbar>
+  </ion-header>
 <ion-content>
 
-  <ion-card class="container">
+  <ion-card *ngFor="let coupon of coupons" class="container">
     <ion-col size=3>
       <div class="puntos">
-        <ion-icon name="leaf"></ion-icon> 15
+        <ion-icon name="leaf"></ion-icon> {{coupon.cost}}
       </div>
     </ion-col>
     <ion-col size=9>
       <ion-card-header>
-        <ion-card-subtitle style="text-transform: uppercase !important">Comida</ion-card-subtitle>
-        <ion-card-title>VIPS</ion-card-title>
+        <ion-card-subtitle style="text-transform: uppercase !important">{{coupon.category}}</ion-card-subtitle>
+        <ion-card-title>{{coupon.title}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>Te hacemos descuento de 30% si tu compra es mayor a $200, y te regalamos el pastel de tu elección.</p>
-        <ion-icon id="canjeo" name="trash" style="color: #ed5f67;"></ion-icon>
-        <ion-icon id="canjeo" name="create" style="color: #feb73c;"></ion-icon>
+        <p>{{coupon.description}}</p>
+        <ion-icon id="canjeo" name="trash" style="color: #ed5f67;" (click)="deleteCoupon(coupon)"></ion-icon>
+        <ion-icon id="canjeo" name="create" style="color: #feb73c;" [routerLink]="['/add-coupon', coupon.$key]"></ion-icon>
       </ion-card-content>
     </ion-col>
   </ion-card>
 
-  <ion-card class="container container_add">
+  <ion-card  [routerLink]="['/add-coupon']" class="container container_add">
     <ion-icon id="canjeo" class="add" name="add"></ion-icon>
   </ion-card>
 

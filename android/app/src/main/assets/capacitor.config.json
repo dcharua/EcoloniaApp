@@ -1,0 +1,7 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "Ecolonia",
+  "bundledWebRuntime": false,
+  "webDir": "www",
+  "linuxAndroidStudioPath": "/home/dcharua/android-studio-ide-173.4697961-linux/android-studio/bin/studio.sh"
+}
