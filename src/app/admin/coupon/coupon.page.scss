@@ -90,9 +90,26 @@ ion-card-content {
   background-color: green;
 }
 
-ion-tab-button {
+// NAVBAR
+
+.navbarRow {
+  display: flex;
+}
+
+.navbarCol {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+
   ion-icon {
-    color: #a8c328;
-    font-size: 20px;
+    color: #a8c328 !important;
   }
+  font-size: 200%;
+}
+
+#titleNavbar {
+  margin: 5px 0;
+  color: #a8c328;
+  font-size: 12px;
 }

@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-row id="logoTop">
-      <img height="50" src="../../../assets/images/logo-small_negro.png" alt="">
+      <img height="50" src="../../../assets/images/logo-small_negro.png" alt="" [routerLink]="['/admin-home']">
       <ion-title> Cupones</ion-title>
       <ion-button color="primary" [routerLink]="['/add-coupon']">
         <ion-icon name="add" slot="icon-only">Agregar</ion-icon>
@@ -38,17 +38,23 @@
 </ion-content>
 
 <ion-footer>
-  <ion-tab-bar slot="bottom">
+  <ion-row class="navbarRow">
+    <ion-col class="navbarCol">
+      <ion-row>
+        <ion-icon name="barcode" style="color: grey !important;"></ion-icon>
+      </ion-row>
+      <ion-row>
+        <p id="titleNavbar" style="color: grey !important;">Cupones</p>
+      </ion-row>
+    </ion-col>
 
-    <ion-tab-button>
-      <ion-icon name="barcode"></ion-icon>
-      <ion-label style="color: grey;">Cupones</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button [routerLink]="['/admin-images']">
-      <ion-icon name="camera"></ion-icon>
-      <ion-label style="color: grey;">Fotos</ion-label>
-    </ion-tab-button>
-
-  </ion-tab-bar>
+    <ion-col class="navbarCol">
+      <ion-row>
+        <ion-icon name="camera" [routerLink]="['/admin-images']"></ion-icon>
+      </ion-row>
+      <ion-row>
+        <p id="titleNavbar">Imagenes</p>
+      </ion-row>
+    </ion-col>
+  </ion-row>
 </ion-footer>
