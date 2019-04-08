@@ -6,5 +6,6 @@ export class Coupon {
     cost:number;
     createdOn: string;
     expiration: string;
+    src: string;
   }
   

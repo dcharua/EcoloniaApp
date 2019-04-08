@@ -41,7 +41,7 @@
       <ion-col size-sm="6">
         <ion-item>
           <ion-label position="floating">Expiración</ion-label>
-          <ion-datetime display-format="MMM DD, YYYY" name="expiration"  [(ngModel)]="coupon.expiration" #expiration="ngModel"  [ngClass]="{ 'invalid': f.submitted && expiration.invalid }" required=""></ion-datetime>
+          <ion-datetime display-format="MMM DD, YYYY" [min]="minDate" [max]="maxDate" name="expiration"  [(ngModel)]="coupon.expiration" #expiration="ngModel"  [ngClass]="{ 'invalid': f.submitted && expiration.invalid }" required=""></ion-datetime>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -54,8 +54,6 @@
         </ion-item>
       </ion-col>
     </ion-row>
-    <ion-button (click)="takePhoto()">Take</ion-button>
-    <ion-button (click)="takePhoto()">Pick</ion-button>
 
       <div class="picker">
         <ion-img role="button" class="image" (click)="onPickImage()" [src]="selectedImage" *ngIf="selectedImage"></ion-img>
@@ -64,6 +62,7 @@
           <ion-label>Take Picture</ion-label>
         </ion-button>
       </div>
+
       <input type="file" accept="image/jpeg" *ngIf="usePicker" #filePicker (change)="onFileChosen($event)"/>
       <ion-row>
         <ion-col size-sm="6" offset-sm="3">

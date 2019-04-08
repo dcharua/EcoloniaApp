@@ -26,7 +26,8 @@ export class AddCouponPage implements OnInit {
   location: Location;
   selectedImage: string;
   usePicker = false;
-
+  minDate: string;
+  maxDate: string;
   constructor(
     private route: ActivatedRoute,
     private couponService: CouponService,
@@ -35,6 +36,8 @@ export class AddCouponPage implements OnInit {
     private alertCtrl: AlertController,
     private platform: Platform
   ) {
+    this.minDate =  new Date().toISOString();
+    this.maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 5)).toISOString();
     this.route.paramMap.subscribe(paramMap => {
       if (paramMap.has('couponId')) {
         this.loadingCtrl.create({
@@ -73,6 +76,7 @@ export class AddCouponPage implements OnInit {
       } else {
         this.loadingCtrl.create({message: 'Creando Cupón...'}).then(loadingEl => {
             loadingEl.present();
+            this.coupon.createdOn = new Date().toISOString();
             this.couponService.addCoupon(this.coupon).then(() => {
               loadingEl.dismiss();
               this.alertCtrl.create({
@@ -213,22 +217,26 @@ export class AddCouponPage implements OnInit {
   }
 
   onFileChosen(event: Event) {
-    const pickedFile = (event.target as HTMLInputElement).files[0];
-    if (!pickedFile) {
-      return;
+    this.loadingCtrl.create({message: 'Cargando Imagen...'}).then(loadingEl => {
+      loadingEl.present();
+        const pickedFile = (event.target as HTMLInputElement).files[0];
+        if (!pickedFile) {
+          return;
+        }
+        const fr = new FileReader();
+        fr.onload = () => {
+          const dataUrl = fr.result.toString();
+          this.selectedImage = dataUrl;
+          const file = this.couponService.uploadIMG(dataUrl, this.coupon.title);
+          file.task.snapshotChanges().pipe(
+            finalize(() => {
+              file.ref.getDownloadURL().subscribe(url =>{
+                this.coupon.src = url;
+                loadingEl.dismiss();
+              });
+            })).subscribe();
+        }
+        fr.readAsDataURL(pickedFile);
+      })
     }
-    const fr = new FileReader();
-    fr.onload = () => {
-      const dataUrl = fr.result.toString();
-      this.selectedImage = dataUrl;
-      const file = this.couponService.uploadIMG(dataUrl, this.coupon.title)
-      file.task.snapshotChanges().pipe(
-        finalize(() => {
-          file.ref.getDownloadURL().subscribe(url =>{
-            console.log(url)
-          });
-        }));
-    }
-    fr.readAsDataURL(pickedFile);
-  }
 }

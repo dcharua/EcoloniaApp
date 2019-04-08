@@ -1,7 +1,7 @@
 import { Coupon } from './../models/coupon';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map, take, finalize } from 'rxjs/operators';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
 @Injectable({
@@ -57,18 +57,12 @@ export class CouponService {
   }
 
   uploadIMG(img: string, title: string){
+    var subject = new Subject<string>();
     const filePath = `/coupons/${ title ? title : 'sin_titulo' }.jpg`;
     const fileRef = this.storage.ref(filePath);
     const image = 'data:image/jpg;base64,' + img;
     const task = fileRef.putString(image.replace('data:image/jpeg;base64,', ''), 'data_url');
-    return {task :task, ref: fileRef};
-    task.snapshotChanges().pipe(
-      finalize(() => {
-        return fileRef.getDownloadURL().pipe(map(url => {
-          return url;
-        }))
-      })
-    )
+    return {task : task, ref: fileRef};
   }
 
 }
