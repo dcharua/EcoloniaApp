@@ -1,12 +1,15 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-button color="primary" [routerLink]="['/add-coupon']" slot="end">
+  <ion-toolbar>
+    <ion-row id="logoTop">
+      <img height="50" src="../../../assets/images/logo-small_negro.png" alt="">
+      <ion-title> Cupones</ion-title>
+      <ion-button color="primary" [routerLink]="['/add-coupon']">
         <ion-icon name="add" slot="icon-only">Agregar</ion-icon>
       </ion-button>
-      <img height="50" src="../../../assets/images/logo-small_negro.png" alt="">
-      <ion-title slot="center"> Cupones</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
 
   <ion-card *ngFor="let coupon of coupons" class="container">
@@ -28,7 +31,7 @@
     </ion-col>
   </ion-card>
 
-  <ion-card  [routerLink]="['/add-coupon']" class="container container_add">
+  <ion-card [routerLink]="['/add-coupon']" class="container container_add">
     <ion-icon id="canjeo" class="add" name="add"></ion-icon>
   </ion-card>
 
