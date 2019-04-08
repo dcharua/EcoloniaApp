@@ -16,6 +16,14 @@
   align-items: center;
 }
 
+#instrucciones {
+  p {
+    color: grey;
+    text-align: center;
+    margin: 8px 0;
+  }
+}
+
 input {
   margin-top: 30px !important;
   font-size: 22px;
@@ -36,7 +44,7 @@ input:focus {
 .boton {
   // Size Box
   width: 70vw;
-  height: 120%;
+  height: auto;
   padding: 10px;
   margin: 20px 0;
 

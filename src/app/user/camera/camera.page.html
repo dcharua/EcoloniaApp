@@ -5,21 +5,29 @@
 </ion-header>
 
 <ion-content>
-  <ion-col id="alignContent">
 
-    <ion-row>
-      <input type="text" [(ngModel)]="text" placeholder="Titulo de la foto">
-    </ion-row>
+  <ion-row>
+    <ion-col id="instrucciones">
+      <p>¡Sube la foto de la basura que recogiste!</p>
+      <p>Describe el residuo con ayuda de las etiquetas.</p>
+      <p>Recibe tus Puntos</p>
+      <p>(Recuerda que entre mejor describas tu foto más puntos ganas)</p>
+    </ion-col>
+  </ion-row>
 
-    <ion-row>
-      <a class="boton" (click)="takePhoto()">Tomar foto</a>
-    </ion-row>
-
-    <ion-row>
-      <p align="center"><img src="{{myPhoto}}"></p>
-    </ion-row>
-
-  </ion-col>
+  <ion-row>
+    <ion-col id="alignContent">
+      <ion-row>
+        <input type="text" [(ngModel)]="text" placeholder="Titulo de la foto">
+      </ion-row>
+      <ion-row>
+        <a class="boton" (click)="takePhoto()">Tomar foto</a>
+      </ion-row>
+      <ion-row>
+        <p align="center"><img src="{{myPhoto}}"></p>
+      </ion-row>
+    </ion-col>
+  </ion-row>
 </ion-content>
 
 <ion-footer>
