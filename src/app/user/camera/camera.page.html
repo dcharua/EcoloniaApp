@@ -31,22 +31,17 @@
 </ion-content>
 
 <ion-footer>
-  <ion-tab-bar slot="bottom">
+  <ion-row class="navbarRow">
+    <ion-col size="4.5" class="navbarCol">
+      <ion-icon name="barcode" [routerLink]="['/user-coupon']"></ion-icon>
+    </ion-col>
 
-    <ion-tab-button [routerLink]="['/user-coupon']">
-      <ion-icon name="barcode"></ion-icon>
-      <ion-label style="color: grey;">Cupones</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button>
+    <ion-col id="photoIcon" size="3" class="navbarCol">
       <ion-icon name="aperture"></ion-icon>
-      <ion-label style="color: grey;">Photos</ion-label>
-    </ion-tab-button>
+    </ion-col>
 
-    <ion-tab-button [routerLink]="['/user-profile']">
-      <ion-icon name="person"></ion-icon>
-      <ion-label style="color: grey;">Perfil</ion-label>
-    </ion-tab-button>
-
-  </ion-tab-bar>
+    <ion-col size="4.5" class="navbarCol">
+      <ion-icon name="person" [routerLink]="['/user-profile']"></ion-icon>
+    </ion-col>
+  </ion-row>
 </ion-footer>
