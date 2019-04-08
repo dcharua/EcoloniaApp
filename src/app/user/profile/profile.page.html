@@ -23,7 +23,7 @@
           <p id="label">Nombre: </p>
         </ion-col>
         <ion-col>
-          <p id="value">Joan Andoni</p>
+          <p id="value">{{user?.name}}</p>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -31,7 +31,7 @@
           <p id="label">Correo: </p>
         </ion-col>
         <ion-col>
-          <p id="value">mcr_joan@hotmai.com</p>
+          <p id="value">{{user?.email}}</p>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -39,14 +39,14 @@
           <p id="label">Usuario desde: </p>
         </ion-col>
         <ion-col>
-          <p id="value">20/07/2019</p>
+          <p id="value">{{user?.createdOn}}</p>
         </ion-col>
       </ion-row>
     </ion-col>
   </ion-row>
 
   <!-- IMAGENES -->
-  <ion-row>
+  <!-- <ion-row>
     <ion-card>
       <ion-card-header>
         <ion-card-title class="ion-bold">Joan Andoni</ion-card-title>
@@ -64,6 +64,20 @@
         </ion-row>
       </ion-card-content>
     </ion-card>
+  </ion-row> -->
+
+  <!-- BUTTON VER CUPONES -->
+  <ion-row>
+    <ion-col size=12>
+      <ion-button expand="block" fill="outline" color="primary">Cupones</ion-button>
+    </ion-col>
+  </ion-row>
+
+  <!-- BUTTON VER IMAGENES -->
+  <ion-row>
+    <ion-col size=12>
+      <ion-button expand="block" fill="outline" color="primary">Imagenes subidas</ion-button>
+    </ion-col>
   </ion-row>
 
   <!-- BUTTON LOGOUT -->

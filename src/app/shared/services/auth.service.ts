@@ -75,6 +75,7 @@ export class AuthService {
   }
 
   SetLocal(user: User) {
+    console.log(user);
     Plugins.Storage.set({ key: 'user', value: JSON.stringify(user) });
   }
 
@@ -100,9 +101,9 @@ export class AuthService {
     return user.admin;
   }
 
-  private getLocalUser() {
+  getLocalUser() {
     return Plugins.Storage.get({ key: 'user' }).then(data => {
-      const user = JSON.parse(data.value) as User;
+      let user = JSON.parse(data.value) as User;
       return user;
     });
   }
