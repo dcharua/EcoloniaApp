@@ -100,8 +100,10 @@ ion-card-content {
 
 .navbarCol {
   display: flex !important;
-  justify-content: center;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+
   ion-icon {
     color: #a8c328 !important;
   }
@@ -110,4 +112,10 @@ ion-card-content {
 
 #photoIcon {
   font-size: 300%;
+}
+
+#titleNavbar {
+  margin: 5px 0;
+  color: #a8c328;
+  font-size: 12px;
 }

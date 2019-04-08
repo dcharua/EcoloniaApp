@@ -35,15 +35,30 @@
 <ion-footer>
   <ion-row class="navbarRow">
     <ion-col size="4.5" class="navbarCol">
-      <ion-icon name="barcode"></ion-icon>
+      <ion-row>
+        <ion-icon name="barcode"></ion-icon>
+      </ion-row>
+      <ion-row>
+        <p id="titleNavbar">Cupones</p>
+      </ion-row>
     </ion-col>
 
     <ion-col id="photoIcon" size="3" class="navbarCol">
-      <ion-icon name="aperture" [routerLink]="['/user-camera']"></ion-icon>
+      <ion-row>
+        <ion-icon name="aperture" [routerLink]="['/user-camera']"></ion-icon>
+      </ion-row>
+      <ion-row>
+        <p id="titleNavbar">Fotos</p>
+      </ion-row>
     </ion-col>
 
     <ion-col size="4.5" class="navbarCol">
-      <ion-icon name="person" [routerLink]="['/user-profile']"></ion-icon>
+      <ion-row>
+        <ion-icon name="person" [routerLink]="['/user-profile']"></ion-icon>
+      </ion-row>
+      <ion-row>
+        <p id="titleNavbar">Perfil</p>
+      </ion-row>
     </ion-col>
   </ion-row>
 </ion-footer>
