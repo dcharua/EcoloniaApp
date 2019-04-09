@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../shared/services/auth.service';
-import { User } from '../../shared/models/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -11,13 +11,17 @@ export class ProfilePage implements OnInit {
   user: any;
 
   constructor(
-    public authService: AuthService
+    public authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.authService.getLocalUser().then(data => {
       this.user = data;
-      console.log(this.user);
     });
+  }
+
+  logout() {
+    this.authService.SignOut();
   }
 }
