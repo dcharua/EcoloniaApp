@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package dcg.ecolonia;
 
 import android.os.Bundle;
 

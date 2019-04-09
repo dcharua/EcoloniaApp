@@ -37,7 +37,7 @@ export class AddCouponPage implements OnInit {
     private platform: Platform
   ) {
     this.minDate =  new Date().toISOString();
-    this.maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 5)).toISOString();
+    this.maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 10)).toISOString();
     this.route.paramMap.subscribe(paramMap => {
       if (paramMap.has('couponId')) {
         this.loadingCtrl.create({
@@ -46,6 +46,7 @@ export class AddCouponPage implements OnInit {
           loadingEl.present();
           this.couponService.getCoupon(paramMap.get('couponId')).subscribe(coupon => {
             this.coupon = coupon;
+            this.selectedImage = coupon.src;
           });
           loadingEl.dismiss();
         });
@@ -56,17 +57,7 @@ export class AddCouponPage implements OnInit {
 
 
   ngOnInit() {
-    console.log('Mobile:', this.platform.is('mobile'));
-    console.log('Hybrid:', this.platform.is('hybrid'));
-    console.log('iOS:', this.platform.is('ios'));
-    console.log('Android:', this.platform.is('android'));
-    console.log('Desktop:', this.platform.is('desktop'));
-    if (
-      (this.platform.is('mobile') && !this.platform.is('hybrid')) ||
-      this.platform.is('desktop')
-    ) {
-      this.usePicker = true;
-    }
+  
   }
 
   createCoupon(form: NgForm) {
@@ -188,34 +179,6 @@ export class AddCouponPage implements OnInit {
       });
   }
 
-  onImagePicked(e){
-    console.log(e)
-  }
-  onPickImage() {
-    if (!Capacitor.isPluginAvailable('Camera')) {
-      this.filePickerRef.nativeElement.click();
-      return;
-    }
-    Plugins.Camera.getPhoto({
-      quality: 50,
-      source: CameraSource.Prompt,
-      correctOrientation: true,
-      // height: 320,
-      width: 300,
-      resultType: CameraResultType.Uri
-    })
-      .then(image => {
-        this.selectedImage = image.path;
-      })
-      .catch(error => {
-        console.log(error);
-        if (this.usePicker) {
-          this.filePickerRef.nativeElement.click();
-        }
-        return false;
-      });
-  }
-
   onFileChosen(event: Event) {
     this.loadingCtrl.create({message: 'Cargando Imagen...'}).then(loadingEl => {
       loadingEl.present();
@@ -223,20 +186,21 @@ export class AddCouponPage implements OnInit {
         if (!pickedFile) {
           return;
         }
+        const file = this.couponService.uploadIMG(pickedFile, this.coupon.title);
+        file.task.snapshotChanges().pipe(
+          finalize(() => {
+            file.ref.getDownloadURL().subscribe(url =>{
+              this.coupon.src = url;
+              loadingEl.dismiss();
+            });
+          })).subscribe();
         const fr = new FileReader();
         fr.onload = () => {
           const dataUrl = fr.result.toString();
           this.selectedImage = dataUrl;
-          const file = this.couponService.uploadIMG(dataUrl, this.coupon.title);
-          file.task.snapshotChanges().pipe(
-            finalize(() => {
-              file.ref.getDownloadURL().subscribe(url =>{
-                this.coupon.src = url;
-                loadingEl.dismiss();
-              });
-            })).subscribe();
         }
         fr.readAsDataURL(pickedFile);
+
       })
     }
 }

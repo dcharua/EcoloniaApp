@@ -1,3 +1,4 @@
+import { AuthService } from './../../shared/services/auth.service';
 import { PhotoService } from './../../shared/services/photo.service';
 import { Photo } from './../../shared/models/photo';
 import { Component, OnInit } from '@angular/core';
@@ -8,8 +9,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./images.page.scss'],
 })
 export class ImagesPage implements OnInit {
-
-  constructor( private photoService: PhotoService) {
+  photos: Photo [] = [];
+  constructor( 
+    private photoService: PhotoService,
+    public authService: AuthService
+    ) {
    
   }
 

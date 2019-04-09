@@ -20,7 +20,8 @@ export class SignupComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private loading: LoadingController
   ) { }
 
   ngOnInit() { }
@@ -28,34 +29,37 @@ export class SignupComponent implements OnInit {
   registrar() {
     if (this.user.name, this.user.email, this.mailConfirmation, this.user.password, this.passwordConfirmation) {
       if (this.user.email != this.mailConfirmation) {
-        this.showAlert("Los correos no coiciden");
+        this.showAlert("Error", "Los correos no coiciden");
       } else {
         if (!this.authService.validateEmail(this.user.email)) {
-          this.showAlert("Ingresa un mail valido");
+          this.showAlert("Error", "Ingresa un mail valido");
         } else {
           if (this.user.password != this.passwordConfirmation) {
-            this.showAlert("Las contraseñas no coinciden");
+            this.showAlert("Error", "Las contraseñas no coinciden");
           } else {
-            this.showAlert("USUARIO REGISTRADO CORRECTAMENTE!");
-            // console.log("USUARIO REGISTRADO CORRECTAMENTE", this.user.name, this.user.email, this.user.password);
-            this.authService.SignUp(this.user);
-            this.user.name = "";
-            this.user.email = "";
-            this.user.password = "";
-            this.mailConfirmation = "";
-            this.passwordConfirmation = "";
+            this.loading.create({message: 'Registrando...'}).then(loadingEl => {
+              loadingEl.present();
+              this.authService.SignUp(this.user).then(()=>{
+                this.showAlert("Registrado", "USUARIO REGISTRADO CORRECTAMENTE!");
+                this.user.name = "";
+                this.user.email = "";
+                this.user.password = "";
+                this.mailConfirmation = "";
+                this.passwordConfirmation = "";
+              });
+            });
           }
         }
       }
     } else {
-      this.showAlert("Llene todos los campos requeridos");
+      this.showAlert("Error", "Llene todos los campos requeridos");
     }
   }
 
-  private showAlert(message: string) {
+  private showAlert(title: string, message: string) {
     this.alertCtrl
       .create({
-        header: 'Authentication failed',
+        header: title,
         message: message,
         buttons: ['Okay']
       })

@@ -18,7 +18,8 @@ const routes: Routes = [
   { path: 'user-profile', loadChildren: './user/profile/profile.module#ProfilePageModule' },
   { path: 'user-camera', loadChildren: './user/camera/camera.module#CameraPageModule' },
   { path: 'add-coupon', loadChildren: './admin/add-coupon/add-coupon.module#AddCouponPageModule' },
-  { path: 'add-coupon/:couponId', loadChildren: './admin/add-coupon/add-coupon.module#AddCouponPageModule' }
+  { path: 'add-coupon/:couponId', loadChildren: './admin/add-coupon/add-coupon.module#AddCouponPageModule' },
+  { path: 'admin-camara', loadChildren: './admin/camara/camara.module#CamaraPageModule' }
 ];
 
 @NgModule({

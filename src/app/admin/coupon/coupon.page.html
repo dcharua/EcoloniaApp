@@ -1,16 +1,19 @@
 <ion-header>
   <ion-toolbar>
     <ion-row id="logoTop">
-      <img height="50" src="../../../assets/images/logo-small_negro.png" alt="" [routerLink]="['/admin-home']">
+      <img [routerLink]="['/admin-home']" height="50" src="../../../assets/images/logo-small_negro.png" alt="" [routerLink]="['/admin-home']">
       <ion-title> Cupones</ion-title>
-      <ion-button color="primary" [routerLink]="['/add-coupon']">
-        <ion-icon name="add" slot="icon-only">Agregar</ion-icon>
+      <ion-button color="danger" (click)="authService.SignOut()">
+        <ion-icon name="log-out" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-row>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+    <ion-card [routerLink]="['/add-coupon']" class="container container_add">
+      <ion-icon id="canjeo" class="add" name="add"></ion-icon>
+    </ion-card>
 
   <ion-card *ngFor="let coupon of coupons" class="container">
     <ion-col size=3>
@@ -31,30 +34,34 @@
     </ion-col>
   </ion-card>
 
-  <ion-card [routerLink]="['/add-coupon']" class="container container_add">
-    <ion-icon id="canjeo" class="add" name="add"></ion-icon>
-  </ion-card>
-
 </ion-content>
 
 <ion-footer>
-  <ion-row class="navbarRow">
-    <ion-col class="navbarCol">
-      <ion-row>
-        <ion-icon name="barcode" style="color: grey !important;"></ion-icon>
-      </ion-row>
-      <ion-row>
-        <p id="titleNavbar" style="color: grey !important;">Cupones</p>
-      </ion-row>
-    </ion-col>
-
-    <ion-col class="navbarCol">
-      <ion-row>
-        <ion-icon name="camera" [routerLink]="['/admin-images']"></ion-icon>
-      </ion-row>
-      <ion-row>
-        <p id="titleNavbar">Imagenes</p>
-      </ion-row>
-    </ion-col>
-  </ion-row>
+    <ion-row class="navbarRow">
+      <ion-col size="4.5" class="navbarCol">
+        <ion-row>
+          <ion-icon name="barcode" [routerLink]="['/admin-coupon']"></ion-icon>
+        </ion-row>
+        <ion-row>
+          <p id="titleNavbar">Cupones</p>
+        </ion-row>
+      </ion-col>
+  
+      <ion-col id="photoIcon" size="3" class="navbarCol">
+        <ion-row>
+          <ion-icon name="aperture" [routerLink]="['/admin-camera']"></ion-icon>
+        </ion-row>
+        <ion-row>
+          <p id="titleNavbar">Fotos</p>
+        </ion-row>
+      </ion-col>
+      <ion-col size="4.5" class="navbarCol">
+        <ion-row>
+        <ion-icon name="checkbox-outline" [routerLink]="['/admin-images']"></ion-icon>
+        </ion-row>
+        <ion-row>
+          <p id="titleNavbar">Validación</p>
+        </ion-row>
+      </ion-col>
+    </ion-row>
 </ion-footer>

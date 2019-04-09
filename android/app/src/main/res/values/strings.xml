@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Ecolonia</string>
     <string name="title_activity_main">Ecolonia</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="fileprovider_authority">io.ionic.starter.fileprovider</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="package_name">dcg.ecolonia</string>
+    <string name="fileprovider_authority">dcg.ecolonia.fileprovider</string>
+    <string name="custom_url_scheme">dcg.ecolonia</string>
 </resources>

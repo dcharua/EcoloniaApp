@@ -1,3 +1,4 @@
+import { AlertController, LoadingController } from '@ionic/angular';
 import { Injectable, NgZone } from '@angular/core';
 import { User } from '../models/user';
 import * as moment from "moment";
@@ -23,7 +24,9 @@ export class AuthService {
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     private userService: UserService,
     public router: Router,
-    public ngZone: NgZone // NgZone service to remove outside scope warning
+    public ngZone: NgZone, // NgZone service to remove outside scope warning
+    private alertCtrl: AlertController,
+    private loading: LoadingController
   ) { }
 
   // Sign in with email/password
@@ -110,10 +113,27 @@ export class AuthService {
 
   // Sign out
   SignOut() {
-    return this.afAuth.auth.signOut().then(() => {
-      Plugins.Storage.remove({ key: 'user' });
-      this.router.navigate(['/auth']);
-    })
+    this.alertCtrl.create({
+      header: 'Confirma!',
+      message: 'Estas seguro de cerrar sesion?',
+      buttons: [
+        {
+          text: 'Salir',
+          handler: () => {
+            this.afAuth.auth.signOut().then(() => {
+              Plugins.Storage.remove({ key: 'user' });
+              this.router.navigate(['/auth']);
+            });
+          }
+        },
+        {
+        text: 'Cancelar'
+        }
+      ]
+    }).then(alertEl => {
+      alertEl.present();
+    });
+    
   }
 
   validateEmail(email) {

@@ -1,3 +1,4 @@
+import { AuthService } from './../../shared/services/auth.service';
 import { Coupon } from './../../shared/models/coupon';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -14,7 +15,8 @@ export class CouponPage implements OnInit, OnDestroy {
   constructor(
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
-    private couponService: CouponService
+    private couponService: CouponService,
+    public authService: AuthService
   ) {
     this.loadingCtrl.create({message: '¿Donde estan?'}).then(loadingEl => {
       loadingEl.present();
@@ -65,6 +67,6 @@ export class CouponPage implements OnInit, OnDestroy {
     }).then(alertEl => {
       alertEl.present();
     });
-   
   }
+
 }

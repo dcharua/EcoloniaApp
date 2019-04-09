@@ -13,3 +13,62 @@
 .invalid{
     border-bottom: 2px solid rgb(255, 0, 0);
 }    
+
+// NAVBAR
+
+.navbarRow {
+    display: flex;
+  }
+  
+  .navbarCol {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+  
+    ion-icon {
+      color: #a8c328 !important;
+    }
+    font-size: 200%;
+  }
+  
+  #photoIcon {
+    font-size: 300%;
+  }
+  
+  #titleNavbar {
+    margin: 5px 0;
+    color: #a8c328;
+    font-size: 12px;
+  }
+  
+  .flex{
+    display: flex
+  }
+  
+  .f-50{
+    flex: 0 1 50%
+  }
+
+  .inputfile {
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: 1;
+    padding: 10px;
+}
+
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: #f1e5e6;
+    background-color:#3880ff;
+    border-radius: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    padding: 0.625rem 1.25rem;
+}
+
