@@ -15,11 +15,15 @@ export class HomePage implements OnInit {
     private router: Router,
     private authService: AuthService
   ) {
-    this.authService.getLoggedInUser().then( user =>{
-      if (user.admin) {
-        this.router.navigate(['/admin-home'])
-      } else if (!user.admin) {
-        this.router.navigate(['/user-home'])
+    this.authService.getLoggedInUser().then(user => {
+      if (user) {
+        if (user.admin) {
+          this.router.navigate(['/admin-home'])
+        } else if (!user.admin) {
+          this.router.navigate(['/user-home'])
+        }
+      } else {
+        console.log("There is no user logged");
       }
     })
   }
