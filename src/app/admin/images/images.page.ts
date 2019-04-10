@@ -17,14 +17,22 @@ export class ImagesPage implements OnInit {
     public authService: AuthService
   ) {
     this.photoService.getPhotos().subscribe((photos) => {
+      photos.forEach((photo, index) => {
+        if (photo.points != 0) {
+          photos.splice(index, 1);
+        }
+      });
       this.photos = photos;
     });
 
   }
 
-
-
   ngOnInit() {
+  }
+
+  updatePoints(photoUpdate, index) {
+    this.photoService.updatePhoto(photoUpdate);
+    this.photos.splice(index, 1);
   }
 
   deletePhoto(photo: Photo) {
