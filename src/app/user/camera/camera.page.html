@@ -22,22 +22,28 @@
     <ion-col id="alignContent">
       <!-- ADD TAGS -->
       <ion-row>
-        <input type="text" *ngIf="this.photo.tags.length == 0" (keyup.enter)="addTag()" [(ngModel)]="tag" placeholder="Ingresa etiqueta">
-        <input type="text" *ngIf="this.photo.tags.length > 0" (keyup.enter)="addTag()" [(ngModel)]="tag" placeholder="Ingresa otra etiqueta">
+        <input type="text" *ngIf="this.tags.length == 0" (keyup.enter)="addTag()" [(ngModel)]="tag" placeholder="Ingresa etiqueta">
+        <input type="text" *ngIf="this.tags.length > 0" (keyup.enter)="addTag()" [(ngModel)]="tag" placeholder="Ingresa otra etiqueta">
       </ion-row>
 
       <!-- SHOW TAGS -->
-      <h2 id="labelEtiquetas" *ngIf="this.photo.tags.length > 0">ETIQUETAS</h2>
-      <ion-row id="containerTags" *ngIf="this.photo.tags.length > 0">
-        <div id="tag" *ngFor="let tag of this.photo.tags">
+      <h2 id="labelEtiquetas" *ngIf="this.tags.length > 0">ETIQUETAS</h2>
+      <ion-row id="containerTags" *ngIf="this.tags.length > 0">
+        <div id="tag" *ngFor="let tag of this.tags">
           <p>{{tag}}</p>
         </div>
       </ion-row>
 
       <!-- UPLOAD IMAGE -->
-      <ion-row *ngIf="this.photo.tags.length > 0">
-        <input type="file" name="file" class="inputfile" accept="image/jpeg" *ngIf="!selectedImage" #filePicker (change)="onFileChosen($event)" />
-        <ion-button for="file" *ngIf="!selectedImage">Take Picture</ion-button>
+      <ion-row *ngIf="this.tags.length > 0">
+        <ion-col size=12>
+          <ion-row>
+            <input type="file" name="file" class="inputfile" accept="image/jpeg" *ngIf="!selectedImage" #filePicker (change)="onFileChosen($event)" />
+          </ion-row>
+          <ion-row>
+            <ion-button expand="block" fill="outline" color="primary" for="file" *ngIf="!selectedImage">Take Picture</ion-button>
+          </ion-row>
+        </ion-col>
       </ion-row>
 
       <!-- SHOW IMAGE UPLOADED -->
@@ -47,7 +53,9 @@
 
       <!-- UPLOAD PHOTO FOR POINTS -->
       <ion-row *ngIf="selectedImage">
-        <ion-button (click)="create()">Enviar</ion-button>
+        <ion-col size=12>
+          <ion-button expand="block" fill="outline" color="primary" (click)="create()">Enviar</ion-button>
+        </ion-col>
       </ion-row>
 
     </ion-col>

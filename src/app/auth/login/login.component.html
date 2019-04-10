@@ -28,7 +28,7 @@
   <ion-row id="box">
     <ion-col>
       <ion-row id="box">
-        <a class="boton" (click)="login()">Ingresar</a>
+        <button [disabled]="!this.user.email" class="boton" (click)="login()">Ingresar</button>
       </ion-row>
       <ion-row id="box">
         <a class="registrar" (click)="changeLogin()">Nuevo aquí?</a>

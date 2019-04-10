@@ -62,6 +62,7 @@ export class AuthService {
         user.uid = res.user.uid;
         user.admin = false;
         user.points = 0;
+        user.coupons = [];
         user.createdOn = moment().format('MMMM Do YYYY');
         this.userService.addUser(user).then((docRef) => {
           user.$key = docRef.id;

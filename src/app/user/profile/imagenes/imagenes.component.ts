@@ -11,6 +11,7 @@ import { Photo } from './../../../shared/models/photo';
 export class ImagenesComponent implements OnInit {
   userId: any;
   photos: Photo[] = [];
+  userPhotos: Photo[] = [];
 
   constructor(
     public photoService: PhotoService,
@@ -19,15 +20,14 @@ export class ImagenesComponent implements OnInit {
     this.photoService.getPhotos().subscribe((photos) => {
       this.authService.getLocalUser().then(data => {
         this.userId = data.uid;
-      });
-      photos.forEach((photo, index) => {
-        if (photo.user_id != this.userId) {
-          photos.splice(index, 1);
-        }
+        photos.forEach((photo) => {
+          if (photo.user_id === this.userId) {
+            this.userPhotos.push(photo);
+          }
+        });
       });
       this.photos = photos;
     });
-
   }
 
   ngOnInit() {
