@@ -1,18 +1,18 @@
 #logoTop {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  
-    padding: 5px !important;
-  }
-  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 5px !important;
+}
+
   #alignContent {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
-  
+
   #instrucciones {
     p {
       color: grey;
@@ -20,7 +20,7 @@
       margin: 8px 0;
     }
   }
-  
+
   input {
     margin-top: 30px !important;
     font-size: 22px;
@@ -32,28 +32,48 @@
     margin: 10px 0;
     width: 80vw;
   }
-  
+
   input:focus {
     outline: none !important;
     border-color: none;
   }
-  
+
   .boton {
     // Size Box
     width: 70vw;
     height: auto;
     padding: 10px;
     margin: 20px 0;
-  
+
     // Style box
     border: none;
     border-radius: 4px;
     background-color: rgba(170, 182, 70, 0.7);
-  
+
     // Text in box
     text-align: center;
     text-decoration: none;
     color: white;
     font-size: 18px;
   }
-  
+
+  #tag {
+    border: 1.5px solid #a8c328;
+    border-radius: 10px;
+    margin: 5px 2px;
+    padding: 0 10px;
+    color: #a8c328;
+  }
+
+  #containerTags {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  #labelEtiquetas {
+    color: grey;
+    font-weight: 900;
+  }

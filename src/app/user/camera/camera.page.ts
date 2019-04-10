@@ -49,7 +49,6 @@ export class CameraPage implements OnInit {
   addTag() {
     this.tags.push(this.tag);
     this.tag = '';
-    console.log(this.tags);
   }
 
   private locateUser() {
