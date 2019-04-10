@@ -69,6 +69,19 @@ export class UserService {
     return updatePoints;
   }
 
+  localCoupons: string[] = [];
+  updateCoupons(userKey, couponKey) {
+    this.getUser(userKey).subscribe(user => {
+      this.localCoupons = user.coupons;
+      this.localCoupons.push(couponKey);
+      console.log(this.localCoupons);
+      console.log(user.coupons);
+    });
+    var userRef = this.db.collection('users').doc(userKey).update({
+      coupons: this.localCoupons
+    });
+  }
+
   setLocation(lat, lon) {
     this.location.lat = lat;
     this.location.lon = lon;
