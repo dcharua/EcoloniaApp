@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-row id="logoTop">
-      <img  [routerLink]="['/user-home']" height="50" src="../../../assets/images/logo-small_negro.png" alt="" [routerLink]="['/user-home']">
+      <img [routerLink]="['/user-home']" height="50" src="../../../assets/images/logo-small_negro.png" alt="" [routerLink]="['/user-home']">
       <ion-title>Cupones</ion-title>
     </ion-row>
   </ion-toolbar>
@@ -16,23 +16,24 @@
     </ion-col>
   </ion-row>
 
-  <ion-card class="container">
+  <ion-card *ngFor="let coupon of coupons" class="container">
     <ion-col size=3>
-      <div class="puntos">
-        <ion-icon name="leaf"></ion-icon> 15
+      <div id="puntos">
+        <ion-icon name="leaf"></ion-icon> {{coupon.cost}}
       </div>
     </ion-col>
     <ion-col size=9>
       <ion-card-header>
-        <ion-card-subtitle style="text-transform: uppercase !important">Comida</ion-card-subtitle>
-        <ion-card-title>VIPS</ion-card-title>
+        <ion-card-subtitle style="text-transform: uppercase !important">{{coupon.category}}</ion-card-subtitle>
+        <ion-card-title>{{coupon.title}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>Te hacemos descuento de 30% si tu compra es mayor a $200, y te regalamos el pastel de tu elección.</p>
-        <ion-icon id="canjeo" name="cloud-download"></ion-icon>
+        <p>{{coupon.description}}</p>
+        <ion-icon id="canjeo" name="download" style="color: #466c1d;" (click)="downloadCoupon(coupon.$key)"></ion-icon>
       </ion-card-content>
     </ion-col>
   </ion-card>
+
 </ion-content>
 
 <ion-footer>
