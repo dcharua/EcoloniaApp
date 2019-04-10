@@ -12,6 +12,7 @@ log.txt
 .vscode/
 npm-debug.log*
 
+android/
 .idea/
 .ionic/
 .sourcemaps/
@@ -28,6 +29,8 @@ plugins/
 plugins/android.json
 plugins/ios.json
 $RECYCLE.BIN/
+capacitor.config.json
+config.xml
 
 .DS_Store
 Thumbs.db
