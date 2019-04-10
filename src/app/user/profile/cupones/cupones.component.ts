@@ -21,13 +21,8 @@ export class CuponesComponent implements OnInit {
       this.authService.getLocalUser().then(data => {
         this.userId = data.uid;
       });
-      photos.forEach((photo, index) => {
-        if (photo.user_id != this.userId) {
-          photos.splice(index, 1);
-        }
-      });
-      this.photos = photos;
-      console.log(this.photos);
+      this.coupons = coupons;
+      console.log(this.coupons);
     });
   }
 

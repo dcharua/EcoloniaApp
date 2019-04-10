@@ -1,0 +1,64 @@
+ion-card-title {
+  color: #466c1d;
+  font-weight: 900;
+  font-size: 2.5em;
+}
+
+ion-card-title::first-letter {
+  font-size: 115%;
+}
+
+ion-card-subtitle {
+  text-transform: capitalize;
+  font-size: 125%;
+  color: rgba(255,255,255,0.6);
+  align-self: flex-end;
+  float:right;
+}
+
+ion-card-subtitle::first-letter {
+  font-size: 120%;
+}
+
+.container {
+  display: flex;
+  flex-direction: initial;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+
+  --ion-background-color: rgba(170, 182, 70, 1);
+  background-color: rgba(170, 182, 70, 1);
+
+  &_add {
+    background-color: transparent;
+    border-radius: 10px;
+    border: 2px solid rgba(170, 182, 70, 1);
+  }
+}
+
+
+ion-card-content {
+  color: rgba(255,255,255,0.85);
+  ion-icon {
+    color: #466c1d;
+  }
+}
+
+#canjeo {
+  display: flex;
+  flex-direction: row;
+  float: right;
+  margin: 10px 5px;
+  font-size: 250%;
+}
+
+.add {
+  color: green;
+  font-size: 30px;
+  font-weight: 900;
+}
+
+#addCoupon {
+  background-color: green;
+}

@@ -1,3 +1,16 @@
-<p>
-  cupones works!
-</p>
+<ion-card *ngFor="let coupon of coupons" class="container">
+  <ion-col size=3>
+    <div class="puntos">
+      <ion-icon name="leaf"></ion-icon> {{coupon.cost}}
+    </div>
+  </ion-col>
+  <ion-col size=9>
+    <ion-card-header>
+      <ion-card-subtitle style="text-transform: uppercase !important">{{coupon.category}}</ion-card-subtitle>
+      <ion-card-title>{{coupon.title}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{coupon.description}}</p>
+    </ion-card-content>
+  </ion-col>
+</ion-card>
