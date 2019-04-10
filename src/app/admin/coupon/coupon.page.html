@@ -11,9 +11,9 @@
 </ion-header>
 
 <ion-content>
-    <ion-card [routerLink]="['/add-coupon']" class="container container_add">
-      <ion-icon id="canjeo" class="add" name="add"></ion-icon>
-    </ion-card>
+  <ion-card [routerLink]="['/add-coupon']" class="container container_add">
+    <ion-icon id="canjeo" class="add" name="add"></ion-icon>
+  </ion-card>
 
   <ion-card *ngFor="let coupon of coupons" class="container">
     <ion-col size=3>
@@ -37,31 +37,31 @@
 </ion-content>
 
 <ion-footer>
-    <ion-row class="navbarRow">
-      <ion-col size="4.5" class="navbarCol">
-        <ion-row>
-          <ion-icon name="barcode" [routerLink]="['/admin-coupon']"></ion-icon>
-        </ion-row>
-        <ion-row>
-          <p id="titleNavbar">Cupones</p>
-        </ion-row>
-      </ion-col>
-  
-      <ion-col id="photoIcon" size="3" class="navbarCol">
-        <ion-row>
-          <ion-icon name="aperture" [routerLink]="['/admin-camera']"></ion-icon>
-        </ion-row>
-        <ion-row>
-          <p id="titleNavbar">Fotos</p>
-        </ion-row>
-      </ion-col>
-      <ion-col size="4.5" class="navbarCol">
-        <ion-row>
+  <ion-row class="navbarRow">
+    <ion-col size="4.5" class="navbarCol">
+      <ion-row>
+        <ion-icon name="barcode" [routerLink]="['/admin-coupon']"></ion-icon>
+      </ion-row>
+      <ion-row>
+        <p id="titleNavbar">Cupones</p>
+      </ion-row>
+    </ion-col>
+
+    <ion-col id="photoIcon" size="3" class="navbarCol">
+      <ion-row>
+        <ion-icon name="aperture" [routerLink]="['/admin-camara']"></ion-icon>
+      </ion-row>
+      <ion-row>
+        <p id="titleNavbar">Fotos</p>
+      </ion-row>
+    </ion-col>
+    <ion-col size="4.5" class="navbarCol">
+      <ion-row>
         <ion-icon name="checkbox-outline" [routerLink]="['/admin-images']"></ion-icon>
-        </ion-row>
-        <ion-row>
-          <p id="titleNavbar">Validación</p>
-        </ion-row>
-      </ion-col>
-    </ion-row>
+      </ion-row>
+      <ion-row>
+        <p id="titleNavbar">Validación</p>
+      </ion-row>
+    </ion-col>
+  </ion-row>
 </ion-footer>
