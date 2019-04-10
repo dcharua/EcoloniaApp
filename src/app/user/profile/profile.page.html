@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-row id="logoTop">
-      <img   [routerLink]="['/user-home']" height="50" src="../../../assets/images/logo-small_negro.png" alt="" [routerLink]="['/user-home']">
+      <img [routerLink]="['/user-home']" height="50" src="../../../assets/images/logo-small_negro.png" alt="" [routerLink]="['/user-home']">
       <ion-title>Perfil</ion-title>
     </ion-row>
   </ion-toolbar>
@@ -69,14 +69,16 @@
   <!-- BUTTON VER CUPONES -->
   <ion-row>
     <ion-col size=12>
-      <ion-button expand="block" fill="outline" color="primary">Cupones</ion-button>
+      <ion-button expand="block" fill="outline" color="primary" (click)="cupones()">Cupones</ion-button>
+      <app-cupones *ngIf="this.viewCupones"></app-cupones>
     </ion-col>
   </ion-row>
 
   <!-- BUTTON VER IMAGENES -->
   <ion-row>
     <ion-col size=12>
-      <ion-button expand="block" fill="outline" color="primary">Imagenes subidas</ion-button>
+      <ion-button expand="block" fill="outline" color="primary" (click)="imagenes()">Imagenes subidas</ion-button>
+      <app-imagenes *ngIf="this.viewImagenes"></app-imagenes>
     </ion-col>
   </ion-row>
 

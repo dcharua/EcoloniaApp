@@ -9,23 +9,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./images.page.scss'],
 })
 export class ImagesPage implements OnInit {
-  photos: Photo [] = [];
-  constructor( 
+  photos: Photo[] = [];
+  user: any;
+
+  constructor(
     private photoService: PhotoService,
     public authService: AuthService
-    ) {
-   this.photoService.getPhotos().subscribe((photos) => {
+  ) {
+    this.photoService.getPhotos().subscribe((photos) => {
       this.photos = photos;
-   });
+    });
+
   }
+
+
 
   ngOnInit() {
   }
 
-  deletePhoto(photo: Photo){
+  deletePhoto(photo: Photo) {
     this.photoService.deletePhoto(photo.$key).then(succ => {
       console.log("deleted")
-    }, (err) =>{
+    }, (err) => {
       console.log(err)
     });
   }

@@ -1,72 +1,71 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-row id="logoTop">
-        <img  [routerLink]="['/admin-home']" height="50" src="../../../assets/images/logo-small_negro.png" alt="" [routerLink]="['/user-home']">
-        <ion-title>Fotos</ion-title>
-        <ion-button color="danger" (click)="authService.SignOut()">
+  <ion-toolbar>
+    <ion-row id="logoTop">
+      <img [routerLink]="['/admin-home']" height="50" src="../../../assets/images/logo-small_negro.png" alt="" [routerLink]="['/user-home']">
+      <ion-title>Fotos</ion-title>
+      <ion-button color="danger" (click)="authService.SignOut()">
         <ion-icon name="log-out" slot="icon-only"></ion-icon>
       </ion-button>
-      </ion-row>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content>
-  
-    <ion-row>
-      <ion-col id="instrucciones">
-        <p>¡Sube la foto de la basura que recogiste!</p>
-        <p>Describe el residuo con ayuda de las etiquetas.</p>
-        <p>Recibe tus Puntos</p>
-        <p>(Recuerda que entre mejor describas tu foto más puntos ganas)</p>
-      </ion-col>
     </ion-row>
-  
-    <ion-row>
-      <ion-col id="alignContent">
-        <ion-row>
-          <input type="text" (keyup.enter)="addTag()" [(ngModel)]="tag" placeholder="Tags">
-        </ion-row>
-        <ion-row>
-            <input type="file" name="file" class="inputfile"  accept="image/jpeg" *ngIf="!selectedImage" #filePicker (change)="onFileChosen($event)"/>
-            <label for="file" *ngIf="!selectedImage">Take Picture</label>
-        </ion-row>
-        <ion-row>
-            <ion-img *ngIf="selectedImage" role="button" class="image"  [src]="selectedImage" ></ion-img>
-        </ion-row>
-        <ion-row *ngIf="selectedImage">
-            <ion-button (click)="create()">Enviar</ion-button>
-        </ion-row>
-      </ion-col>
-    </ion-row>
-  </ion-content>
-  
-  <ion-footer>
-      <ion-row class="navbarRow">
-        <ion-col size="4.5" class="navbarCol">
-          <ion-row>
-            <ion-icon name="barcode" [routerLink]="['/admin-coupon']"></ion-icon>
-          </ion-row>
-          <ion-row>
-            <p id="titleNavbar">Cupones</p>
-          </ion-row>
-        </ion-col>
-    
-        <ion-col id="photoIcon" size="3" class="navbarCol">
-          <ion-row>
-            <ion-icon name="aperture" [routerLink]="['/admin-camera']"></ion-icon>
-          </ion-row>
-          <ion-row>
-            <p id="titleNavbar">Fotos</p>
-          </ion-row>
-        </ion-col>
-        <ion-col size="4.5" class="navbarCol">
-          <ion-row>
-          <ion-icon name="checkbox-outline" [routerLink]="['/admin-images']"></ion-icon>
-          </ion-row>
-          <ion-row>
-            <p id="titleNavbar">Validación</p>
-          </ion-row>
-        </ion-col>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-row>
+    <ion-col id="instrucciones">
+      <p>¡Sube la foto de la basura que recogiste!</p>
+      <p>Describe el residuo con ayuda de las etiquetas.</p>
+      <p>Recibe tus Puntos</p>
+      <p>(Recuerda que entre mejor describas tu foto más puntos ganas)</p>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col id="alignContent">
+      <ion-row>
+        <input type="text" (keyup.enter)="addTag()" [(ngModel)]="tag" placeholder="Tags">
       </ion-row>
-  </ion-footer>
-  
+      <ion-row>
+        <input type="file" name="file" class="inputfile" accept="image/jpeg" *ngIf="!selectedImage" #filePicker (change)="onFileChosen($event)" />
+        <label for="file" *ngIf="!selectedImage">Take Picture</label>
+      </ion-row>
+      <ion-row>
+        <ion-img *ngIf="selectedImage" role="button" class="image" [src]="selectedImage"></ion-img>
+      </ion-row>
+      <ion-row *ngIf="selectedImage">
+        <ion-button (click)="create()">Enviar</ion-button>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-content>
+
+<ion-footer>
+  <ion-row class="navbarRow">
+    <ion-col size="4.5" class="navbarCol">
+      <ion-row>
+        <ion-icon name="barcode" [routerLink]="['/admin-coupon']"></ion-icon>
+      </ion-row>
+      <ion-row>
+        <p id="titleNavbar">Cupones</p>
+      </ion-row>
+    </ion-col>
+
+    <ion-col id="photoIcon" size="3" class="navbarCol">
+      <ion-row>
+        <ion-icon name="aperture" [routerLink]="['/admin-camara']"></ion-icon>
+      </ion-row>
+      <ion-row>
+        <p id="titleNavbar">Fotos</p>
+      </ion-row>
+    </ion-col>
+    <ion-col size="4.5" class="navbarCol">
+      <ion-row>
+        <ion-icon name="checkbox-outline" [routerLink]="['/admin-images']"></ion-icon>
+      </ion-row>
+      <ion-row>
+        <p id="titleNavbar">Validación</p>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-footer>

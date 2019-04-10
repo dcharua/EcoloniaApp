@@ -4,14 +4,13 @@ import { PhotoService } from './../../shared/services/photo.service';
 import { Photo } from './../../shared/models/photo';
 import { AuthService } from './../../shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { Plugins, Capacitor} from '@capacitor/core';
+import { Plugins, Capacitor } from '@capacitor/core';
 import { finalize } from 'rxjs/operators';
 
-export interface Location{
+export interface Location {
   lat: number;
   lng: number;
 }
-
 
 @Component({
   selector: 'app-camara',
@@ -49,7 +48,7 @@ export class CamaraPage implements OnInit {
   }
 
 
-  addTag(){
+  addTag() {
     this.photo.tags.push(this.tag);
     this.tag = '';
   }
@@ -66,49 +65,49 @@ export class CamaraPage implements OnInit {
         };
       })
       .catch(err => {
-       console.log(err);
+        console.log(err);
       });
   }
 
 
   onFileChosen(event: Event) {
-    this.loadingCtrl.create({message: 'Cargando Imagen...'}).then(loadingEl => {
+    this.loadingCtrl.create({ message: 'Cargando Imagen...' }).then(loadingEl => {
       loadingEl.present();
-        const pickedFile = (event.target as HTMLInputElement).files[0];
-        if (!pickedFile) {
-          return;
-        }
-        const file = this.photoService.uploadIMG(pickedFile, "title");
-        file.task.snapshotChanges().pipe(
-          finalize(() => {
-            file.ref.getDownloadURL().subscribe(url =>{
-              this.photo.src = url;
-              loadingEl.dismiss();
-            });
-          })).subscribe();
-        const fr = new FileReader();
-        fr.onload = () => {
-          const dataUrl = fr.result.toString();
-          this.selectedImage = dataUrl;
-        }
-        fr.readAsDataURL(pickedFile);
-
-      });
-    }
-
-    create(){
-      this.loadingCtrl.create({message: 'Creando...'}).then(loadingEl => {
-        loadingEl.present();
-        this.photoService.addPhoto(this.photo).then(() => {
-          this.toast.create({
-            message: 'Se subio la imagen exitosamente.',
-            duration: 2000
-          }).then((toast) =>{
-            toast.present();
+      const pickedFile = (event.target as HTMLInputElement).files[0];
+      if (!pickedFile) {
+        return;
+      }
+      const file = this.photoService.uploadIMG(pickedFile, "title");
+      file.task.snapshotChanges().pipe(
+        finalize(() => {
+          file.ref.getDownloadURL().subscribe(url => {
+            this.photo.src = url;
+            loadingEl.dismiss();
           });
-          loadingEl.dismiss();
+        })).subscribe();
+      const fr = new FileReader();
+      fr.onload = () => {
+        const dataUrl = fr.result.toString();
+        this.selectedImage = dataUrl;
+      }
+      fr.readAsDataURL(pickedFile);
+
+    });
+  }
+
+  create() {
+    this.loadingCtrl.create({ message: 'Creando...' }).then(loadingEl => {
+      loadingEl.present();
+      this.photoService.addPhoto(this.photo).then(() => {
+        this.toast.create({
+          message: 'Se subio la imagen exitosamente.',
+          duration: 2000
+        }).then((toast) => {
+          toast.present();
         });
+        loadingEl.dismiss();
       });
-    }
+    });
+  }
 
 }

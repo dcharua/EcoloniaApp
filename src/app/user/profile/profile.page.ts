@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 })
 export class ProfilePage implements OnInit {
   user: any;
+  viewCupones: boolean = false;
+  viewImagenes: boolean = false;
 
   constructor(
     public authService: AuthService,
@@ -21,7 +23,25 @@ export class ProfilePage implements OnInit {
     });
   }
 
+  cupones() {
+    if (this.viewCupones) {
+      this.viewCupones = false;
+    } else {
+      this.viewCupones = true;
+    }
+  }
+
+  imagenes() {
+    if (this.viewImagenes) {
+      this.viewImagenes = false;
+    } else {
+      this.viewImagenes = true;
+    }
+  }
+
   logout() {
     this.authService.SignOut();
   }
+
+
 }
