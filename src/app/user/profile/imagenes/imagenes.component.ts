@@ -19,7 +19,7 @@ export class ImagenesComponent implements OnInit {
   ) {
     this.photoService.getPhotos().subscribe((photos) => {
       this.authService.getLocalUser().then(data => {
-        this.userId = data.uid;
+        this.userId = data.$key;
         photos.forEach((photo) => {
           if (photo.user_id === this.userId) {
             this.userPhotos.push(photo);

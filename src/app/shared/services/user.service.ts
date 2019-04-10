@@ -43,6 +43,7 @@ export class UserService {
       })
       );
   }
+
   getUser(key: string) {
     return this.db.collection('users').doc<User>(key).valueChanges().pipe(
       take(1),
@@ -74,8 +75,6 @@ export class UserService {
     this.getUser(userKey).subscribe(user => {
       this.localCoupons = user.coupons;
       this.localCoupons.push(couponKey);
-      console.log(this.localCoupons);
-      console.log(user.coupons);
     });
     var userRef = this.db.collection('users').doc(userKey).update({
       coupons: this.localCoupons

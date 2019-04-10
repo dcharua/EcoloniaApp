@@ -12,26 +12,27 @@ import { CouponService } from '../../shared/services/coupon.service';
 export class CouponPage implements OnInit, OnDestroy {
   coupons: Coupon[] = [];
   sub: any;
+
   constructor(
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
     private couponService: CouponService,
     public authService: AuthService
   ) {
-    this.loadingCtrl.create({message: '¿Donde estan?'}).then(loadingEl => {
+    this.loadingCtrl.create({ message: '¿Donde estan?' }).then(loadingEl => {
       loadingEl.present();
       this.sub = this.couponService.getCoupons().subscribe(coupons => {
         this.coupons = coupons;
         loadingEl.dismiss();
       });
     });
-   
+
   }
 
   ngOnInit() {
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
@@ -44,8 +45,8 @@ export class CouponPage implements OnInit, OnDestroy {
           text: 'Borrar',
           handler: () => {
             this.couponService.deleteCoupon(coupon.$key).then(() => {
-              
-            }, err =>{
+
+            }, err => {
               this.alertCtrl.create({
                 header: 'Error!',
                 message: err,
@@ -61,7 +62,7 @@ export class CouponPage implements OnInit, OnDestroy {
           }
         },
         {
-        text: 'Cancelar'
+          text: 'Cancelar'
         }
       ]
     }).then(alertEl => {

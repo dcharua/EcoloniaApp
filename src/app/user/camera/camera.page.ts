@@ -38,7 +38,7 @@ export class CameraPage implements OnInit {
     this.authService.getLoggedInUser().then((user) => {
       this.user = user;
       this.locateUser();
-      this.photo.user_id = user.uid;
+      this.photo.user_id = user.$key;
       this.photo.user_name = user.name;
       this.photo.auth = user.admin;
       this.photo.points = 0;

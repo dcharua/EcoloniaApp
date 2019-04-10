@@ -18,7 +18,6 @@ export class PhotoService {
     return this.db.collection('photos').add({ ...photo });
   }
 
-
   getPhoto(key: string): Observable<Photo> {
     return this.db.collection('photos').doc<Photo>(key).valueChanges().pipe(
       take(1),
@@ -50,7 +49,6 @@ export class PhotoService {
     delete photo.$key;
     return this.db.collection('photos').doc(key).update(photo);
   }
-
 
   uploadIMG(img: File, title: string) {
     const filePath = `/recolections/${title ? title : 'sin_titulo'}.jpg`;
