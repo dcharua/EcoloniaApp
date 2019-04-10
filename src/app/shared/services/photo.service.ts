@@ -51,31 +51,12 @@ export class PhotoService {
     return this.db.collection('photos').doc(key).update(photo);
   }
 
-  uploadPhotoFile(event: FileList) {
-    // The File object
-    const file = event.item(0)
-    let task: AngularFireUploadTask;
-
-    // Client-side validation example
-    if (file.type.split('/')[0] !== 'image') {
-      return;
-    }
-
-    // The storage path
-    const path = `images/${file.name}`;
-    const fileRef = this.storage.ref(path)
-
-    // The main task
-    task = this.storage.upload(path, file)
-
-    // Get notified when the download URL is available
-    return task.snapshotChanges().pipe(
-      finalize(() => {
-        fileRef.getDownloadURL().subscribe(url => {
-          return url;
-        });
-      })
-    )
+  
+  uploadIMG(img: File, title: string){
+    const filePath = `/recolections/${ title ? title : 'sin_titulo' }.jpg`;
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(filePath, img);
+    return {task : task, ref: fileRef};
   }
 
 }

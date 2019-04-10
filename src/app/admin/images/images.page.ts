@@ -14,7 +14,9 @@ export class ImagesPage implements OnInit {
     private photoService: PhotoService,
     public authService: AuthService
     ) {
-   
+   this.photoService.getPhotos().subscribe((photos) => {
+      this.photos = photos;
+   });
   }
 
   ngOnInit() {

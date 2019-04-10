@@ -24,13 +24,17 @@
     <ion-row>
       <ion-col id="alignContent">
         <ion-row>
-          <input type="text" [(ngModel)]="text" placeholder="Titulo de la foto">
+          <input type="text" (keyup.enter)="addTag()" [(ngModel)]="tag" placeholder="Tags">
         </ion-row>
         <ion-row>
-          <a class="boton" (click)="takePhoto()">Tomar foto</a>
+            <input type="file" name="file" class="inputfile"  accept="image/jpeg" *ngIf="!selectedImage" #filePicker (change)="onFileChosen($event)"/>
+            <label for="file" *ngIf="!selectedImage">Take Picture</label>
         </ion-row>
         <ion-row>
-          <p align="center"><img src="{{myPhoto}}"></p>
+            <ion-img *ngIf="selectedImage" role="button" class="image"  [src]="selectedImage" ></ion-img>
+        </ion-row>
+        <ion-row *ngIf="selectedImage">
+            <ion-button (click)="create()">Enviar</ion-button>
         </ion-row>
       </ion-col>
     </ion-row>

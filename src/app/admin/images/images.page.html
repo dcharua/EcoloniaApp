@@ -13,30 +13,6 @@
 <ion-content>
   <!-- IMAGENES -->
   <ion-row>
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title class="ion-bold">Joan Andoni</ion-card-title>
-        <ion-card-subtitle> 21/07/2019</ion-card-subtitle>
-      </ion-card-header>
-      <img src="http://ecolonia.mx/images/recoleccion.png">
-      <ion-card-content>
-        <ion-row>
-          <p>Reciclaje de dos botellas de agua en la condesa</p>
-        </ion-row>
-        <ion-row style="float: right; text-align: end;">
-          <p id="puntosCard">
-            <ion-icon name="leaf"></ion-icon> +
-          </p>
-          <input id="inputNumber" type="number" name="points" value="20">
-        </ion-row>
-        <ion-row style="float: left; text-align: end;" class="iconsAccept">
-          <ion-icon name="checkmark" style="color: green;"></ion-icon>
-          <ion-icon name="close" style="color: #ed5f67;"></ion-icon>
-        </ion-row>
-      </ion-card-content>
-    </ion-card>
-
-
     <ion-card *ngFor="let photo of photos">
       <ion-card-header>
         <ion-card-title class="ion-bold">{{photo.user_name}}</ion-card-title>

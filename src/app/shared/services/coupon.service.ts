@@ -57,10 +57,8 @@ export class CouponService {
   }
 
   uploadIMG(img: File, title: string){
-    var subject = new Subject<string>();
     const filePath = `/coupons/${ title ? title : 'sin_titulo' }.jpg`;
     const fileRef = this.storage.ref(filePath);
-    const image = 'data:image/jpg;base64,' + img;
     const task = this.storage.upload(filePath, img);
     return {task : task, ref: fileRef};
   }

@@ -4,12 +4,12 @@ export class Photo {
     user_name: string;
     src: string;
     tags: string[];
-    points: string[];
-    location?: {
+    points: number;
+    location: {
       lat: number;
-      lon: number;
+      lng: number;
     };
     auth: boolean;
-    createdOn: boolean;
+    createdOn: string;
   }
   
