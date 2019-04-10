@@ -11,7 +11,7 @@ import { Query } from '@firebase/firestore-types'
 
 export class UserService {
   selectedUser: User = new User();
-  user: AngularFirestoreDocument <User>;
+  user: AngularFirestoreDocument<User>;
   users: AngularFirestoreCollection<User>;
 
   location = {
@@ -19,7 +19,7 @@ export class UserService {
     lon: null
   };
 
-  constructor(private db: AngularFirestore ) {
+  constructor(private db: AngularFirestore) {
     this.getUsers();
   }
 
@@ -28,22 +28,22 @@ export class UserService {
     return this.users;
   }
 
-  addUser(user: User){
-    return this.users.add({...user});
+  addUser(user: User) {
+    return this.users.add({ ...user });
   }
 
-  getUserById(id: string): Observable<User[]>{
+  getUserById(id: string): Observable<User[]> {
     return this.db.collection('users', ref => ref.where('uid', '==', id).limit(1)).snapshotChanges()
-    .pipe( map(users => {
-      return users.map(a => {
-        const data = a.payload.doc.data() as User;
-        const $key = a.payload.doc.id;
-        return { $key, ...data };
-      });
-    })
-  );
-}
-  getUser(key: string){
+      .pipe(map(users => {
+        return users.map(a => {
+          const data = a.payload.doc.data() as User;
+          const $key = a.payload.doc.id;
+          return { $key, ...data };
+        });
+      })
+      );
+  }
+  getUser(key: string) {
     return this.db.collection('users').doc<User>(key).valueChanges().pipe(
       take(1),
       map(user => {
@@ -68,7 +68,7 @@ export class UserService {
     this.location.lon = lon;
   }
 
-  getLoggedUser(){
+  getLoggedUser() {
     const user = JSON.parse(localStorage.getItem('user'));
     return this.getUserById(user.uid);
   }

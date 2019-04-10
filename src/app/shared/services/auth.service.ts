@@ -61,6 +61,7 @@ export class AuthService {
         user.email = res.user.email;
         user.uid = res.user.uid;
         user.admin = false;
+        user.points = 0;
         user.createdOn = moment().format('MMMM Do YYYY');
         this.userService.addUser(user).then((docRef) => {
           user.$key = docRef.id;
@@ -127,13 +128,13 @@ export class AuthService {
           }
         },
         {
-        text: 'Cancelar'
+          text: 'Cancelar'
         }
       ]
     }).then(alertEl => {
       alertEl.present();
     });
-    
+
   }
 
   validateEmail(email) {
