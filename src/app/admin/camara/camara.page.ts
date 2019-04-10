@@ -3,7 +3,7 @@ import { LoadingController, AlertController, ToastController } from '@ionic/angu
 import { PhotoService } from './../../shared/services/photo.service';
 import { Photo } from './../../shared/models/photo';
 import { AuthService } from './../../shared/services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Plugins, Capacitor } from '@capacitor/core';
 import { finalize } from 'rxjs/operators';
 import { Router } from "@angular/router";
@@ -20,14 +20,15 @@ export interface Location {
 })
 
 
-export class CamaraPage implements OnInit {
+export class CamaraPage implements OnInit, OnDestroy {
   photo: Photo = new Photo();
   user: User = new User();
   tag: string;
   tags: string[] = [];
   location: Location;
   selectedImage: string;
-
+  uploaded = false;
+  imgRef: string;
   constructor(
     public authService: AuthService,
     private photoService: PhotoService,
@@ -73,7 +74,6 @@ export class CamaraPage implements OnInit {
 
   onFileChosen(event: Event) {
     this.photo.tags = this.tags;
-    console.log(this.photo.tags);
     let date = new Date();
     this.loadingCtrl.create({ message: 'Cargando Imagen...' }).then(loadingEl => {
       loadingEl.present();
@@ -81,7 +81,8 @@ export class CamaraPage implements OnInit {
       if (!pickedFile) {
         return;
       }
-      const file = this.photoService.uploadIMG(pickedFile, "title" + date.toString());
+      this.imgRef = this.user.name + date.toString();
+      const file = this.photoService.uploadIMG(pickedFile, this.imgRef);
       file.task.snapshotChanges().pipe(
         finalize(() => {
           file.ref.getDownloadURL().subscribe(url => {
@@ -101,8 +102,8 @@ export class CamaraPage implements OnInit {
   create() {
     this.loadingCtrl.create({ message: 'Creando...' }).then(loadingEl => {
       loadingEl.present();
-      console.log(this.photo);
       this.photoService.addPhoto(this.photo).then(() => {
+        this.uploaded = true;
         this.toast.create({
           message: 'Se subio la imagen exitosamente.',
           duration: 2000
@@ -114,7 +115,14 @@ export class CamaraPage implements OnInit {
     });
     this.ngOnInit();
     this.tags = [];
-    this.router.navigate(['/user-profile']);
+    this.router.navigate(['/admin-images']);
+  }
+
+  ngOnDestroy() {
+    if (!this.uploaded && this.imgRef){
+      this.photoService.deletePhoto(this.imgRef);
+    }
+
   }
 
 }

@@ -26,6 +26,7 @@
           <p id="value">{{user?.name}}</p>
         </ion-col>
       </ion-row>
+
       <ion-row>
         <ion-col>
           <p id="label">Correo: </p>
@@ -34,6 +35,7 @@
           <p id="value">{{user?.email}}</p>
         </ion-col>
       </ion-row>
+
       <ion-row>
         <ion-col>
           <p id="label">Usuario desde: </p>
@@ -67,6 +69,12 @@
       <ion-button expand="block" fill="outline" color="danger" (click)="logout()">Cerrar sesión</ion-button>
     </ion-col>
   </ion-row>
+
+  <ion-row>
+      <ion-col>
+          <a href=""> <p id="value" style="text-align: center;">Términos y condiciones: </p></a>
+        </ion-col>
+    </ion-row>
 
 </ion-content>
 

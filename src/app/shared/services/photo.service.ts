@@ -41,7 +41,7 @@ export class PhotoService {
   }
 
   deletePhoto(key: string) {
-    return this.db.doc('photos/' + key).delete();
+    return this.db.doc('/recolections/' + key).delete();
   }
 
   updatePhoto(photo: Photo) {

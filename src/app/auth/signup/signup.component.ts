@@ -40,7 +40,8 @@ export class SignupComponent implements OnInit {
             this.loading.create({message: 'Registrando...'}).then(loadingEl => {
               loadingEl.present();
               this.authService.SignUp(this.user).then(()=>{
-                this.showAlert("Registrado", "USUARIO REGISTRADO CORRECTAMENTE!");
+                loadingEl.dismiss();
+                this.showAlert("Bienvenido", "La cuidamos juntos!");
                 this.user.name = "";
                 this.user.email = "";
                 this.user.password = "";
