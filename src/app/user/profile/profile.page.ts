@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../shared/services/auth.service';
+import { UserService } from '../../shared/services/user.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,12 +15,15 @@ export class ProfilePage implements OnInit {
 
   constructor(
     public authService: AuthService,
-    private router: Router
+    private router: Router,
+    public userService: UserService
   ) { }
 
   ngOnInit() {
     this.authService.getLocalUser().then(data => {
-      this.user = data;
+      this.userService.getUser(data.$key).subscribe(user => {
+        this.user = user;
+      });
     });
   }
 

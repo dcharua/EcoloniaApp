@@ -25,9 +25,9 @@ export class CouponPage implements OnInit {
     this.authService.getLocalUser().then(data => {
       this.userService.getUser(data.$key).subscribe(user => {
         this.user = user;
-        console.log(this.user.points);
       });
     });
+
     this.loadingCtrl.create({ message: '¿Donde estan?' }).then(loadingEl => {
       loadingEl.present();
       this.sub = this.couponService.getCoupons().subscribe(coupons => {
@@ -39,6 +39,8 @@ export class CouponPage implements OnInit {
 
   ngOnInit() {
   }
+
+  // CHECK IF THE USER HAS POINTS TO CONSUME AND THE QUERY OF THE ARRAY TO UPLOAD CORRECTLY THE KEY OF THE COUPON
 
   downloadCoupon(couponKey) {
     this.userService.updateCoupons(this.user.$key, couponKey);
