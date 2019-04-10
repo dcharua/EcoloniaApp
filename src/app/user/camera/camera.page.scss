@@ -56,3 +56,24 @@ input:focus {
   color: white;
   font-size: 18px;
 }
+
+#tag {
+  border: 1.5px solid #a8c328;
+  border-radius: 10px;
+  margin: 5px 2px;
+  padding: 0 10px;
+  color: #a8c328;
+}
+
+#containerTags {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#labelEtiquetas {
+  color: grey;
+  font-weight: 900;
+}

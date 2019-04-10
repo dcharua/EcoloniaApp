@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-row id="logoTop">
-      <img  [routerLink]="['/user-home']" height="50" src="../../../assets/images/logo-small_negro.png" alt="" [routerLink]="['/user-home']">
+      <img [routerLink]="['/user-home']" height="50" src="../../../assets/images/logo-small_negro.png" alt="" [routerLink]="['/user-home']">
       <ion-title>Fotos</ion-title>
     </ion-row>
   </ion-toolbar>
@@ -20,15 +20,36 @@
 
   <ion-row>
     <ion-col id="alignContent">
+      <!-- ADD TAGS -->
       <ion-row>
-        <input type="text" [(ngModel)]="text" placeholder="Titulo de la foto">
+        <input type="text" *ngIf="this.photo.tags.length == 0" (keyup.enter)="addTag()" [(ngModel)]="tag" placeholder="Ingresa etiqueta">
+        <input type="text" *ngIf="this.photo.tags.length > 0" (keyup.enter)="addTag()" [(ngModel)]="tag" placeholder="Ingresa otra etiqueta">
       </ion-row>
+
+      <!-- SHOW TAGS -->
+      <h2 id="labelEtiquetas" *ngIf="this.photo.tags.length > 0">ETIQUETAS</h2>
+      <ion-row id="containerTags" *ngIf="this.photo.tags.length > 0">
+        <div id="tag" *ngFor="let tag of this.photo.tags">
+          <p>{{tag}}</p>
+        </div>
+      </ion-row>
+
+      <!-- UPLOAD IMAGE -->
+      <ion-row *ngIf="this.photo.tags.length > 0">
+        <input type="file" name="file" class="inputfile" accept="image/jpeg" *ngIf="!selectedImage" #filePicker (change)="onFileChosen($event)" />
+        <ion-button for="file" *ngIf="!selectedImage">Take Picture</ion-button>
+      </ion-row>
+
+      <!-- SHOW IMAGE UPLOADED -->
       <ion-row>
-        <a class="boton" (click)="takePhoto()">Tomar foto</a>
+        <ion-img *ngIf="selectedImage" role="button" class="image" [src]="selectedImage"></ion-img>
       </ion-row>
-      <ion-row>
-        <p align="center"><img src="{{myPhoto}}"></p>
+
+      <!-- UPLOAD PHOTO FOR POINTS -->
+      <ion-row *ngIf="selectedImage">
+        <ion-button (click)="create()">Enviar</ion-button>
       </ion-row>
+
     </ion-col>
   </ion-row>
 </ion-content>

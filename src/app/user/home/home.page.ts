@@ -21,7 +21,7 @@ export class HomePage implements OnInit {
       photos.forEach((photo, index) => {
         let compare = new Date(photo.createdOn);
         if (compare.setHours(0, 0, 0, 0) === today.setHours(0, 0, 0, 0)) {
-          console.log("Uploaded today");
+          // console.log("Uploaded today");
         } else {
           photos.slice(index, 1);
         }
