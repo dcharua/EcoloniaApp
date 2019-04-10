@@ -26,7 +26,6 @@ export class ImagenesComponent implements OnInit {
         }
       });
       this.photos = photos;
-      console.log(this.photos);
     });
 
   }

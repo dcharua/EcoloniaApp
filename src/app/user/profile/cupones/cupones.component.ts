@@ -12,6 +12,7 @@ import { Coupon } from './../../../shared/models/coupon';
 export class CuponesComponent implements OnInit {
   userId: any;
   coupons: Coupon[] = [];
+  couponsUser: string[] = [];
 
   constructor(
     public couponService: CouponService,
@@ -22,7 +23,6 @@ export class CuponesComponent implements OnInit {
         this.userId = data.uid;
       });
       this.coupons = coupons;
-      console.log(this.coupons);
     });
   }
 
