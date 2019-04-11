@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../shared/services/auth.service';
 import { UserService } from '../../shared/services/user.service';
 import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +17,8 @@ export class ProfilePage implements OnInit {
   constructor(
     public authService: AuthService,
     private router: Router,
-    public userService: UserService
+    public userService: UserService,
+    public modal: ModalController
   ) { }
 
   ngOnInit() {

@@ -19,7 +19,8 @@ const routes: Routes = [
   { path: 'user-camera', loadChildren: './user/camera/camera.module#CameraPageModule' },
   { path: 'add-coupon', loadChildren: './admin/add-coupon/add-coupon.module#AddCouponPageModule' },
   { path: 'add-coupon/:couponId', loadChildren: './admin/add-coupon/add-coupon.module#AddCouponPageModule' },
-  { path: 'admin-camara', loadChildren: './admin/camara/camara.module#CamaraPageModule' }
+  { path: 'admin-camara', loadChildren: './admin/camara/camara.module#CamaraPageModule' },
+  { path: 'modal-terms', loadChildren: './user/modal-terms/modal-terms.module#ModalTermsPageModule' }
 ];
 
 @NgModule({

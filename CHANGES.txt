@@ -1,0 +1,23 @@
+1.- Al compilar el app no sirve tomar foto, solo te deja escoger archivos no abre la camara, se tiene que programar con el plug in de capacitor camara como ya lo habiamos intentando
+
+AUN NO
+
+2.- En admin-images | Editar | Borrar | Agregar | los tags de las fotos subidas
+
+AUN NO
+
+3.- al subir fotos, poder quitar tags, dar recomendación de los Tags mas usados y llevar contador de veces usado
+
+AUN NO
+
+4.- En admin images, boton hasta arriba (como agregar cupon) para cambiar entre Ver Fotos Autorizadas y No autorizadas
+
+LISTO
+
+5.- No  se le estan agregando los puntos otrogados de la revision a los usuarios, solo se agrega en base de datos a la foto
+
+LISTO
+
+6.- Modal de terminos y condiciones al picarle en user profile, nos pasaran el texto
+
+LISTO
