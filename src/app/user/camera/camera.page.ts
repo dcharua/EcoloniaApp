@@ -72,7 +72,8 @@ export class CameraPage implements OnInit {
 
       const image = `data:image/jpeg;base64,${result}`;
 
-      const photos = storage().ref('photos');
+      let date = new Date();
+      const photos = storage().ref('recolections/image' + date.toString());
       photos.putString(image, 'data_url');
 
       // file.task.snapshotChanges().pipe(
