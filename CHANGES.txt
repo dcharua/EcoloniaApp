@@ -1,6 +1,6 @@
 1.- Al compilar el app no sirve tomar foto, solo te deja escoger archivos no abre la camara, se tiene que programar con el plug in de capacitor camara como ya lo habiamos intentando
 
-AUN NO
+TRABAJANDO
 
 2.- En admin-images | Editar | Borrar | Agregar | los tags de las fotos subidas
 
@@ -8,7 +8,7 @@ AUN NO
 
 3.- En | user-camera | admin-camara | Poder quitar tags
 
-AUN NO
+LISTO
 
 4.- En | user-camera | admin-camara | Recomendación de los Tags mas usados ( Llevar contador de veces usado )
 
@@ -26,6 +26,10 @@ LISTO
 
 LISTO
 
-8. Checar el update de consumir cupones
+8.- Checar el update de consumir cupones
+
+LISTO
+
+9.- Crear la visualizacion del popup para informar que no tiene puntos para el cupon deseado o preguntar si quiere el cupon
 
 AUN NO

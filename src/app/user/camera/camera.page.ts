@@ -8,6 +8,11 @@ import { Plugins, Capacitor } from '@capacitor/core';
 import { finalize } from 'rxjs/operators';
 import { Router } from "@angular/router";
 
+// CAMERA
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { storage } from 'firebase';
+
+
 export interface Location {
   lat: number;
   lng: number;
@@ -31,7 +36,8 @@ export class CameraPage implements OnInit {
     private photoService: PhotoService,
     public router: Router,
     private loadingCtrl: LoadingController,
-    private toast: ToastController
+    private toast: ToastController,
+    private camera: Camera
   ) { }
 
   ngOnInit() {
@@ -51,6 +57,40 @@ export class CameraPage implements OnInit {
     this.tag = '';
   }
 
+  async takePhoto() {
+    try {
+      const options: CameraOptions = {
+        quality: 50,
+        targetHeight: 600,
+        targetWidth: 600,
+        destinationType: this.camera.DestinationType.FILE_URI,
+        encodingType: this.camera.EncodingType.JPEG,
+        mediaType: this.camera.MediaType.PICTURE
+      }
+
+      const result = await this.camera.getPicture(options);
+
+      const image = `data:image/jpeg;base64,${result}`;
+
+      const photos = storage().ref('photos');
+      photos.putString(image, 'data_url');
+
+      // file.task.snapshotChanges().pipe(
+      //   finalize(() => {
+      //     file.ref.getDownloadURL().subscribe(url => {
+      //       this.photo.src = url;
+      //       loadingEl.dismiss();
+      //     });
+      //   })).subscribe();
+
+    } catch (e) {
+      console.log(e);
+    }
+
+  }
+
+
+
   private locateUser() {
     if (!Capacitor.isPluginAvailable('Geolocation')) {
       return;
@@ -66,6 +106,11 @@ export class CameraPage implements OnInit {
         console.log(err);
       });
   }
+
+  deleteTag(index: number) {
+    this.tags.splice(index, 1);
+  }
+
 
   onFileChosen(event: Event) {
     this.photo.tags = this.tags;
