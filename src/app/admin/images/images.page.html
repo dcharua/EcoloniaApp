@@ -51,8 +51,8 @@
     </ion-card>
   </ion-row>
 
-  <!-- IMAGENES TO CHECK -->
-  <ion-row *ngIf="photosCheck.length > 0 && images === 2">
+  <!-- IMAGENES CHECKED -->
+  <ion-row *ngIf="photosChecked.length > 0 && images === 2">
     <ion-card *ngFor="let photo of photosChecked; let i = index">
       <ion-card-header>
         <ion-card-title class="ion-bold">{{photo.user_name}}</ion-card-title>
@@ -85,7 +85,7 @@
   </ion-row>
 
   <!-- NO HAY IMAGENES -->
-  <ion-row id="noPhotos" *ngIf="photosCheck.length === 0 && images === 2">
+  <ion-row id="noPhotos" *ngIf="photosChecked.length === 0 && images === 2">
     <h1>No hay fotos para checar</h1>
   </ion-row>
 
