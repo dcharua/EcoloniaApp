@@ -30,6 +30,7 @@ export class PhotoService {
 
   getPhotos(): Observable<Photo[]> {
     return this.db.collection('photos').snapshotChanges().pipe(
+      take(1),
       map(actions => {
         return actions.map(a => {
           const data = a.payload.doc.data() as Photo;

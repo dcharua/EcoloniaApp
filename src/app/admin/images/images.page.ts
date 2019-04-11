@@ -3,6 +3,7 @@ import { PhotoService } from './../../shared/services/photo.service';
 import { UserService } from './../../shared/services/user.service';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { Photo } from './../../shared/models/photo';
+import { User } from './../../shared/models/user';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
@@ -14,8 +15,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 export class ImagesPage implements OnInit, OnDestroy {
   photos: Photo[] = [];
   photosCheck: Photo[] = [];
+  userUpdate: User;
   user: any;
   sub: any;
+  sub2: any;
 
   constructor(
     private loadingCtrl: LoadingController,
@@ -30,10 +33,8 @@ export class ImagesPage implements OnInit, OnDestroy {
           if (photo.points === 0) {
             this.photosCheck.push(photo);
           } else {
-            // console.log("La foto ya tiene puntos");
           }
         });
-        // console.log(this.photosCheck);
         loadingEl.dismiss();
       });
     });
@@ -41,10 +42,6 @@ export class ImagesPage implements OnInit, OnDestroy {
     this.authService.getLocalUser().then(data => {
       this.user = data;
     });
-  }
-
-  getUserToUpdate() {
-
   }
 
   ngOnInit() {
@@ -55,11 +52,18 @@ export class ImagesPage implements OnInit, OnDestroy {
   }
 
   updatePoints(photoUpdate, index) {
-    console.log(photoUpdate.user_id);
-    this.user.points += photoUpdate.points;
+    this.sub2 = this.userService.getUser(photoUpdate.user_id).subscribe((user) => {
+      if (user) {
+        this.userUpdate = user;
+        this.userUpdate.points += photoUpdate.points;
+        this.userService.updateUserPoints(this.userUpdate.$key, this.userUpdate.points);
+      } else {
+        console.log('we didnt found the user');
+      }
+    });
     this.photoService.updatePhoto(photoUpdate);
-    this.userService.updateUserPoints(this.user.$key, this.user.points);
     this.photosCheck.splice(index, 1);
+    this.sub2.unsubscribe();
   }
 
   deletePhoto(photo: Photo) {
