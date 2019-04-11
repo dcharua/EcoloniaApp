@@ -13,12 +13,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 
 export class ImagesPage implements OnInit, OnDestroy {
-  photos: Photo[] = [];
+  photosChecked: Photo[] = [];
   photosCheck: Photo[] = [];
   userUpdate: User;
   user: any;
   sub: any;
   sub2: any;
+  images: number = 1;
 
   constructor(
     private loadingCtrl: LoadingController,
@@ -33,6 +34,7 @@ export class ImagesPage implements OnInit, OnDestroy {
           if (photo.points === 0) {
             this.photosCheck.push(photo);
           } else {
+            this.photosChecked.push(photo);
           }
         });
         loadingEl.dismiss();
@@ -45,6 +47,10 @@ export class ImagesPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+  }
+
+  viewImages(number) {
+    this.images = number;
   }
 
   ngOnDestroy() {
@@ -62,6 +68,7 @@ export class ImagesPage implements OnInit, OnDestroy {
       }
     });
     this.photoService.updatePhoto(photoUpdate);
+    this.photosChecked.push(this.photosCheck[index]);
     this.photosCheck.splice(index, 1);
     this.sub2.unsubscribe();
   }

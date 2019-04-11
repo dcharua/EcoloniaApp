@@ -11,8 +11,20 @@
 </ion-header>
 
 <ion-content>
-  <!-- IMAGENES -->
-  <ion-row *ngIf="photosCheck.length > 0">
+  <ion-row>
+    <ion-col size=12>
+      <ion-button expand="block" fill="outline" color="primary" (click)="viewImages(1)">Imagenes para checar</ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size=12>
+      <ion-button expand="block" fill="outline" color="primary" (click)="viewImages(2)">Imagenes chequeadas</ion-button>
+    </ion-col>
+  </ion-row>
+
+  <!-- IMAGENES TO CHECK -->
+  <ion-row *ngIf="photosCheck.length > 0 && images === 1">
     <ion-card *ngFor="let photo of photosCheck; let i = index">
       <ion-card-header>
         <ion-card-title class="ion-bold">{{photo.user_name}}</ion-card-title>
@@ -39,8 +51,41 @@
     </ion-card>
   </ion-row>
 
+  <!-- IMAGENES TO CHECK -->
+  <ion-row *ngIf="photosCheck.length > 0 && images === 2">
+    <ion-card *ngFor="let photo of photosChecked; let i = index">
+      <ion-card-header>
+        <ion-card-title class="ion-bold">{{photo.user_name}}</ion-card-title>
+        <ion-card-subtitle> {{photo.createdOn}}</ion-card-subtitle>
+      </ion-card-header>
+      <img [src]="photo.src">
+      <ion-card-content>
+        <ion-row>
+          <ul>
+            <li *ngFor="let tag of photo.tags">{{tag}}</li>
+          </ul>
+        </ion-row>
+        <ion-row style="float: right; text-align: end;">
+          <p id="puntosCard">
+            <ion-icon name="leaf"></ion-icon> +
+          </p>
+          <input id="inputNumber" type="number" name="points" [(ngModel)]="photo.points">
+        </ion-row>
+        <ion-row style="float: left; text-align: end;" class="iconsAccept">
+          <ion-icon type="" name="checkmark" style="color: green;" (click)="updatePoints(photo, i)"></ion-icon>
+          <ion-icon name="close" style="color: #ed5f67;" (click)="deletePhoto(photo)"></ion-icon>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-row>
+
   <!-- NO HAY IMAGENES -->
-  <ion-row id="noPhotos" *ngIf="photosCheck.length === 0">
+  <ion-row id="noPhotos" *ngIf="photosCheck.length === 0 && images === 1">
+    <h1>No hay fotos para checar</h1>
+  </ion-row>
+
+  <!-- NO HAY IMAGENES -->
+  <ion-row id="noPhotos" *ngIf="photosCheck.length === 0 && images === 2">
     <h1>No hay fotos para checar</h1>
   </ion-row>
 
