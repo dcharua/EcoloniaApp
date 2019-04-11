@@ -3,7 +3,6 @@ import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection 
 import { User } from "../models/user"
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { Query } from '@firebase/firestore-types'
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +18,9 @@ export class UserService {
     lon: null
   };
 
-  constructor(private db: AngularFirestore) {
+  constructor(
+    private db: AngularFirestore
+  ) {
     this.getUsers();
   }
 
@@ -68,17 +69,6 @@ export class UserService {
     var userRef = this.db.collection('users').doc(userKey);
     var updatePoints = userRef.update({ points: pointsUpdate });
     return updatePoints;
-  }
-
-  localCoupons: string[] = [];
-  updateCoupons(userKey, couponKey) {
-    this.getUser(userKey).subscribe(user => {
-      this.localCoupons = user.coupons;
-      this.localCoupons.push(couponKey);
-    });
-    var userRef = this.db.collection('users').doc(userKey).update({
-      coupons: this.localCoupons
-    });
   }
 
   setLocation(lat, lon) {

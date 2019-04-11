@@ -82,12 +82,17 @@ export class AuthService {
           message: error.message,
           buttons: ['Okay']
         }).then(alertEl => alertEl.present());
-        
-    });
+
+      });
   }
 
   SetLocal(user: User) {
     console.log(user);
+    Plugins.Storage.set({ key: 'user', value: JSON.stringify(user) });
+  }
+
+  SetLocalEdit(user: User) {
+    Plugins.Storage.remove({ key: 'user' });
     Plugins.Storage.set({ key: 'user', value: JSON.stringify(user) });
   }
 

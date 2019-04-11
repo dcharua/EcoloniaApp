@@ -6,18 +6,26 @@ AUN NO
 
 AUN NO
 
-3.- al subir fotos, poder quitar tags, dar recomendación de los Tags mas usados y llevar contador de veces usado
+3.- En | user-camera | admin-camara | Poder quitar tags
 
 AUN NO
 
-4.- En admin images, boton hasta arriba (como agregar cupon) para cambiar entre Ver Fotos Autorizadas y No autorizadas
+4.- En | user-camera | admin-camara | Recomendación de los Tags mas usados ( Llevar contador de veces usado )
+
+AUN NO
+
+5.- En admin images, boton hasta arriba (como agregar cupon) para cambiar entre Ver Fotos Autorizadas y No autorizadas
 
 LISTO
 
-5.- No  se le estan agregando los puntos otrogados de la revision a los usuarios, solo se agrega en base de datos a la foto
+6.- No  se le estan agregando los puntos otorgados de la revision a los usuarios, solo se agrega en base de datos a la foto
 
 LISTO
 
-6.- Modal de terminos y condiciones al picarle en user profile, nos pasaran el texto
+7.- Modal de terminos y condiciones al picarle en user profile, nos pasaran el texto
 
 LISTO
+
+8. Checar el update de consumir cupones
+
+AUN NO

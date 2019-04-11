@@ -10,10 +10,11 @@ import { CouponService } from '../../shared/services/coupon.service';
   templateUrl: './coupon.page.html',
   styleUrls: ['./coupon.page.scss'],
 })
-export class CouponPage implements OnInit {
+export class CouponPage implements OnInit, OnDestroy {
   user: any;
   coupons: Coupon[] = [];
   sub: any;
+  subProfile: any;
 
   constructor(
     private loadingCtrl: LoadingController,
@@ -22,12 +23,6 @@ export class CouponPage implements OnInit {
     private userService: UserService,
     public authService: AuthService
   ) {
-    this.authService.getLocalUser().then(data => {
-      this.userService.getUser(data.$key).subscribe(user => {
-        this.user = user;
-      });
-    });
-
     this.loadingCtrl.create({ message: '¿Donde estan?' }).then(loadingEl => {
       loadingEl.present();
       this.sub = this.couponService.getCoupons().subscribe(coupons => {
@@ -38,15 +33,27 @@ export class CouponPage implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.getLocalUser().then(data => {
+      this.subProfile = this.userService.getUser(data.$key).subscribe(user => {
+        this.user = user;
+      });
+    });
   }
 
-  // CHECK IF THE USER HAS POINTS TO CONSUME AND THE QUERY OF THE ARRAY TO UPLOAD CORRECTLY THE KEY OF THE COUPON
-
-  downloadCoupon(couponKey) {
-    this.userService.updateCoupons(this.user.$key, couponKey);
+  downloadCoupon(coupon) {
+    if (this.user.points < coupon.cost) {
+      console.log("No tienes los puntos necesarios");
+    } else {
+      this.user.coupons.push(coupon.$key);
+      this.user.points -= coupon.cost;
+      this.authService.SetLocalEdit(this.user);
+      this.userService.updateUser(this.user);
+    }
+    this.ngOnInit();
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+    this.subProfile.unsubscribe();
   }
 }
