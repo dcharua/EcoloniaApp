@@ -66,17 +66,24 @@ export class AuthService {
         user.createdOn = moment().format('MMMM Do YYYY');
         this.userService.addUser(user).then((docRef) => {
           user.$key = docRef.id;
-          console.log("Document successfully written!");
           this.SetLocal(user);
           this.getLoggedInUser();
           this.router.navigate(['/user-home']);
-        })
-          .catch(function(error) {
-            console.error("Error writing document: ", error);
-          });;
+        }).catch(function(error) {
+          this.alertCtrl.create({
+            header: 'Error',
+            message: error.message,
+            buttons: ['Okay']
+          }).then(alertEl => alertEl.present());
+        });
       }).catch((error) => {
-        window.alert(error.message)
-      })
+        this.alertCtrl.create({
+          header: 'Error',
+          message: error.message,
+          buttons: ['Okay']
+        }).then(alertEl => alertEl.present());
+        
+    });
   }
 
   SetLocal(user: User) {

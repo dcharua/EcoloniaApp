@@ -30,32 +30,25 @@ export class SignupComponent implements OnInit {
     if (this.user.name, this.user.email, this.mailConfirmation, this.user.password, this.passwordConfirmation) {
       if (this.user.email != this.mailConfirmation) {
         this.showAlert("Error", "Los correos no coiciden");
-      } else {
-        if (!this.authService.validateEmail(this.user.email)) {
-          this.showAlert("Error", "Ingresa un mail valido");
-        } else {
-          if (this.user.password != this.passwordConfirmation) {
-            this.showAlert("Error", "Las contraseñas no coinciden");
-          } else {
-            this.loading.create({message: 'Registrando...'}).then(loadingEl => {
-              loadingEl.present();
-              this.authService.SignUp(this.user).then(()=>{
-                loadingEl.dismiss();
-                this.showAlert("Bienvenido", "La cuidamos juntos!");
-                this.user.name = "";
-                this.user.email = "";
-                this.user.password = "";
-                this.mailConfirmation = "";
-                this.passwordConfirmation = "";
-              });
-            });
-          }
-        }
+        return;
       }
+      if (!this.authService.validateEmail(this.user.email)) {
+        this.showAlert("Error", "Ingresa un mail valido");
+        return;
+      }
+      if (this.user.password != this.passwordConfirmation) {
+        this.showAlert("Error", "Las contraseñas no coinciden");
+        return;
+      }
+      this.loading.create({message: 'Registrando...'}).then(loadingEl => {
+        loadingEl.present();
+        this.authService.SignUp(this.user).then(() => {loadingEl.dismiss()})
+      });
     } else {
       this.showAlert("Error", "Llene todos los campos requeridos");
     }
   }
+
 
   private showAlert(title: string, message: string) {
     this.alertCtrl
