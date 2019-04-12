@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { CamaraPage } from './camara.page';
+import { FilterPipeModule } from 'ngx-filter-pipe';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    FilterPipeModule,
     RouterModule.forChild(routes)
   ],
   declarations: [CamaraPage]

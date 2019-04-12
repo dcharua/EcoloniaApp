@@ -15,9 +15,7 @@ export class TagService {
 
   constructor(
     private db: AngularFirestore
-  ) {
-    this.getTags();
-  }
+  ) {}
 
   getTags(): Observable<Tag[]> {
     return this.db.collection('tags').snapshotChanges().pipe(
@@ -33,7 +31,7 @@ export class TagService {
   }
 
   addTag(tag: Tag) {
-    return this.tags.add({ ...tag });
+    return this.db.collection('tags').add({ ...tag });
   }
 
   getTagByText(text: string): Observable<Tag[]> {
@@ -45,12 +43,9 @@ export class TagService {
           return { $key, ...data };
         });
       })
-      );
+    );
   }
 
-  getExistingTag(text: string) {
-    return this.getTagByText(text);
-  }
 
   getTagByKey(key: string) {
     return this.db.collection('tags').doc<Tag>(key).valueChanges().pipe(
@@ -73,9 +68,8 @@ export class TagService {
   }
 
   updateTagCounter(tagKey, countUpdate) {
-    var tagRef = this.db.collection('tags').doc(tagKey);
-    var updateCounter = tagRef.update({ count: countUpdate });
-    return updateCounter;
+    return this.db.collection('tags').doc(tagKey).update({ count: countUpdate });;
+
   }
 
 }

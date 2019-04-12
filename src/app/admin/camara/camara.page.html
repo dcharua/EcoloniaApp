@@ -22,7 +22,33 @@
 
   <ion-row>
     <ion-col id="alignContent">
-      
+
+      <!-- SHOW IMAGE UPLOADED -->
+      <ion-row>
+          <ion-img *ngIf="selectedImage" role="button" class="image" [src]="selectedImage"></ion-img>
+        </ion-row>
+
+        <!-- SHOW MOST USED TAGS -->
+        <h5 id="labelEtiquetas" *ngIf="tagsObjects.length > 0">10 ETIQUETAS MÁS USADAS</h5>
+        <ion-row id="containerTags" *ngIf="tagsObjects.length > 0">
+          <div id="tag" *ngFor="let t of tagsObjects| filterBy: tag | slice:0:10 ; let i = index ">
+            <span (click)="addTag(t.text)"> <ion-icon name="add"></ion-icon> {{t.text}}</span>
+          </div>
+        </ion-row>
+        
+        <!-- ADD TAGS -->
+        <ion-row>
+          <input type="text" (keyup.enter)="addTag()" [(ngModel)]="tag.text" [placeholder]=" tags.length === 0 ? 'Ingresa una etiqueta' : 'Ingresa otra etiqueta'">
+        </ion-row>
+
+          <!-- SHOW ADDED TAGS -->
+        <h5 id="labelEtiquetas" *ngIf="tags.length > 0">ETIQUETAS</h5>
+        <ion-row id="containerTags" *ngIf="tags.length > 0">
+          <div id="tag" *ngFor="let tag of tags; let i = index">
+            <span (click)="deleteTag(i)"> <ion-icon name="close"></ion-icon> {{tag}}</span>
+          </div>
+        </ion-row>
+
       <!-- UPLOAD IMAGE -->
       <ion-row *ngIf="!selectedImage">
         <ion-col size=12>
@@ -43,25 +69,6 @@
         </ion-col>
       </ion-row>
       
-      <!-- SHOW IMAGE UPLOADED -->
-      <ion-row>
-        <ion-img *ngIf="selectedImage" role="button" class="image" [src]="selectedImage"></ion-img>
-      </ion-row>
-      
-      <!-- ADD TAGS -->
-      <ion-row>
-        <input type="text" (keyup.enter)="addTag()" [(ngModel)]="tag" [placeholder]=" tags.length === 0 ? 'Ingresa una etiqueta' : 'Ingresa otra etiqueta'">
-      </ion-row>
-      
-      <!-- SHOW TAGS -->
-      <h2 id="labelEtiquetas" *ngIf="tags.length > 0">ETIQUETAS</h2>
-      <ion-row id="containerTags" *ngIf="tags.length > 0">
-        <div id="tag" *ngFor="let tag of tags">
-          <p>{{tag}}</p>
-        </div>
-      </ion-row>
-
-
       <!-- UPLOAD PHOTO FOR POINTS -->
       <ion-row *ngIf="selectedImage && tags.length > 0">
         <ion-col size=12>

@@ -1,24 +1,14 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Plugins, Capacitor } from '@capacitor/core';
-import { finalize } from 'rxjs/operators';
-import { take } from 'rxjs/operators';
-import { Router } from "@angular/router";
-import { LoadingController, AlertController, ToastController } from '@ionic/angular';
-
-// MODELS
 import { User } from './../../shared/models/user';
-import { Photo } from './../../shared/models/photo';
-import { Tag } from './../../shared/models/tag';
-
-// Services
-import { AuthService } from './../../shared/services/auth.service';
+import { LoadingController, AlertController, ToastController, Platform } from '@ionic/angular';
 import { PhotoService } from './../../shared/services/photo.service';
-import { TagService } from './../../shared/services/tag.service'
-
-// CAMERA
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { storage } from 'firebase';
-
+import { Photo } from './../../shared/models/photo';
+import { AuthService } from './../../shared/services/auth.service';
+import { Component, OnInit, OnDestroy,  ViewChild, ElementRef} from '@angular/core';
+import { finalize, take } from 'rxjs/operators';
+import { Router } from "@angular/router";
+import { Plugins, Capacitor, CameraSource, CameraResultType} from '@capacitor/core';
+import { Tag } from 'src/app/shared/models/tag';
+import { TagService } from 'src/app/shared/services/tag.service';
 
 export interface Location {
   lat: number;
@@ -30,34 +20,45 @@ export interface Location {
   templateUrl: './camera.page.html',
   styleUrls: ['./camera.page.scss'],
 })
+
+
 export class CameraPage implements OnInit, OnDestroy {
+  @ViewChild('filePicker') filePickerRef: ElementRef<HTMLInputElement>;
   photo: Photo = new Photo();
   user: User = new User();
-  tagObject: Tag = new Tag();
 
-  tag: string;
+  tag: Tag = new Tag();
   tags: string[] = [];
   tagsObjects: Tag[] = [];
 
-  sub: any;
+
   location: Location;
   selectedImage: string;
-
+  usePicker = false;
+  uploaded = false;
+  imgRef: string;
   constructor(
     public authService: AuthService,
     private photoService: PhotoService,
-    private tagService: TagService,
+    public router: Router,
     private loadingCtrl: LoadingController,
     private toast: ToastController,
-    public router: Router
+    private platform: Platform,
+    private tagService: TagService
   ) { }
 
   ngOnInit() {
+    if ((this.platform.is('mobile') && !this.platform.is('hybrid')) ||this.platform.is('desktop')) {
+      this.usePicker = true;
+    }
+
     this.tagService.getTags().subscribe((tags) => {
       this.tagsObjects = tags;
-      console.log(this.tagsObjects);
+      this.tagsObjects.sort((a,b) => {
+        return a.count - b.count;
+      });
+      this.tagsObjects.reverse();
     });
-
 
     this.authService.getLoggedInUser().then((user) => {
       this.user = user;
@@ -70,36 +71,89 @@ export class CameraPage implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
+
+  //TAG FUNCTIONS
+  addTag(tag: string) {
+    tag ?  this.tags.push(tag) :  this.tags.push(this.tag.text);
+    this.tag.text = '';
   }
 
-  addTag(tagParam: string) {
-    this.tagObject.text = this.tag;
-    if (tagParam != '') {
-      this.tagObject.text = tagParam;
-    }
-    this.tags.push(this.tagObject.text);
 
-    this.sub = this.tagService.getExistingTag(this.tagObject.text).pipe(take(1)).subscribe((tags) => {
-      if (tags.length === 0) {
-        this.tagObject.count = 1;
-        this.tagService.addTag(this.tagObject);
-      } else {
-        tags.forEach((tag) => {
-          tag.count += 1;
-          this.tagService.updateTag(tag);
-        })
-      }
+  deleteTag(index: number) {
+    this.tags.splice(index, 1);
+  }
+
+  uploadTags() {
+    this.tags.forEach((tag) =>{
+      this.tagService.getTagByText(tag).pipe(take(1)).subscribe((tags) => {
+        if (tags[0]) {
+          tags[0].count += 1;
+          this.tagService.updateTag(tags[0]);
+        } else {
+          let tagObject = new Tag();
+          tagObject.count = 1;
+          tagObject.text = tag;
+          this.tagService.addTag(tagObject);
+        }
+      });
     });
-
-    this.tag = '';
   }
 
-  takePhoto() {
-    console.log("Take photo");
+  //UPLOAD PHOTO FUNCTIONS
+  onPickImage() {
+    if (!Capacitor.isPluginAvailable('Camera')) {
+      this.filePickerRef.nativeElement.click();
+      return;
+    }
+    Plugins.Camera.getPhoto({
+      quality: 80,
+      source: CameraSource.Prompt,
+      correctOrientation: true,
+      width: 600,
+      resultType: CameraResultType.Base64
+    })
+      .then(image => {
+        this.uploadImg(image.base64Data);
+      })
+      .catch(error => {
+        console.log(error);
+        if (this.usePicker) {
+          this.filePickerRef.nativeElement.click();
+        }
+        return false;
+      });
   }
 
+  onFileChosen(event: Event) {
+    const pickedFile = (event.target as HTMLInputElement).files[0];
+    if (!pickedFile) {
+      return;
+    }
+    const fr = new FileReader();
+    fr.onload = () => {
+      const dataUrl = fr.result.toString();
+      this.uploadImg(dataUrl);
+    };
+    fr.readAsDataURL(pickedFile);
+  }
+
+  uploadImg(img: string){
+    this.selectedImage = img;
+    this.loadingCtrl.create({ message: 'Cargando Imagen...' }).then(loadingEl => {
+      loadingEl.present();
+      this.imgRef = this.photo.user_name + new Date().toString()
+      const file = this.photoService.uploadIMG(img, this.imgRef);
+      file.task.snapshotChanges().pipe(
+        finalize(() => {
+          file.ref.getDownloadURL().subscribe(url => {
+            this.photo.src = url;
+            loadingEl.dismiss();
+          });
+        })).subscribe();
+      });
+  }
+
+  // CREATE FUNCTIONS
   private locateUser() {
     if (!Capacitor.isPluginAvailable('Geolocation')) {
       return;
@@ -116,66 +170,31 @@ export class CameraPage implements OnInit, OnDestroy {
       });
   }
 
-  deleteTag(tagText: string, index: number) {
-    this.tags.splice(index, 1);
-
-    this.sub = this.tagService.getExistingTag(tagText).pipe(take(1)).subscribe((tags) => {
-      if (tags.length === 0) {
-        console.log("There is no tag with that text");
-      } else {
-        tags.forEach((tag) => {
-          tag.count -= 1;
-          this.tagService.updateTag(tag);
-        })
-      }
-    });
-
-  }
-
-  onFileChosen(event: Event) {
-    this.photo.tags = this.tags;
-    console.log(this.photo.tags);
-    let date = new Date();
-    this.loadingCtrl.create({ message: 'Cargando Imagen...' }).then(loadingEl => {
-      loadingEl.present();
-      const pickedFile = (event.target as HTMLInputElement).files[0];
-      if (!pickedFile) {
-        return;
-      }
-      const file = this.photoService.uploadIMG('this', "title" + date.toString());
-      file.task.snapshotChanges().pipe(
-        finalize(() => {
-          file.ref.getDownloadURL().subscribe(url => {
-            this.photo.src = url;
-            loadingEl.dismiss();
-          });
-        })).subscribe();
-      const fr = new FileReader();
-      fr.onload = () => {
-        const dataUrl = fr.result.toString();
-        this.selectedImage = dataUrl;
-      }
-      fr.readAsDataURL(pickedFile);
-    });
-  }
-
   create() {
+    this.photo.tags = this.tags;
     this.loadingCtrl.create({ message: 'Creando...' }).then(loadingEl => {
       loadingEl.present();
-      console.log(this.photo);
       this.photoService.addPhoto(this.photo).then(() => {
+        this.uploaded = true;
         this.toast.create({
           message: 'Se subio la imagen exitosamente.',
           duration: 2000
         }).then((toast) => {
           toast.present();
+          this.uploadTags();
+          this.tags = [];
+          window.setTimeout(() => { this.router.navigate(['/admin-images']); }, 1000);
+        
         });
         loadingEl.dismiss();
       });
     });
-    this.ngOnInit();
-    this.tags = [];
-    this.router.navigate(['/user-profile']);
+  }
+
+  ngOnDestroy() {
+    if (!this.uploaded && this.imgRef){
+      this.photoService.deletePhoto(this.imgRef);
+    }
   }
 
 }

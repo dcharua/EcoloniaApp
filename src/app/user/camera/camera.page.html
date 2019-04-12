@@ -1,18 +1,21 @@
 <ion-header>
   <ion-toolbar>
     <ion-row id="logoTop">
-      <img [routerLink]="['/user-home']" height="50" src="../../../assets/images/logo-small_negro.png" alt="" [routerLink]="['/user-home']">
+      <img [routerLink]="['/admin-home']" height="50" src="../../../assets/images/logo-small_negro.png" alt=""
+        [routerLink]="['/user-home']">
       <ion-title>Fotos</ion-title>
+      <ion-button color="danger" (click)="authService.SignOut()">
+        <ion-icon name="log-out" slot="icon-only"></ion-icon>
+      </ion-button>
     </ion-row>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
   <ion-row>
     <ion-col id="instrucciones">
-      <p>¡Sube la foto de la basura que recogiste!</p>
-      <p>Describe el residuo con ayuda de las etiquetas.</p>
+      <h5 class="ion-text-center"> <b>¡Sube la foto de la basura que recogiste!</b> </h5>
+      <h5 class="ion-text-center"> <b>Describe el residuo con ayuda de las etiquetas.</b> </h5>
       <p>Recibe tus Puntos</p>
       <p>(Recuerda que entre mejor describas tu foto más puntos ganas)</p>
     </ion-col>
@@ -21,50 +24,61 @@
   <ion-row>
     <ion-col id="alignContent">
 
-      <!-- SHOW TAGS -->
-      <h2 id="labelEtiquetas" *ngIf="this.tagsObjects.length > 0">10 ETIQUETAS MÁS USADAS</h2>
-      <ion-row id="containerTags" *ngIf="this.tagsObjects.length > 0">
-        <div id="tag" *ngFor="let tag of this.tagsObjects; let i = index">
-          <p (click)="addTag(tag.text)">{{tag.text}}</p>
-        </div>
-      </ion-row>
-
-      <!-- ADD TAGS -->
-      <ion-row>
-        <input type="text" *ngIf="this.tags.length == 0" (keyup.enter)="addTag()" [(ngModel)]="tag" placeholder="Ingresa etiqueta">
-        <input type="text" *ngIf="this.tags.length > 0" (keyup.enter)="addTag()" [(ngModel)]="tag" placeholder="Ingresa otra etiqueta">
-      </ion-row>
-
-      <!-- SHOW TAGS -->
-      <h2 id="labelEtiquetas" *ngIf="this.tags.length > 0">ETIQUETAS</h2>
-      <ion-row id="containerTags" *ngIf="this.tags.length > 0">
-        <div id="tag" *ngFor="let tag of this.tags; let i = index">
-          <p (click)="deleteTag(tag, i)">{{tag}}</p>
-        </div>
-      </ion-row>
-
-      <!-- UPLOAD IMAGE -->
-      <ion-row *ngIf="this.tags.length > 0">
-        <ion-col size=12>
-          <!-- <ion-row>
-            <input type="file" name="file" class="inputfile" accept="image/jpeg" *ngIf="!selectedImage" #filePicker (change)="onFileChosen($event)" />
-          </ion-row> -->
-          <!-- <ion-row>
-            <ion-button expand="block" fill="outline" color="primary" for="file" *ngIf="!selectedImage">Take Picture</ion-button>
-          </ion-row> -->
-          <ion-row>
-            <ion-button expand="block" fill="outline" color="primary" (click)="takePhoto()">Take Picture</ion-button>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-
       <!-- SHOW IMAGE UPLOADED -->
       <ion-row>
         <ion-img *ngIf="selectedImage" role="button" class="image" [src]="selectedImage"></ion-img>
       </ion-row>
 
+      <!-- SHOW MOST USED TAGS -->
+      <h5 id="labelEtiquetas" *ngIf="tagsObjects.length > 0">10 ETIQUETAS MÁS USADAS</h5>
+      <ion-row id="containerTags" *ngIf="tagsObjects.length > 0">
+        <div id="tag" *ngFor="let t of tagsObjects| filterBy: tag | slice:0:10 ; let i = index ">
+          <span (click)="addTag(t.text)">
+            <ion-icon name="add"></ion-icon> {{t.text}}
+          </span>
+        </div>
+      </ion-row>
+
+      <!-- ADD TAGS -->
+      <ion-row>
+        <input type="text" (keyup.enter)="addTag()" [(ngModel)]="tag.text"
+          [placeholder]=" tags.length === 0 ? 'Ingresa una etiqueta' : 'Ingresa otra etiqueta'">
+      </ion-row>
+
+      <!-- SHOW ADDED TAGS -->
+      <h5 id="labelEtiquetas" *ngIf="tags.length > 0">ETIQUETAS</h5>
+      <ion-row id="containerTags" *ngIf="tags.length > 0">
+        <div id="tag" *ngFor="let tag of tags; let i = index">
+          <span (click)="deleteTag(i)">
+            <ion-icon name="close"></ion-icon> {{tag}}
+          </span>
+        </div>
+      </ion-row>
+
+      <!-- UPLOAD IMAGE -->
+      <ion-row *ngIf="!selectedImage">
+        <ion-col size=12>
+          <ion-row *ngIf="!usePicker">
+            <ion-button color="primary" (click)="onPickImage()" *ngIf="!selectedImage || !showPreview">
+              <ion-icon name="camera" slot="start"></ion-icon>
+              <ion-label>Take Picture</ion-label>
+            </ion-button>
+          </ion-row>
+          <div *ngIf="usePicker">
+            <ion-row>
+              <input type="file" name="file" class="inputfile" accept="image/jpeg" *ngIf="!selectedImage" #filePicker
+                (change)="onFileChosen($event)" />
+            </ion-row>
+            <ion-row>
+              <ion-button expand="block" fill="outline" color="primary" for="file" *ngIf="!selectedImage">Take Picture
+              </ion-button>
+            </ion-row>
+          </div>
+        </ion-col>
+      </ion-row>
+
       <!-- UPLOAD PHOTO FOR POINTS -->
-      <ion-row *ngIf="selectedImage">
+      <ion-row *ngIf="selectedImage && tags.length > 0">
         <ion-col size=12>
           <ion-button expand="block" fill="outline" color="primary" (click)="create()">Enviar</ion-button>
         </ion-col>
@@ -87,10 +101,10 @@
 
     <ion-col id="photoIcon" size="3" class="navbarCol">
       <ion-row>
-        <ion-icon name="aperture" style="color: grey !important;"></ion-icon>
+        <ion-icon name="aperture" [routerLink]="['/user-camera']"></ion-icon>
       </ion-row>
       <ion-row>
-        <p id="titleNavbar" style="color: grey !important;">Fotos</p>
+        <p id="titleNavbar">Fotos</p>
       </ion-row>
     </ion-col>
 

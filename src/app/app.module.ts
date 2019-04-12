@@ -16,8 +16,6 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { AngularFireStorage } from '@angular/fire/storage';
 
 
-// import { SharedModule } from './shared/modules/shared.module';
-
 @NgModule({
   declarations: [
     AppComponent
@@ -29,7 +27,6 @@ import { AngularFireStorage } from '@angular/fire/storage';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
-    // SharedModule
   ],
   providers: [
     AngularFireStorage,

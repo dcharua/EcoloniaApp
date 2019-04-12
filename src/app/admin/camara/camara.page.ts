@@ -4,9 +4,11 @@ import { PhotoService } from './../../shared/services/photo.service';
 import { Photo } from './../../shared/models/photo';
 import { AuthService } from './../../shared/services/auth.service';
 import { Component, OnInit, OnDestroy,  ViewChild, ElementRef} from '@angular/core';
-import { finalize } from 'rxjs/operators';
+import { finalize, take } from 'rxjs/operators';
 import { Router } from "@angular/router";
 import { Plugins, Capacitor, CameraSource, CameraResultType} from '@capacitor/core';
+import { Tag } from 'src/app/shared/models/tag';
+import { TagService } from 'src/app/shared/services/tag.service';
 
 export interface Location {
   lat: number;
@@ -24,8 +26,12 @@ export class CamaraPage implements OnInit, OnDestroy {
   @ViewChild('filePicker') filePickerRef: ElementRef<HTMLInputElement>;
   photo: Photo = new Photo();
   user: User = new User();
-  tag: string;
+
+  tag: Tag = new Tag();
   tags: string[] = [];
+  tagsObjects: Tag[] = [];
+
+
   location: Location;
   selectedImage: string;
   usePicker = false;
@@ -37,13 +43,23 @@ export class CamaraPage implements OnInit, OnDestroy {
     public router: Router,
     private loadingCtrl: LoadingController,
     private toast: ToastController,
-    private platform: Platform
+    private platform: Platform,
+    private tagService: TagService
   ) { }
 
   ngOnInit() {
     if ((this.platform.is('mobile') && !this.platform.is('hybrid')) ||this.platform.is('desktop')) {
       this.usePicker = true;
     }
+
+    this.tagService.getTags().subscribe((tags) => {
+      this.tagsObjects = tags;
+      this.tagsObjects.sort((a,b) => {
+        return a.count - b.count;
+      });
+      this.tagsObjects.reverse();
+    });
+
     this.authService.getLoggedInUser().then((user) => {
       this.user = user;
       this.locateUser();
@@ -56,10 +72,34 @@ export class CamaraPage implements OnInit, OnDestroy {
   }
 
 
-  addTag() {
-    this.tags.push(this.tag);
-    this.tag = '';
+  //TAG FUNCTIONS
+  addTag(tag: string) {
+    tag ?  this.tags.push(tag) :  this.tags.push(this.tag.text);
+    this.tag.text = '';
   }
+
+
+  deleteTag(index: number) {
+    this.tags.splice(index, 1);
+  }
+
+  uploadTags() {
+    this.tags.forEach((tag) =>{
+      this.tagService.getTagByText(tag).pipe(take(1)).subscribe((tags) => {
+        if (tags[0]) {
+          tags[0].count += 1;
+          this.tagService.updateTag(tags[0]);
+        } else {
+          let tagObject = new Tag();
+          tagObject.count = 1;
+          tagObject.text = tag;
+          this.tagService.addTag(tagObject);
+        }
+      });
+    });
+  }
+
+  //UPLOAD PHOTO FUNCTIONS
   onPickImage() {
     if (!Capacitor.isPluginAvailable('Camera')) {
       this.filePickerRef.nativeElement.click();
@@ -69,7 +109,6 @@ export class CamaraPage implements OnInit, OnDestroy {
       quality: 80,
       source: CameraSource.Prompt,
       correctOrientation: true,
-      // height: 320,
       width: 600,
       resultType: CameraResultType.Base64
     })
@@ -114,6 +153,7 @@ export class CamaraPage implements OnInit, OnDestroy {
       });
   }
 
+  // CREATE FUNCTIONS
   private locateUser() {
     if (!Capacitor.isPluginAvailable('Geolocation')) {
       return;
@@ -130,8 +170,8 @@ export class CamaraPage implements OnInit, OnDestroy {
       });
   }
 
-
   create() {
+    this.photo.tags = this.tags;
     this.loadingCtrl.create({ message: 'Creando...' }).then(loadingEl => {
       loadingEl.present();
       this.photoService.addPhoto(this.photo).then(() => {
@@ -141,13 +181,14 @@ export class CamaraPage implements OnInit, OnDestroy {
           duration: 2000
         }).then((toast) => {
           toast.present();
+          this.uploadTags();
+          this.tags = [];
+          window.setTimeout(() => { this.router.navigate(['/admin-images']); }, 1000);
+        
         });
         loadingEl.dismiss();
       });
     });
-    this.ngOnInit();
-    this.tags = [];
-    this.router.navigate(['/admin-images']);
   }
 
   ngOnDestroy() {
