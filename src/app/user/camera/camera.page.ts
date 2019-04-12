@@ -1,12 +1,19 @@
-import { User } from './../../shared/models/user';
-import { LoadingController, AlertController, ToastController } from '@ionic/angular';
-import { PhotoService } from './../../shared/services/photo.service';
-import { Photo } from './../../shared/models/photo';
-import { AuthService } from './../../shared/services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Plugins, Capacitor } from '@capacitor/core';
 import { finalize } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { Router } from "@angular/router";
+import { LoadingController, AlertController, ToastController } from '@ionic/angular';
+
+// MODELS
+import { User } from './../../shared/models/user';
+import { Photo } from './../../shared/models/photo';
+import { Tag } from './../../shared/models/tag';
+
+// Services
+import { AuthService } from './../../shared/services/auth.service';
+import { PhotoService } from './../../shared/services/photo.service';
+import { TagService } from './../../shared/services/tag.service'
 
 // CAMERA
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -23,24 +30,35 @@ export interface Location {
   templateUrl: './camera.page.html',
   styleUrls: ['./camera.page.scss'],
 })
-export class CameraPage implements OnInit {
+export class CameraPage implements OnInit, OnDestroy {
   photo: Photo = new Photo();
   user: User = new User();
+  tagObject: Tag = new Tag();
+
   tag: string;
   tags: string[] = [];
+  tagsObjects: Tag[] = [];
+
+  sub: any;
   location: Location;
   selectedImage: string;
 
   constructor(
     public authService: AuthService,
     private photoService: PhotoService,
-    public router: Router,
+    private tagService: TagService,
     private loadingCtrl: LoadingController,
     private toast: ToastController,
-    private camera: Camera
+    public router: Router
   ) { }
 
   ngOnInit() {
+    this.tagService.getTags().subscribe((tags) => {
+      this.tagsObjects = tags;
+      console.log(this.tagsObjects);
+    });
+
+
     this.authService.getLoggedInUser().then((user) => {
       this.user = user;
       this.locateUser();
@@ -52,45 +70,35 @@ export class CameraPage implements OnInit {
     });
   }
 
-  addTag() {
-    this.tags.push(this.tag);
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
+
+  addTag(tagParam: string) {
+    this.tagObject.text = this.tag;
+    if (tagParam != '') {
+      this.tagObject.text = tagParam;
+    }
+    this.tags.push(this.tagObject.text);
+
+    this.sub = this.tagService.getExistingTag(this.tagObject.text).pipe(take(1)).subscribe((tags) => {
+      if (tags.length === 0) {
+        this.tagObject.count = 1;
+        this.tagService.addTag(this.tagObject);
+      } else {
+        tags.forEach((tag) => {
+          tag.count += 1;
+          this.tagService.updateTag(tag);
+        })
+      }
+    });
+
     this.tag = '';
   }
 
-  async takePhoto() {
-    try {
-      const options: CameraOptions = {
-        quality: 50,
-        targetHeight: 600,
-        targetWidth: 600,
-        destinationType: this.camera.DestinationType.FILE_URI,
-        encodingType: this.camera.EncodingType.JPEG,
-        mediaType: this.camera.MediaType.PICTURE
-      }
-
-      const result = await this.camera.getPicture(options);
-
-      const image = `data:image/jpeg;base64,${result}`;
-
-      let date = new Date();
-      const photos = storage().ref('recolections/image' + date.toString());
-      photos.putString(image, 'data_url');
-
-      // file.task.snapshotChanges().pipe(
-      //   finalize(() => {
-      //     file.ref.getDownloadURL().subscribe(url => {
-      //       this.photo.src = url;
-      //       loadingEl.dismiss();
-      //     });
-      //   })).subscribe();
-
-    } catch (e) {
-      console.log(e);
-    }
-
+  takePhoto() {
+    console.log("Take photo");
   }
-
-
 
   private locateUser() {
     if (!Capacitor.isPluginAvailable('Geolocation')) {
@@ -108,10 +116,21 @@ export class CameraPage implements OnInit {
       });
   }
 
-  deleteTag(index: number) {
+  deleteTag(tagText: string, index: number) {
     this.tags.splice(index, 1);
-  }
 
+    this.sub = this.tagService.getExistingTag(tagText).pipe(take(1)).subscribe((tags) => {
+      if (tags.length === 0) {
+        console.log("There is no tag with that text");
+      } else {
+        tags.forEach((tag) => {
+          tag.count -= 1;
+          this.tagService.updateTag(tag);
+        })
+      }
+    });
+
+  }
 
   onFileChosen(event: Event) {
     this.photo.tags = this.tags;

@@ -20,6 +20,15 @@
 
   <ion-row>
     <ion-col id="alignContent">
+
+      <!-- SHOW TAGS -->
+      <h2 id="labelEtiquetas" *ngIf="this.tagsObjects.length > 0">10 ETIQUETAS MÁS USADAS</h2>
+      <ion-row id="containerTags" *ngIf="this.tagsObjects.length > 0">
+        <div id="tag" *ngFor="let tag of this.tagsObjects; let i = index">
+          <p (click)="addTag(tag.text)">{{tag.text}}</p>
+        </div>
+      </ion-row>
+
       <!-- ADD TAGS -->
       <ion-row>
         <input type="text" *ngIf="this.tags.length == 0" (keyup.enter)="addTag()" [(ngModel)]="tag" placeholder="Ingresa etiqueta">
@@ -30,7 +39,7 @@
       <h2 id="labelEtiquetas" *ngIf="this.tags.length > 0">ETIQUETAS</h2>
       <ion-row id="containerTags" *ngIf="this.tags.length > 0">
         <div id="tag" *ngFor="let tag of this.tags; let i = index">
-          <p (click)="deleteTag(i)">{{tag}}</p>
+          <p (click)="deleteTag(tag, i)">{{tag}}</p>
         </div>
       </ion-row>
 
