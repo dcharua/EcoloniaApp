@@ -14,7 +14,8 @@
         <ion-col>
           <ion-item>
             <ion-label position="floating">Titulo</ion-label>
-            <ion-input type="text" name="title" [(ngModel)]="coupon.title" #title="ngModel" [ngClass]="{ 'invalid': f.submitted && title.invalid }" autocomplete autocorrect required></ion-input>
+            <ion-input type="text" name="title" [(ngModel)]="coupon.title" #title="ngModel"
+              [ngClass]="{ 'invalid': f.submitted && title.invalid }" autocomplete autocorrect required></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -23,7 +24,8 @@
         <ion-col>
           <ion-item>
             <ion-label position="floating">Cost</ion-label>
-            <ion-input type="number" name="cost" [(ngModel)]="coupon.cost" #cost="ngModel" [ngClass]="{ 'invalid': f.submitted && cost.invalid }" required></ion-input>
+            <ion-input type="number" name="cost" [(ngModel)]="coupon.cost" #cost="ngModel"
+              [ngClass]="{ 'invalid': f.submitted && cost.invalid }" required></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -32,7 +34,8 @@
         <ion-col>
           <ion-item>
             <ion-label position="floating">Categoría</ion-label>
-            <ion-input type="text" name="category" [(ngModel)]="coupon.category" #category="ngModel" [ngClass]="{ 'invalid': f.submitted && category.invalid }" required></ion-input>
+            <ion-input type="text" name="category" [(ngModel)]="coupon.category" #category="ngModel"
+              [ngClass]="{ 'invalid': f.submitted && category.invalid }" required></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -41,7 +44,9 @@
         <ion-col>
           <ion-item>
             <ion-label position="floating">Expiración</ion-label>
-            <ion-datetime display-format="MMM DD, YYYY" [min]="minDate" [max]="maxDate" name="expiration" [(ngModel)]="coupon.expiration" #expiration="ngModel" [ngClass]="{ 'invalid': f.submitted && expiration.invalid }" required=""></ion-datetime>
+            <ion-datetime display-format="MMM DD, YYYY" [min]="minDate" [max]="maxDate" name="expiration"
+              [(ngModel)]="coupon.expiration" #expiration="ngModel"
+              [ngClass]="{ 'invalid': f.submitted && expiration.invalid }" required=""></ion-datetime>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -50,18 +55,39 @@
         <ion-col>
           <ion-item>
             <ion-label position="floating" style="margin-bottom: 20px;">Descripción</ion-label>
-            <ion-textarea rows="3" name="des" [(ngModel)]="coupon.description" #des="ngModel" [ngClass]="{ 'invalid': f.submitted && des.invalid }" required></ion-textarea>
+            <ion-textarea rows="3" name="des" [(ngModel)]="coupon.description" #des="ngModel"
+              [ngClass]="{ 'invalid': f.submitted && des.invalid }" required></ion-textarea>
           </ion-item>
         </ion-col>
       </ion-row>
 
-      <ion-row>
-        <ion-col>
-          <ion-img role="button" class="image" [src]="selectedImage" *ngIf="selectedImage"></ion-img>
-          <input type="file" name="file" class="inputfile" accept="image/jpeg" *ngIf="!selectedImage" #filePicker (change)="onFileChosen($event)" />
-          <label for="file" *ngIf="!selectedImage">Take Picture</label>
+      <!-- IMAGE UPLOAD BTNS -->
+      <ion-row *ngIf="!selectedImage">
+        <ion-col size=12>
+          <ion-row *ngIf="!usePicker">
+            <ion-button color="primary" (click)="onPickImage()" *ngIf="!selectedImage || !showPreview">
+              <ion-icon name="camera" slot="start"></ion-icon>
+              <ion-label>Take Picture</ion-label>
+            </ion-button>
+          </ion-row>
+          <div *ngIf="usePicker">
+            <ion-row>
+              <input type="file" name="file" class="inputfile" accept="image/jpeg" *ngIf="!selectedImage" #filePicker
+                (change)="onFileChosen($event)" />
+            </ion-row>
+            <ion-row>
+              <ion-button expand="block" fill="outline" color="primary" for="file" *ngIf="!selectedImage">Take Picture
+              </ion-button>
+            </ion-row>
+          </div>
         </ion-col>
       </ion-row>
+
+      <!-- SHOW IMAGE UPLOADED -->
+      <ion-row>
+        <ion-img *ngIf="selectedImage" role="button" class="image" [src]="selectedImage"></ion-img>
+      </ion-row>
+
 
       <ion-row>
         <ion-col>

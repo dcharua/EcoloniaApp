@@ -51,11 +51,12 @@ export class PhotoService {
     return this.db.collection('photos').doc(key).update(photo);
   }
 
-  uploadIMG(img: File, title: string) {
-    const filePath = `/recolections/${title ? title : 'sin_titulo'}.jpg`;
+  uploadIMG(img: string, title: string){
+    const filePath = `/recolections/${ title ? title : 'sin_titulo' }.jpg`;
     const fileRef = this.storage.ref(filePath);
-    const task = this.storage.upload(filePath, img);
-    return { task: task, ref: fileRef };
+    const image = 'data:image/jpg;base64,' + img;
+    const task = fileRef.putString(image.replace('data:image/jpeg;base64,', ''), 'data_url');
+    return {task : task, ref: fileRef};
   }
 
 }

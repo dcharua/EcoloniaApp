@@ -26,12 +26,20 @@
       <!-- UPLOAD IMAGE -->
       <ion-row *ngIf="!selectedImage">
         <ion-col size=12>
-          <ion-row>
-            <input type="file" name="file" class="inputfile" accept="image/jpeg" *ngIf="!selectedImage" #filePicker (change)="onFileChosen($event)" />
+          <ion-row *ngIf="!usePicker">
+            <ion-button color="primary" (click)="onPickImage()" *ngIf="!selectedImage || !showPreview">
+              <ion-icon name="camera" slot="start"></ion-icon>
+              <ion-label>Take Picture</ion-label>
+            </ion-button>
           </ion-row>
-          <ion-row>
-            <ion-button expand="block" fill="outline" color="primary" for="file" *ngIf="!selectedImage">Take Picture</ion-button>
-          </ion-row>
+          <div  *ngIf="usePicker">
+            <ion-row>
+              <input type="file" name="file" class="inputfile" accept="image/jpeg" *ngIf="!selectedImage" #filePicker (change)="onFileChosen($event)" />
+            </ion-row> 
+            <ion-row>
+              <ion-button expand="block" fill="outline" color="primary" for="file" *ngIf="!selectedImage">Take Picture</ion-button>
+            </ion-row> 
+          </div>
         </ion-col>
       </ion-row>
       

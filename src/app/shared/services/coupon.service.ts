@@ -56,10 +56,13 @@ export class CouponService {
     return this.db.collection('coupons').doc(key).update(coupon);
   }
 
-  uploadIMG(img: File, title: string){
+
+
+  uploadIMG(img: string, title: string){
     const filePath = `/coupons/${ title ? title : 'sin_titulo' }.jpg`;
     const fileRef = this.storage.ref(filePath);
-    const task = this.storage.upload(filePath, img);
+    const image = 'data:image/jpg;base64,' + img;
+    const task = fileRef.putString(image.replace('data:image/jpeg;base64,', ''), 'data_url');
     return {task : task, ref: fileRef};
   }
 

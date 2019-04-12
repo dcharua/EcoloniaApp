@@ -123,7 +123,7 @@ export class CameraPage implements OnInit {
       if (!pickedFile) {
         return;
       }
-      const file = this.photoService.uploadIMG(pickedFile, "title" + date.toString());
+      const file = this.photoService.uploadIMG('this', "title" + date.toString());
       file.task.snapshotChanges().pipe(
         finalize(() => {
           file.ref.getDownloadURL().subscribe(url => {

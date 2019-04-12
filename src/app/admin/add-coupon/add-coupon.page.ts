@@ -1,11 +1,11 @@
 
 import { Coupon } from './../../shared/models/coupon';
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoadingController, AlertController, Platform } from '@ionic/angular';
 import { switchMap } from 'rxjs/operators';
-import { Plugins, Capacitor,  CameraSource,CameraResultType } from '@capacitor/core';
+import { Component, OnInit, OnDestroy,  ViewChild, ElementRef} from '@angular/core';
+import { Plugins, Capacitor, CameraSource, CameraResultType} from '@capacitor/core';
 import { CouponService } from '../../shared/services/coupon.service';
 import { map, take, finalize } from 'rxjs/operators';
 export interface Location{
@@ -28,6 +28,7 @@ export class AddCouponPage implements OnInit {
   usePicker = false;
   minDate: string;
   maxDate: string;
+
   constructor(
     private route: ActivatedRoute,
     private couponService: CouponService,
@@ -36,6 +37,9 @@ export class AddCouponPage implements OnInit {
     private alertCtrl: AlertController,
     private platform: Platform
   ) {
+    if ((this.platform.is('mobile') && !this.platform.is('hybrid')) ||this.platform.is('desktop')) {
+      this.usePicker = true;
+    }
     this.minDate =  new Date().toISOString();
     this.maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 10)).toISOString();
     this.route.paramMap.subscribe(paramMap => {
@@ -163,44 +167,57 @@ export class AddCouponPage implements OnInit {
       });
   }
 
-  private locateUser() {
-    if (!Capacitor.isPluginAvailable('Geolocation')) {
+  onPickImage() {
+    if (!Capacitor.isPluginAvailable('Camera')) {
+      this.filePickerRef.nativeElement.click();
       return;
     }
-    Plugins.Geolocation.getCurrentPosition()
-      .then(geoPosition => {
-        this.location = {
-          lat: geoPosition.coords.latitude,
-          lng: geoPosition.coords.longitude
-        };
+    Plugins.Camera.getPhoto({
+      quality: 50,
+      source: CameraSource.Prompt,
+      correctOrientation: true,
+      // height: 320,
+      width: 600,
+      resultType: CameraResultType.Base64
+    })
+      .then(image => {
+        this.uploadImg(image.base64Data);
       })
-      .catch(err => {
-       console.log(err);
+      .catch(error => {
+        console.log(error);
+        if (this.usePicker) {
+          this.filePickerRef.nativeElement.click();
+        }
+        return false;
       });
   }
 
   onFileChosen(event: Event) {
-    this.loadingCtrl.create({message: 'Cargando Imagen...'}).then(loadingEl => {
-      loadingEl.present();
-        const pickedFile = (event.target as HTMLInputElement).files[0];
-        if (!pickedFile) {
-          return;
-        }
-        const file = this.couponService.uploadIMG(pickedFile, this.coupon.title);
-        file.task.snapshotChanges().pipe(
-          finalize(() => {
-            file.ref.getDownloadURL().subscribe(url =>{
-              this.coupon.src = url;
-              loadingEl.dismiss();
-            });
-          })).subscribe();
-        const fr = new FileReader();
-        fr.onload = () => {
-          const dataUrl = fr.result.toString();
-          this.selectedImage = dataUrl;
-        }
-        fr.readAsDataURL(pickedFile);
-
-      })
+    const pickedFile = (event.target as HTMLInputElement).files[0];
+    if (!pickedFile) {
+      return;
     }
+    const fr = new FileReader();
+    fr.onload = () => {
+      const dataUrl = fr.result.toString();
+      this.uploadImg(dataUrl);
+    };
+    fr.readAsDataURL(pickedFile);
+  }
+
+
+  uploadImg(img: string){
+    this.selectedImage = img;
+    this.loadingCtrl.create({ message: 'Cargando Imagen...' }).then(loadingEl => {
+      loadingEl.present();
+      const file = this.couponService.uploadIMG(img, this.coupon.title);
+      file.task.snapshotChanges().pipe(
+        finalize(() => {
+          file.ref.getDownloadURL().subscribe(url => {
+            this.coupon.src = url;
+            loadingEl.dismiss();
+          });
+        })).subscribe();
+      });
+  }
 }
