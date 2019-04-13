@@ -88,3 +88,24 @@ ion-card-content {
   margin: 10px 5px;
   font-size: 250%;
 }
+.puntos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 60px;
+  width: 60px;
+
+  border-radius: 50%;
+  border: 5px solid #637d38;
+  background-color: none;
+
+  color: #637d38;
+  font-size: 100%;
+  position: absolute;
+  right: 10px;
+
+  ion-icon {
+    color: #637d38 !important;
+  }
+}

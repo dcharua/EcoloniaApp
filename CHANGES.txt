@@ -32,12 +32,12 @@ LISTO
 
 9.- Crear la visualizacion del popup para informar que no tiene puntos para el cupon deseado o preguntar si quiere el cupon
 
-AUN NO
+Listo
 
 10.- Funcionalidad de comprar cupones (descargar la imagen) y mostrarlos en user cupons, enseñar la imagen
 
-AUN NO
+Parace que ya, falta probar en apk
 
 11.- Acabar home, agregar hasta abajo una tabla con los tags mas usados
 
-AUN NO
+Listo

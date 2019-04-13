@@ -3,6 +3,10 @@
     <ion-row id="logoTop">
       <img [routerLink]="['/user-home']" height="50" src="../../../assets/images/logo-small_negro.png" alt="" [routerLink]="['/user-home']">
       <ion-title>Cupones</ion-title>
+      <div class="puntos">
+        <ion-icon name="leaf"></ion-icon> {{user?.points}}
+      </div>
+
     </ion-row>
   </ion-toolbar>
 </ion-header>

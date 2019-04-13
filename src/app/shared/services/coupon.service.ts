@@ -10,10 +10,6 @@ import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask 
 export class CouponService {
 
   task: AngularFireUploadTask;
-
-  progress: any;  // Observable 0 to 100
-
-  image: string; // base64
   constructor(
     private db: AngularFirestore,
     private storage: AngularFireStorage 
@@ -55,8 +51,6 @@ export class CouponService {
     delete coupon.$key;
     return this.db.collection('coupons').doc(key).update(coupon);
   }
-
-
 
   uploadIMG(img: string, title: string){
     const filePath = `/coupons/${ title ? title : 'sin_titulo' }.jpg`;

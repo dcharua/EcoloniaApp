@@ -42,7 +42,7 @@ export class PhotoService {
   }
 
   deletePhoto(key: string) {
-    return this.db.doc('/recolections/' + key).delete();
+    return this.db.doc('photos/' + key).delete();
   }
 
   updatePhoto(photo: Photo) {
@@ -57,6 +57,10 @@ export class PhotoService {
     const image = 'data:image/jpg;base64,' + img;
     const task = fileRef.putString(image.replace('data:image/jpeg;base64,', ''), 'data_url');
     return {task : task, ref: fileRef};
+  }
+
+  deleteIMG(img:string){
+    
   }
 
 }

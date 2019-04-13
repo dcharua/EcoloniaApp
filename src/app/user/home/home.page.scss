@@ -39,6 +39,17 @@
   ion-icon {
     color: #637d38 !important;
   }
+}
 
+.tags{
+  list-style: none;
+  color: #a8c328 !important;
+  padding: 0 30px;
+  font-size: 1.6rem;
+
+  &_number{
+    float: right;
+    color: #637d38 !important;
+  }
 }
 
