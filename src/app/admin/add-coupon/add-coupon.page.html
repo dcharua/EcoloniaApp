@@ -91,7 +91,7 @@
 
       <ion-row>
         <ion-col>
-          <ion-button type="submit">{{ coupon.$key ? 'Editar' : 'Agregar'}}</ion-button>
+          <ion-button *ngIf="coupon.title" type="submit">{{ coupon.$key ? 'Editar' : 'Agregar'}}</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>

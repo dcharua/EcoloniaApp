@@ -6,7 +6,7 @@ import { Photo } from './../../shared/models/photo';
 import { User } from './../../shared/models/user';
 import { Tag } from './../../shared/models/tag';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-
+import {take} from 'rxjs/operators'
 @Component({
   selector: 'app-images',
   templateUrl: './images.page.html',
@@ -16,10 +16,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 export class ImagesPage implements OnInit, OnDestroy {
   photosChecked: Photo[] = [];
   photosCheck: Photo[] = [];
-  userUpdate: User;
   tagToCheck: Tag;
   images: number = 1;
-  updateTag: boolean = false;
 
   user: any;
   sub: any;
@@ -31,17 +29,14 @@ export class ImagesPage implements OnInit, OnDestroy {
     private userService: UserService,
     public authService: AuthService
   ) {
-    this.loadingCtrl.create({ message: 'Get coupons' }).then(loadingEl => {
+    this.loadingCtrl.create({ message: 'Estoy pensando..' }).then(loadingEl => {
       loadingEl.present();
-      this.sub = this.photoService.getPhotos().subscribe((photos) => {
-        photos.forEach((photo, index) => {
-          if (photo.points === 0) {
-            this.photosCheck.push(photo);
-          } else {
-            this.photosChecked.push(photo);
-          }
+      this.sub = this.photoService.getUnAuthPhotos().subscribe((photos) => {
+        this.photosCheck = photos;
+        this.sub2 = this.photoService.getAuthPhotos().subscribe((photos) => {
+          this.photosChecked = photos;
+          loadingEl.dismiss();
         });
-        loadingEl.dismiss();
       });
     });
 
@@ -53,54 +48,35 @@ export class ImagesPage implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
-  getTagToUpdate(user, text, index) {
-    this.updateTag = true;
-    console.log("Update: " + text + ", From:" + user);
-  }
-
-  getTagToDelete(user, text, indexImage, indexTag) {
-    this.updateTag = false;
-    this.photosCheck[indexImage].tags.splice(indexTag, 1);
-    console.log(this.photosCheck[indexImage].tags[indexTag]);
-
-    console.log("Delete: " + text + ", From:" + user);
-  }
-
-  getTagToSave(user, text, index) {
-    this.updateTag = false;
-    console.log("Guardar: " + text + ", From:" + user);
-  }
 
   viewImages(number) {
     this.images = number;
   }
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
-
-  updatePoints(photoUpdate, index) {
-    this.sub2 = this.userService.getUser(photoUpdate.user_id).subscribe((user) => {
+  
+  authPhoto(photo) {
+    photo.auth = true;
+    this.userService.getUser(photo.user_id).pipe(take(1)).subscribe((user) => {
       if (user) {
-        this.userUpdate = user;
-        this.userUpdate.points += photoUpdate.points;
-        this.userService.updateUserPoints(this.userUpdate.$key, this.userUpdate.points);
+        user.points += photo.points;
+        this.userService.updateUserPoints(user);
       } else {
         console.log('we didnt found the user');
       }
     });
-    this.photoService.updatePhoto(photoUpdate);
-    this.photosChecked.push(this.photosCheck[index]);
-    this.photosCheck.splice(index, 1);
-    this.sub2.unsubscribe();
+    this.photoService.updatePhoto(photo);
   }
-
+  
   deletePhoto(photo: Photo) {
-    this.photoService.deletePhoto(photo.$key).then(succ => {
+    this.photoService.deletePhoto(photo).then(succ => {
       console.log("deleted")
     }, (err) => {
       console.log(err)
     });
   }
 
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+    this.sub2.unsubscribe();
+  }
 }

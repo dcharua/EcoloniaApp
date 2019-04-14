@@ -65,10 +65,8 @@ export class UserService {
     return this.db.collection('users').doc(key).update(user);
   }
 
-  updateUserPoints(userKey, pointsUpdate) {
-    var userRef = this.db.collection('users').doc(userKey);
-    var updatePoints = userRef.update({ points: pointsUpdate });
-    return updatePoints;
+  updateUserPoints(user: User) {
+    return this.db.collection('users').doc(user.$key).update({ points: user.points });
   }
 
   setLocation(lat, lon) {

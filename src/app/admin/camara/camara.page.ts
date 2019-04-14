@@ -142,6 +142,7 @@ export class CamaraPage implements OnInit, OnDestroy {
     this.loadingCtrl.create({ message: 'Cargando Imagen...' }).then(loadingEl => {
       loadingEl.present();
       this.imgRef = this.photo.user_name + new Date().toString()
+      this.photo.imgRef = this.imgRef;
       const file = this.photoService.uploadIMG(img, this.imgRef);
       file.task.snapshotChanges().pipe(
         finalize(() => {
@@ -193,7 +194,7 @@ export class CamaraPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (!this.uploaded && this.imgRef){
-      this.photoService.deletePhoto(this.imgRef);
+      this.photoService.deleteIMG(this.imgRef);
     }
   }
 

@@ -42,8 +42,9 @@ export class CouponService {
     );
   }
 
-  deleteCoupon(key: string) {
-    return this.db.doc('coupons/' + key).delete();
+  deleteCoupon(coupon: Coupon) {
+    this.deleteIMG(coupon.title);
+    return this.db.doc('coupons/' + coupon.$key).delete();
   }
 
   updateCoupon(coupon: Coupon) {
@@ -53,11 +54,15 @@ export class CouponService {
   }
 
   uploadIMG(img: string, title: string){
-    const filePath = `/coupons/${ title ? title : 'sin_titulo' }.jpg`;
+    const filePath = `coupons/${ title ? title : 'sin_titulo' }.jpg`;
     const fileRef = this.storage.ref(filePath);
     const image = 'data:image/jpg;base64,' + img;
     const task = fileRef.putString(image.replace('data:image/jpeg;base64,', ''), 'data_url');
     return {task : task, ref: fileRef};
+  }
+
+  deleteIMG(img: string){
+    this.storage.ref(`coupons/${img}`).delete();
   }
 
 }

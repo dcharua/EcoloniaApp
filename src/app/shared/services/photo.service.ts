@@ -41,8 +41,36 @@ export class PhotoService {
     );
   }
 
-  deletePhoto(key: string) {
-    return this.db.doc('photos/' + key).delete();
+
+  getAuthPhotos(): Observable<Photo[]> {
+    return this.db.collection('photos', ref => ref.where('auth', '==', true)).snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data() as Photo;
+          const $key = a.payload.doc.id;
+          return { $key, ...data };
+        });
+      })
+    );
+  }
+
+  getUnAuthPhotos(): Observable<Photo[]> {
+    return this.db.collection('photos', ref => ref.where('auth', '==', false)).snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data() as Photo;
+          const $key = a.payload.doc.id;
+          return { $key, ...data };
+        });
+      })
+    );
+  }
+  
+  
+
+  deletePhoto(photo: Photo) {
+    this.deleteIMG(photo.imgRef)
+    return this.db.doc('photos/' + photo.$key).delete();
   }
 
   updatePhoto(photo: Photo) {
@@ -52,15 +80,15 @@ export class PhotoService {
   }
 
   uploadIMG(img: string, title: string){
-    const filePath = `/recolections/${ title ? title : 'sin_titulo' }.jpg`;
+    const filePath = `recolections/${ title ? title : 'sin_titulo' }.jpg`;
     const fileRef = this.storage.ref(filePath);
     const image = 'data:image/jpg;base64,' + img;
     const task = fileRef.putString(image.replace('data:image/jpeg;base64,', ''), 'data_url');
     return {task : task, ref: fileRef};
   }
 
-  deleteIMG(img:string){
-    
+  deleteIMG(img: string){
+    this.storage.ref(`recolections/${img}`).delete();
   }
 
 }

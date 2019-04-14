@@ -11,5 +11,6 @@ export class Photo {
     };
     auth: boolean;
     createdOn: string;
+    imgRef: string;
   }
   

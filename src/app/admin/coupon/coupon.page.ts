@@ -44,7 +44,7 @@ export class CouponPage implements OnInit, OnDestroy {
         {
           text: 'Borrar',
           handler: () => {
-            this.couponService.deleteCoupon(coupon.$key).then(() => {
+            this.couponService.deleteCoupon(coupon).then(() => {
 
             }, err => {
               this.alertCtrl.create({

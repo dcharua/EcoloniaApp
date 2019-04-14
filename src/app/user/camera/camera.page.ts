@@ -141,7 +141,8 @@ export class CameraPage implements OnInit, OnDestroy {
     this.selectedImage = img;
     this.loadingCtrl.create({ message: 'Cargando Imagen...' }).then(loadingEl => {
       loadingEl.present();
-      this.imgRef = this.photo.user_name + new Date().toString()
+      this.imgRef = this.photo.user_name + new Date().toString();
+      this.photo.imgRef = this.imgRef;
       const file = this.photoService.uploadIMG(img, this.imgRef);
       file.task.snapshotChanges().pipe(
         finalize(() => {
@@ -183,7 +184,7 @@ export class CameraPage implements OnInit, OnDestroy {
           toast.present();
           this.uploadTags();
           this.tags = [];
-          window.setTimeout(() => { this.router.navigate(['/admin-images']); }, 1000);
+          window.setTimeout(() => { this.router.navigate(['/user-profile']); }, 1000);
         
         });
         loadingEl.dismiss();
@@ -193,7 +194,7 @@ export class CameraPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (!this.uploaded && this.imgRef){
-      this.photoService.deletePhoto(this.imgRef);
+      this.photoService.deleteIMG(this.imgRef);
     }
   }
 
