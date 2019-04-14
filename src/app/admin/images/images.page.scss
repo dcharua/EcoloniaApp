@@ -48,6 +48,35 @@ ion-card-title {
   color: green;
 }
 
+ul {
+  list-style-type: none;
+}
+
+li {
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  justify-content: space-between;
+  text-align: justify;
+  p {
+    margin: 0 8px;
+  }
+}
+
+.rowTag {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  align-items: center;
+  justify-content: space-between;
+}
+
+#listTag {
+  border: 1px solid green;
+}
+
 #label {
   text-align: right;
   color: #637d38;

@@ -32,10 +32,16 @@
       </ion-card-header>
       <img [src]="photo.src">
       <ion-card-content>
-        <ion-row>
-          <ul>
-            <li *ngFor="let tag of photo.tags">{{tag}}</li>
-          </ul>
+        <ion-row *ngFor="let tag of photo.tags; let i2 = index">
+          <ion-col size=10>
+            <p>{{tag}}</p>
+          </ion-col>
+          <ion-col size=1>
+            <ion-icon name="create" style="color: #feb73c;" (click)="getTagToUpdate(photo.user_id, tag, i, i2)"></ion-icon>
+          </ion-col>
+          <ion-col size=1>
+            <ion-icon name="trash" style="color: #ed5f67;" (click)="getTagToDelete(photo.user_id, tag, i, i2)"></ion-icon>
+          </ion-col>
         </ion-row>
         <ion-row style="float: right; text-align: end;">
           <p id="puntosCard">

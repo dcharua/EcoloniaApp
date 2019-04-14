@@ -11,7 +11,46 @@
 </ion-header>
 
 <ion-content>
-  Something
+
+  <ion-row class="containerNumbers">
+    <div class="flex">
+      <div class="f-50">
+        <div class="puntos">
+          <ion-icon name="bookmarks"></ion-icon> {{numberPhotos}}
+        </div>
+      </div>
+    </div>
+    <div class="f-50">
+      <h3 padding class="ion-text-center">Total de Recolecciones</h3>
+    </div>
+  </ion-row>
+
+  <ion-row class="containerNumbers">
+    <div class="flex">
+      <div class="f-50">
+        <div class="puntos">
+          <ion-icon name="bookmarks"></ion-icon> {{numberPhotosToday}}
+        </div>
+      </div>
+    </div>
+    <div class="f-50">
+      <h3 padding class="ion-text-center">Recolecciones de Hoy</h3>
+    </div>
+  </ion-row>
+
+
+  <ion-row>
+    <ion-col padding>
+      <h3 class="ion-text-center">Tags mas usados</h3>
+      <ul class="tags">
+        <li *ngFor="let tag of tags| slice:0:10">
+          <ion-icon name="pricetag"></ion-icon> {{tag.text}}<span class="tags_number">{{tag.count}}</span>
+        </li>
+      </ul>
+    </ion-col>
+  </ion-row>
+
+
 </ion-content>
 
 <ion-footer>

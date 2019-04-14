@@ -4,6 +4,7 @@ import { UserService } from './../../shared/services/user.service';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { Photo } from './../../shared/models/photo';
 import { User } from './../../shared/models/user';
+import { Tag } from './../../shared/models/tag';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
@@ -16,10 +17,13 @@ export class ImagesPage implements OnInit, OnDestroy {
   photosChecked: Photo[] = [];
   photosCheck: Photo[] = [];
   userUpdate: User;
+  tagToCheck: Tag;
+  images: number = 1;
+  updateTag: boolean = false;
+
   user: any;
   sub: any;
   sub2: any;
-  images: number = 1;
 
   constructor(
     private loadingCtrl: LoadingController,
@@ -47,6 +51,24 @@ export class ImagesPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+  }
+
+  getTagToUpdate(user, text, index) {
+    this.updateTag = true;
+    console.log("Update: " + text + ", From:" + user);
+  }
+
+  getTagToDelete(user, text, indexImage, indexTag) {
+    this.updateTag = false;
+    this.photosCheck[indexImage].tags.splice(indexTag, 1);
+    console.log(this.photosCheck[indexImage].tags[indexTag]);
+
+    console.log("Delete: " + text + ", From:" + user);
+  }
+
+  getTagToSave(user, text, index) {
+    this.updateTag = false;
+    console.log("Guardar: " + text + ", From:" + user);
   }
 
   viewImages(number) {
