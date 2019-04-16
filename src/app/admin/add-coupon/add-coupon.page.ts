@@ -3,8 +3,7 @@ import { Coupon } from './../../shared/models/coupon';
 import { FormGroup, NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoadingController, AlertController, Platform } from '@ionic/angular';
-import { switchMap } from 'rxjs/operators';
-import { Component, OnInit, OnDestroy,  ViewChild, ElementRef} from '@angular/core';
+import { Component, ViewChild, ElementRef} from '@angular/core';
 import { Plugins, Capacitor, CameraSource, CameraResultType} from '@capacitor/core';
 import { CouponService } from '../../shared/services/coupon.service';
 import { map, take, finalize } from 'rxjs/operators';
@@ -19,7 +18,7 @@ export interface Location{
   templateUrl: './add-coupon.page.html',
   styleUrls: ['./add-coupon.page.scss'],
 })
-export class AddCouponPage implements OnInit {
+export class AddCouponPage {
   @ViewChild('filePicker') filePickerRef: ElementRef<HTMLInputElement>;
   coupon: Coupon = new Coupon();
   form: FormGroup;
@@ -36,7 +35,9 @@ export class AddCouponPage implements OnInit {
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
     private platform: Platform
-  ) {
+  ) {}
+
+  ionViewDidEnter(){
     if ((this.platform.is('mobile') && !this.platform.is('hybrid')) ||this.platform.is('desktop')) {
       this.usePicker = true;
     }
@@ -58,11 +59,6 @@ export class AddCouponPage implements OnInit {
     });
   }
 
-
-
-  ngOnInit() {
-  
-  }
 
   createCoupon(form: NgForm) {
     if (form.valid) {

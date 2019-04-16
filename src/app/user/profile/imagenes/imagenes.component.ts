@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { PhotoService } from '../../../shared/services/photo.service';
 import { AuthService } from '../../../shared/services/auth.service';
 import { Photo } from './../../../shared/models/photo';
@@ -8,16 +8,16 @@ import { Photo } from './../../../shared/models/photo';
   templateUrl: './imagenes.component.html',
   styleUrls: ['./imagenes.component.scss'],
 })
-export class ImagenesComponent implements OnInit {
+export class ImagenesComponent {
   userId: any;
   photos: Photo[] = [];
   userPhotos: Photo[] = [];
-
+  sub: any;
   constructor(
     public photoService: PhotoService,
     public authService: AuthService
   ) {
-    this.photoService.getPhotos().subscribe((photos) => {
+    this.sub = this.photoService.getPhotos().subscribe((photos) => {
       this.authService.getLocalUser().then(data => {
         this.userId = data.$key;
         photos.forEach((photo) => {
@@ -30,7 +30,9 @@ export class ImagenesComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  
+  ionViewDidLeave(){
+    this.sub.unsubscribe();
   }
 
 }

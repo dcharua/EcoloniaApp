@@ -22,7 +22,7 @@ export interface Location {
 })
 
 
-export class CameraPage implements OnInit, OnDestroy {
+export class CameraPage {
   @ViewChild('filePicker') filePickerRef: ElementRef<HTMLInputElement>;
   photo: Photo = new Photo();
   user: User = new User();
@@ -44,15 +44,16 @@ export class CameraPage implements OnInit, OnDestroy {
     private loadingCtrl: LoadingController,
     private toast: ToastController,
     private platform: Platform,
-    private tagService: TagService
+    private tagService: TagService,
+    private alertController: AlertController
   ) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     if ((this.platform.is('mobile') && !this.platform.is('hybrid')) ||this.platform.is('desktop')) {
       this.usePicker = true;
     }
 
-    this.tagService.getTags().subscribe((tags) => {
+    this.tagService.getTags().pipe(take(1)).subscribe((tags) => {
       this.tagsObjects = tags;
       this.tagsObjects.sort((a,b) => {
         return a.count - b.count;
@@ -149,6 +150,25 @@ export class CameraPage implements OnInit, OnDestroy {
           file.ref.getDownloadURL().subscribe(url => {
             this.photo.src = url;
             loadingEl.dismiss();
+            if(this.tags.length > 0) {
+              this.alertController.create({
+                header: '¿Subir foto?',
+                message: 'Deseas subir la foto, o agregar mas tags?',
+                buttons: [
+                  {
+                    text: 'Subir',
+                    handler: () => {
+                      this.create();
+                    }
+                  },
+                  {
+                    text: 'Modificar tags'
+                  }
+                ]
+              }).then(alertEl => {
+                alertEl.present();
+              });
+            }
           });
         })).subscribe();
       });
@@ -183,16 +203,17 @@ export class CameraPage implements OnInit, OnDestroy {
         }).then((toast) => {
           toast.present();
           this.uploadTags();
-          this.tags = [];
           window.setTimeout(() => { this.router.navigate(['/user-profile']); }, 1000);
-        
         });
         loadingEl.dismiss();
       });
     });
   }
 
-  ngOnDestroy() {
+  ionViewDidLeave() {
+    this.tags = [];
+    this.selectedImage = '';
+    this.photo = new Photo();
     if (!this.uploaded && this.imgRef){
       this.photoService.deleteIMG(this.imgRef);
     }

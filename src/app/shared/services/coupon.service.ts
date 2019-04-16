@@ -62,7 +62,7 @@ export class CouponService {
   }
 
   deleteIMG(img: string){
-    this.storage.ref(`coupons/${img}`).delete();
+    this.storage.ref(`coupons/${img}.jpg`).delete();
   }
 
 }

@@ -36,20 +36,25 @@ export class AuthService {
         this.userService.getUserById(result.user.uid)
           .subscribe((users) => {
             const user: User = users[0];
-            this.SetLocal(user);
-            if (user.admin) {
-              this.ngZone.run(() => {
-                this.router.navigate(['/admin-home']);
-              });
-            } else {
-              this.ngZone.run(() => {
-                this.router.navigate(['/user-home']);
-              });
-            }
+            this.SetLocal(user).then(() => {
+              if (user.admin) {
+                this.ngZone.run(() => {
+                  this.router.navigate(['/admin-home']);
+                });
+              } else {
+                this.ngZone.run(() => {
+                  this.router.navigate(['/user-home']);
+                });
+              }
+            });
           });
       }).catch((error) => {
-        window.alert(error.message)
-      })
+        this.alertCtrl.create({
+          header: 'Error',
+          message: error.message,
+          buttons: ['Okay']
+        }).then(alertEl => alertEl.present());
+      });
   }
 
   // Sign up with email/password
@@ -66,9 +71,10 @@ export class AuthService {
         user.createdOn = moment().format('MMMM Do YYYY');
         this.userService.addUser(user).then((docRef) => {
           user.$key = docRef.id;
-          this.SetLocal(user);
-          this.getLoggedInUser();
-          this.router.navigate(['/user-home']);
+          this.SetLocal(user).then(() =>{
+            this.getLoggedInUser();
+            this.router.navigate(['/user-home']);
+          });
         }).catch(function(error) {
           this.alertCtrl.create({
             header: 'Error',
@@ -87,8 +93,7 @@ export class AuthService {
   }
 
   SetLocal(user: User) {
-    console.log(user);
-    Plugins.Storage.set({ key: 'user', value: JSON.stringify(user) });
+    return Plugins.Storage.set({ key: 'user', value: JSON.stringify(user) });
   }
 
   SetLocalEdit(user: User) {
@@ -135,8 +140,9 @@ export class AuthService {
           text: 'Salir',
           handler: () => {
             this.afAuth.auth.signOut().then(() => {
-              Plugins.Storage.remove({ key: 'user' });
-              this.router.navigate(['/auth']);
+              Plugins.Storage.remove({ key: 'user' }).then(() => {
+                this.router.navigate(['/auth']);
+              });
             });
           }
         },

@@ -3,9 +3,8 @@ import { PhotoService } from './../../shared/services/photo.service';
 import { UserService } from './../../shared/services/user.service';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { Photo } from './../../shared/models/photo';
-import { User } from './../../shared/models/user';
 import { Tag } from './../../shared/models/tag';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import {take} from 'rxjs/operators'
 @Component({
   selector: 'app-images',
@@ -13,11 +12,11 @@ import {take} from 'rxjs/operators'
   styleUrls: ['./images.page.scss'],
 })
 
-export class ImagesPage implements OnInit, OnDestroy {
+export class ImagesPage  {
   photosChecked: Photo[] = [];
   photosCheck: Photo[] = [];
   tagToCheck: Tag;
-  images: number = 1;
+  images = 1;
 
   user: any;
   sub: any;
@@ -27,8 +26,11 @@ export class ImagesPage implements OnInit, OnDestroy {
     private loadingCtrl: LoadingController,
     private photoService: PhotoService,
     private userService: UserService,
-    public authService: AuthService
-  ) {
+    public authService: AuthService,
+    private alertController: AlertController
+  ) {}
+
+  ionViewWillEnter() {
     this.loadingCtrl.create({ message: 'Estoy pensando..' }).then(loadingEl => {
       loadingEl.present();
       this.sub = this.photoService.getUnAuthPhotos().subscribe((photos) => {
@@ -45,15 +47,11 @@ export class ImagesPage implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
-  }
-
 
   viewImages(number) {
     this.images = number;
   }
 
-  
   authPhoto(photo) {
     photo.auth = true;
     this.userService.getUser(photo.user_id).pipe(take(1)).subscribe((user) => {
@@ -68,14 +66,34 @@ export class ImagesPage implements OnInit, OnDestroy {
   }
   
   deletePhoto(photo: Photo) {
-    this.photoService.deletePhoto(photo).then(succ => {
-      console.log("deleted")
-    }, (err) => {
-      console.log(err)
+    this.alertController.create({
+      header: 'Confirma!',
+      message: 'Estas seguro de borrar esta imagen?',
+      buttons: [
+        {
+          text: 'Borrar',
+          handler: () => {
+            this.photoService.deletePhoto(photo).then(succ => {
+              console.log("deleted")
+            }, (err) => {
+              console.log(err)
+            });
+          }
+        },
+        {
+          text: 'Cancelar'
+        }
+      ]
+    }).then(alertEl => {
+      alertEl.present();
     });
   }
 
-  ngOnDestroy() {
+  updateTag(photo:Photo, e: any, i: number){
+    photo.tags[i] = e.srcElement.value;
+  }
+
+  ionViewDidLeave() {
     this.sub.unsubscribe();
     this.sub2.unsubscribe();
   }

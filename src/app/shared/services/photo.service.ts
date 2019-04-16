@@ -88,7 +88,7 @@ export class PhotoService {
   }
 
   deleteIMG(img: string){
-    this.storage.ref(`recolections/${img}`).delete();
+    this.storage.ref(`recolections/${img}.jpg`).delete();
   }
 
 }

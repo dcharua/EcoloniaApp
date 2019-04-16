@@ -3,6 +3,9 @@
     <ion-row id="logoTop">
       <img height="50" src="../../../assets/images/logo-small_negro.png" alt="">
       <ion-title>Inicio</ion-title>
+      <ion-button color="danger" (click)="authService.SignOut()">
+        <ion-icon name="log-out" slot="icon-only"></ion-icon>
+      </ion-button>
     </ion-row>
   </ion-toolbar>
 </ion-header>
@@ -36,11 +39,16 @@
   </ion-row>
 
 
+  <div class="map" #map></div>
+
+
   <ion-row>
     <ion-col padding>
       <h3 class="ion-text-center">Tags mas usados</h3>
       <ul class="tags">
-        <li *ngFor="let tag of tags| slice:0:10"><ion-icon name="pricetag"></ion-icon> {{tag.text}}<span class="tags_number">{{tag.count}}</span></li>
+        <li *ngFor="let tag of tags| slice:0:10">
+          <ion-icon name="pricetag"></ion-icon> {{tag.text}}<span class="tags_number">{{tag.count}}</span>
+        </li>
       </ul>
     </ion-col>
   </ion-row>
@@ -52,7 +60,7 @@
   <ion-row class="navbarRow">
     <ion-col size="4.5" class="navbarCol">
       <ion-row>
-        <ion-icon name="barcode" [routerLink]="['/user-coupon']"></ion-icon>
+        <ion-icon name="barcode" [routerLink]="['/admin-coupon']"></ion-icon>
       </ion-row>
       <ion-row>
         <p id="titleNavbar">Cupones</p>
@@ -61,19 +69,18 @@
 
     <ion-col id="photoIcon" size="3" class="navbarCol">
       <ion-row>
-        <ion-icon name="aperture" [routerLink]="['/user-camera']"></ion-icon>
+        <ion-icon name="aperture" [routerLink]="['/admin-camara']"></ion-icon>
       </ion-row>
       <ion-row>
         <p id="titleNavbar">Fotos</p>
       </ion-row>
     </ion-col>
-
     <ion-col size="4.5" class="navbarCol">
       <ion-row>
-        <ion-icon name="person" [routerLink]="['/user-profile']"></ion-icon>
+        <ion-icon name="checkbox-outline" [routerLink]="['/admin-images']"></ion-icon>
       </ion-row>
       <ion-row>
-        <p id="titleNavbar">Perfil</p>
+        <p id="titleNavbar">Validación</p>
       </ion-row>
     </ion-col>
   </ion-row>

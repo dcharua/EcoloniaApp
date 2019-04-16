@@ -10,6 +10,10 @@
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
 
+
+*:focus{
+  outline: none;
+}
 .invalid{
     border-bottom: 2px solid rgb(255, 0, 0);
 }    

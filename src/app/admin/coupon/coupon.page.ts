@@ -1,7 +1,7 @@
 import { AuthService } from './../../shared/services/auth.service';
 import { Coupon } from './../../shared/models/coupon';
 import { LoadingController, AlertController } from '@ionic/angular';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { CouponService } from '../../shared/services/coupon.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { CouponService } from '../../shared/services/coupon.service';
   templateUrl: './coupon.page.html',
   styleUrls: ['./coupon.page.scss'],
 })
-export class CouponPage implements OnInit, OnDestroy {
+export class CouponPage  {
   coupons: Coupon[] = [];
   sub: any;
 
@@ -19,6 +19,11 @@ export class CouponPage implements OnInit, OnDestroy {
     private couponService: CouponService,
     public authService: AuthService
   ) {
+    
+
+  }
+
+  ionViewWillEnter() {
     this.loadingCtrl.create({ message: '¿Donde estan?' }).then(loadingEl => {
       loadingEl.present();
       this.sub = this.couponService.getCoupons().subscribe(coupons => {
@@ -26,13 +31,9 @@ export class CouponPage implements OnInit, OnDestroy {
         loadingEl.dismiss();
       });
     });
-
   }
 
-  ngOnInit() {
-  }
-
-  ngOnDestroy() {
+  ionViewDidLeave() {
     this.sub.unsubscribe();
   }
 
