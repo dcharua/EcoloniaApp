@@ -14,7 +14,7 @@ import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/fi
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { AngularFireStorage } from '@angular/fire/storage';
-
+import { Facebook } from '@ionic-native/facebook/ngx';
 
 @NgModule({
   declarations: [
@@ -34,6 +34,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
     StatusBar,
     SplashScreen,
     Camera,
+    Facebook,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
   ],

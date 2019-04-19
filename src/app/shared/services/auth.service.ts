@@ -10,6 +10,8 @@ import { Observable } from 'rxjs';
 import { Plugins } from '@capacitor/core';
 import { BehaviorSubject, from } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { Facebook} from '@ionic-native/facebook/ngx'
+import * as firebase from 'firebase/app';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +28,8 @@ export class AuthService {
     public router: Router,
     public ngZone: NgZone, // NgZone service to remove outside scope warning
     private alertCtrl: AlertController,
-    private loading: LoadingController
+    private loading: LoadingController,
+    public facebook: Facebook
   ) { }
 
   // Sign in with email/password
@@ -71,8 +74,7 @@ export class AuthService {
         user.createdOn = moment().format('MMMM Do YYYY');
         this.userService.addUser(user).then((docRef) => {
           user.$key = docRef.id;
-          this.SetLocal(user).then(() =>{
-            this.getLoggedInUser();
+          this.SetLocal(user).then(() => {
             this.router.navigate(['/user-home']);
           });
         }).catch(function(error) {
@@ -90,6 +92,61 @@ export class AuthService {
         }).then(alertEl => alertEl.present());
 
       });
+  }
+
+loginWithFacebook(): Promise<any> {
+    return this.facebook.login(['email']).then( response => {
+        const facebookCredential = firebase.auth.FacebookAuthProvider.credential(response.authResponse.accessToken);
+        firebase.auth().signInWithCredential(facebookCredential).then( result => { 
+          this.alertCtrl.create({
+            header: 'Error',
+            message: JSON.stringify(result),
+            buttons: ['Okay']
+          }).then(alertEl => alertEl.present());
+
+          this.userService.getUserById(result.uid).subscribe((users) => {
+            if (users[0]) {
+              const user: User = users[0];
+              this.SetLocal(user).then(() => {
+                if (user.admin) {
+                  this.ngZone.run(() => {
+                    this.router.navigate(['/admin-home']);
+                  });
+                } else {
+                  this.ngZone.run(() => {
+                    this.router.navigate(['/user-home']);
+                  });
+                }
+              });
+            } else {
+              const user: User = new User();
+              user.email = result.email;
+              user.uid = result.uid;
+              user.name = result.displayName;
+              user.admin = false;
+              user.points = 0;
+              user.coupons = [];
+              user.createdOn = moment().format('MMMM Do YYYY');
+              this.userService.addUser(user).then((docRef) => {
+                user.$key = docRef.id;
+                this.SetLocal(user).then(() => {
+                  this.router.navigate(['/user-home']);
+                });
+              }).catch(function(error) {
+                this.alertCtrl.create({
+                  header: 'Error',
+                  message: error.message,
+                  buttons: ['Okay']
+                }).then(alertEl => alertEl.present());
+              });
+            }
+          });
+      }).catch((error) => { this.alertCtrl.create({
+        header: 'Error',
+        message: JSON.stringify(error),
+        buttons: ['Okay']
+      }).then(alertEl => alertEl.present()); });
+    });
   }
 
   SetLocal(user: User) {

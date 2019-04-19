@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private loadingCtrl: LoadingController,
-    private authService: AuthService
+    public authService: AuthService
   ) { }
 
   ngOnInit() { }
@@ -27,7 +27,10 @@ export class LoginComponent implements OnInit {
         loadingEl.dismiss();
       });
     });
-   
+  }
+
+  loginWithFacebook(){
+    this.authService.loginWithFacebook();
   }
 
   changeLogin() {
