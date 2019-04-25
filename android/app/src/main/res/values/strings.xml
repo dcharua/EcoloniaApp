@@ -5,6 +5,6 @@
     <string name="package_name">dcg.ecolonia</string>
     <string name="fileprovider_authority">dcg.ecolonia.fileprovider</string>
     <string name="custom_url_scheme">dcg.ecolonia</string>
-    <string name="fb_app_id">2269895806400490</string>
-    <string name="fb_app_name">Ecolonia</string>
+    <string name="fb_app_id">1276688979331002</string>
+    <string name="fb_app_name">Ecolonia App</string>
 </resources>

@@ -85,8 +85,4 @@
     <config-file parent="NSCameraUsageDescription" platform="ios" target="*-Info.plist">
         <string>You can take photos</string>
     </config-file>
-    <plugin name="cordova-plugin-facebook4" spec="4.2.1">
-        <variable name="APP_ID" value="2269895806400490" />
-        <variable name="APP_NAME" value="Ecolonia" />
-    </plugin>
 </widget>

@@ -14,7 +14,6 @@ export class SignupComponent implements OnInit {
   @Output() emitLogin = new EventEmitter<boolean>();
 
   public user: User = new User();
-  public mailConfirmation: string;
   public passwordConfirmation: string;
 
   constructor(
@@ -27,11 +26,7 @@ export class SignupComponent implements OnInit {
   ngOnInit() { }
 
   registrar() {
-    if (this.user.name, this.user.email, this.mailConfirmation, this.user.password, this.passwordConfirmation) {
-      if (this.user.email != this.mailConfirmation) {
-        this.showAlert("Error", "Los correos no coiciden");
-        return;
-      }
+    if (this.user.name, this.user.email,this.user.password, this.passwordConfirmation) {
       if (!this.authService.validateEmail(this.user.email)) {
         this.showAlert("Error", "Ingresa un mail valido");
         return;

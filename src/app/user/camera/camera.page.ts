@@ -1,3 +1,4 @@
+import { UserService } from './../../shared/services/user.service';
 import { User } from './../../shared/models/user';
 import { LoadingController, AlertController, ToastController, Platform } from '@ionic/angular';
 import { PhotoService } from './../../shared/services/photo.service';
@@ -41,6 +42,7 @@ export class CameraPage {
     public authService: AuthService,
     private photoService: PhotoService,
     public router: Router,
+    private userService: UserService,
     private loadingCtrl: LoadingController,
     private toast: ToastController,
     private platform: Platform,
@@ -67,7 +69,7 @@ export class CameraPage {
       this.photo.user_id = user.$key;
       this.photo.user_name = user.name;
       this.photo.auth = user.admin;
-      this.photo.points = 0;
+      this.photo.points = 5;
       this.photo.createdOn = new Date().toISOString();
     });
   }
@@ -203,6 +205,8 @@ export class CameraPage {
         }).then((toast) => {
           toast.present();
           this.uploadTags();
+          this.user.points += 5;
+          this.userService.updateUser(this.user);
           window.setTimeout(() => { this.router.navigate(['/user-profile']); }, 1000);
         });
         loadingEl.dismiss();

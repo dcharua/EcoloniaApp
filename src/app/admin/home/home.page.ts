@@ -19,7 +19,6 @@ export class HomePage {
   sub: any;
   sub2: any;
   googleMaps: any;
-
   constructor(
     private loadingCtrl: LoadingController,
     public photoService: PhotoService,
@@ -41,21 +40,19 @@ export class HomePage {
             zoom: 12
           });
           let markers = [];
-          photos.forEach((photo, i) => {
-            markers[i] = new googleMaps.Marker({
-              position: photo.location,
-              map: map,
-              title: 'Recoleccion',
-            });
-            //markers.setMap(map);
+          let i = 0;
+          photos.forEach(photo => {
+            if (photo.location) {
+              markers[i++] = new googleMaps.Marker({
+                position: photo.location,
+                map: map,
+                title: 'Recoleccion',
+              });
+            }
           })
-          console.log(markers)
-          var markerCluster = new MarkerClusterer(map, markers, {imagePath: '/assets/icon/m'})
-          console.log(markerCluster)
-          }) .catch(err => {
+          var markerCluster = new MarkerClusterer(map, markers, {imagePath: '/assets/icon/m'})}) .catch(err => {
             console.log(err);
           });
-        
 
         this.numberPhotosToday = 0;
         this.numberPhotos = photos.length;
@@ -68,6 +65,7 @@ export class HomePage {
             photos.slice(index, 1);
           }
         });
+        loadingEl.dismiss();
       });
 
       this.sub2 = this.tagService.getTags().subscribe((tags) => {
@@ -77,7 +75,7 @@ export class HomePage {
         });
         this.tags.reverse();
       });
-      loadingEl.dismiss();
+   
     });
   }
 
